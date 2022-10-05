@@ -1,5 +1,7 @@
 
 class gui {
+
+    // main class to render everything
     public static void main(String[] args) {
         // initialize gui components
         javax.swing.JFrame frame = new javax.swing.JFrame("Hello World"); // the window box
@@ -15,5 +17,12 @@ class gui {
         frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 300);
         frame.setVisible(true);
+        // add an event listener to the button
+        button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                label.setText("You clicked the button");
+            }
+        });
     }
+
 }
