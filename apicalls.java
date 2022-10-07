@@ -13,39 +13,32 @@ public class apicalls {
     // this method manages all things GUI
     private void guiManager() {
         // initialize gui components
-        JFrame frame = new JFrame("API CALLS"); // the window box
-        JLabel label = new JLabel(); // the text label
-        JButton button = new JButton("Click me"); // the button
-        JTextField textField = new JTextField(); // the input box
-        JPanel panel = new JPanel(); // the panel
-
         // label params
-        // label.setBounds(150, 20, 400, 30); // x axis, y axis, width, height
+        JLabel label = new JLabel(); // the text label
         label.setVerticalAlignment(0); // 0 is top, 1 is center, 2 is bottom
         label.setText(res); // set the text
 
         // text field params
-        textField.setBounds(150, 100, 100, 30); // x axis, y axis, width, height
+        JTextField textField = new JTextField(); // the input box
+        textField.setBorder(BorderFactory.createEmptyBorder()); // remove the border
 
         // button params
-        button.setBounds(150, 150, 95, 30); // x axis, y axis, width, height
+        JButton button = new JButton("Click me"); // the button
 
         // panel
-        panel.add(label);
-        panel.add(button);
-        panel.add(textField);
+        JPanel panel = new JPanel(); // the panel
         panel.setBackground(Color.gray);
         panel.setLayout(new BorderLayout());
 
-        // add components to panel
-        frame.add(panel);
-
-        // add panel to frame
-
+        JFrame frame = new JFrame("API CALLS"); // the window box
         // set frame properties //this apparently needs to be last
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
         frame.setVisible(true);
+        panel.add(label);
+        panel.add(button);
+        panel.add(textField);
+        frame.add(panel);
 
         // add an event listener to the button
         button.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +84,6 @@ public class apicalls {
         } else {
             return "GET request not worked";
         }
-
     }
 
     // method main runs the program
