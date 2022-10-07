@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.swing.*;
 
 public class apicalls {
     // class declarations
@@ -11,21 +12,33 @@ public class apicalls {
     // this method manages all things GUI
     private void GuiManager() {
         // initialize gui components
-        javax.swing.JFrame frame = new javax.swing.JFrame("Hello World"); // the window box
-        javax.swing.JLabel label = new javax.swing.JLabel("Hello World"); // the text label
-        javax.swing.JButton button = new javax.swing.JButton("Click me"); // the button
-        javax.swing.JTextField textField = new javax.swing.JTextField(); // the input box
-        javax.swing.JPanel panel = new javax.swing.JPanel(); // the panel to hold the components (inside frame)
-        // add panel to frame
-        frame.add(panel);
+        JFrame frame = new JFrame("API CALLS"); // the window box
+        JLabel label = new JLabel("Response here"); // the text label
+        JButton button = new JButton("Click me"); // the button
+        JTextField textField = new JTextField(); // the input box
+
+        // label params
+        label.setBounds(150, 20, 400, 30); // x axis, y axis, width, height
+
+        // text field params
+        textField.setBounds(150, 100, 100, 30); // x axis, y axis, width, height
+
+        // button params
+        button.setBounds(150, 150, 95, 30); // x axis, y axis, width, height
+
         // add components to panel
-        panel.add(label);
-        panel.add(button);
-        panel.add(textField);
+        frame.add(label);
+        frame.add(button);
+        frame.add(textField);
+
+        // add panel to frame
+
         // set frame properties //this apparently needs to be last
-        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 500);
+        frame.setLayout(null);
         frame.setVisible(true);
+
         // add an event listener to the button
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -34,7 +47,6 @@ public class apicalls {
                     try {
                         res = CallApi(textField.getText());
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                 }
