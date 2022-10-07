@@ -13,6 +13,7 @@ public class apicalls {
     // this method manages all things GUI
     private void guiManager() {
         // initialize gui components
+        
         // label params
         JLabel label = new JLabel(); // the text label
         label.setVerticalAlignment(0); // 0 is top, 1 is center, 2 is bottom
@@ -24,22 +25,6 @@ public class apicalls {
 
         // button params
         JButton button = new JButton("Click me"); // the button
-
-        // panel
-        JPanel panel = new JPanel(); // the panel
-        panel.setBackground(Color.gray);
-        panel.setLayout(new BorderLayout());
-
-        JFrame frame = new JFrame("API CALLS"); // the window box
-        // set frame properties //this apparently needs to be last
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setVisible(true);
-        panel.add(label);
-        panel.add(button);
-        panel.add(textField);
-        frame.add(panel);
-
         // add an event listener to the button
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -55,6 +40,22 @@ public class apicalls {
                 label.setText(res);
             }
         });
+
+        // panel
+        JPanel panel = new JPanel(); // the panel
+        panel.setBackground(Color.gray);
+        panel.setLayout(new GridLayout(3, 3, 3, 3)); // set the layout
+
+        // set frame properties //this apparently needs to be last
+        JFrame frame = new JFrame("API CALLS"); // the window box
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 500);
+        frame.setVisible(true);
+        panel.add(textField);
+        panel.add(button);
+        panel.add(label);
+        frame.add(panel);
+
     }
 
     // this method calls the api
@@ -80,6 +81,7 @@ public class apicalls {
                 response.append(inputLine);
             }
             in.close();
+            System.out.println(response.toString());
             return response.toString();
         } else {
             return "GET request not worked";
