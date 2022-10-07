@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.awt.*;
 import javax.swing.*;
 
 public class apicalls {
@@ -10,15 +11,18 @@ public class apicalls {
     private String res;
 
     // this method manages all things GUI
-    private void GuiManager() {
+    private void guiManager() {
         // initialize gui components
         JFrame frame = new JFrame("API CALLS"); // the window box
-        JLabel label = new JLabel("Response here"); // the text label
+        JLabel label = new JLabel(); // the text label
         JButton button = new JButton("Click me"); // the button
         JTextField textField = new JTextField(); // the input box
+        JPanel panel = new JPanel(); // the panel
 
         // label params
-        label.setBounds(150, 20, 400, 30); // x axis, y axis, width, height
+        // label.setBounds(150, 20, 400, 30); // x axis, y axis, width, height
+        label.setVerticalAlignment(0); // 0 is top, 1 is center, 2 is bottom
+        label.setText(res); // set the text
 
         // text field params
         textField.setBounds(150, 100, 100, 30); // x axis, y axis, width, height
@@ -26,17 +30,21 @@ public class apicalls {
         // button params
         button.setBounds(150, 150, 95, 30); // x axis, y axis, width, height
 
+        // panel
+        panel.add(label);
+        panel.add(button);
+        panel.add(textField);
+        panel.setBackground(Color.gray);
+        panel.setLayout(new BorderLayout());
+
         // add components to panel
-        frame.add(label);
-        frame.add(button);
-        frame.add(textField);
+        frame.add(panel);
 
         // add panel to frame
 
         // set frame properties //this apparently needs to be last
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
-        frame.setLayout(null);
         frame.setVisible(true);
 
         // add an event listener to the button
@@ -45,7 +53,7 @@ public class apicalls {
                 // CallApi method that takes the text from the input box
                 if (textField.getText().length() > 0) {
                     try {
-                        res = CallApi(textField.getText());
+                        res = callApi(textField.getText());
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -61,7 +69,7 @@ public class apicalls {
      * @param query
      * @throws IOException
      */
-    private String CallApi(String query) throws IOException {
+    private String callApi(String query) throws IOException {
         String url = "https://api.github.com/users/" + query;
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -89,6 +97,6 @@ public class apicalls {
     // method main runs the program
     public static void main(String[] args) {
         apicalls app = new apicalls();
-        app.GuiManager();
+        app.guiManager();
     }
 }
