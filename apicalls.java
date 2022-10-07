@@ -13,11 +13,13 @@ public class apicalls {
     // this method manages all things GUI
     private void guiManager() {
         // initialize gui components
-        
+
         // label params
         JLabel label = new JLabel(); // the text label
         label.setVerticalAlignment(0); // 0 is top, 1 is center, 2 is bottom
         label.setText(res); // set the text
+        //
+        JLabel labelImage = new JLabel(); // the image label
 
         // text field params
         JTextField textField = new JTextField(); // the input box
@@ -66,25 +68,30 @@ public class apicalls {
     private String callApi(String query) throws IOException {
         String url = "https://api.github.com/users/" + query;
         URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-        int responseCode = con.getResponseCode();
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+        int responseCode = conn.getResponseCode();
         System.out.println("GET Response Code :: " + responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+            // receive the response as an object
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
-
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
-            in.close();
-            System.out.println(response.toString());
+
+            // get the image_url from the response
+            String[] responseArray = response.toString().split(",");
+            String imageUrl = responseArray[3].split(":")[2].replace("\"", "");
+            System.out.println(imageUrl);
+            // close the input stream
+
+            System.out.println(response);
             return response.toString();
         } else {
-            return "GET request not worked";
+            return "User not found";
         }
     }
 
