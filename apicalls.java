@@ -4,11 +4,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class apicalls {
     // class declarations
-    private String res;
+    private String imageurlstringRes;
+    private URL imageurl;
 
     // this method manages all things GUI
     private void guiManager() {
@@ -17,46 +20,75 @@ public class apicalls {
         // label params
         JLabel label = new JLabel(); // the text label
         label.setVerticalAlignment(0); // 0 is top, 1 is center, 2 is bottom
-        label.setText(res); // set the text
-        //
+        label.setText("Search github profile pictures"); // set the text
+
         JLabel labelImage = new JLabel(); // the image label
+        labelImage.setVerticalAlignment(0); // 0 is top, 1 is center, 2 is bottom
 
         // text field params
         JTextField textField = new JTextField(); // the input box
         textField.setBorder(BorderFactory.createEmptyBorder()); // remove the border
+        textField.setPreferredSize(new Dimension(200, 30)); // set the size
 
         // button params
-        JButton button = new JButton("Click me"); // the button
+        JButton button = new JButton("Search"); // the button
+        // set the size of the button
+        button.setPreferredSize(new Dimension(100, 30));
+
         // add an event listener to the button
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // CallApi method that takes the text from the input box
                 if (textField.getText().length() > 0) {
                     try {
-                        res = callApi(textField.getText());
+                        imageurlstringRes = callApi(textField.getText());
+                        // add https:// in front of the url
+                        imageurlstringRes = "https:" + imageurlstringRes;
+                        // turn imageurlstringREs to URL
+                        imageurl = new URL(imageurlstringRes);
+                        System.out.println(imageurlstringRes);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                 }
                 // set the label text to the response
-                label.setText(res);
+                try {
+                    BufferedImage img = ImageIO.read(imageurl);
+                    labelImage.setIcon(new ImageIcon(img));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
-        // panel
+        // controls panel
         JPanel panel = new JPanel(); // the panel
         panel.setBackground(Color.gray);
-        panel.setLayout(new GridLayout(3, 3, 3, 3)); // set the layout
+        panel.setLayout(new GridLayout(
+                3, // rows
+                1, // columns
+                16, // horizontal gap
+                16 // vertical gap
+        )); // set the layout
+
+        // image panel
+        JPanel panelImage = new JPanel(); // the panel
+        panelImage.setBackground(Color.gray);
 
         // set frame properties //this apparently needs to be last
         JFrame frame = new JFrame("API CALLS"); // the window box
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
+        frame.setSize(720, 720);
         frame.setVisible(true);
+        frame.setLayout(new GridLayout(2, 1, 3, 3)); // set the layout
+        // add the components to the panel
+        panel.add(label);
         panel.add(textField);
         panel.add(button);
-        panel.add(label);
+        panelImage.add(labelImage);
+        // add the panel to the frame
         frame.add(panel);
+        frame.add(panelImage);
 
     }
 
@@ -84,12 +116,8 @@ public class apicalls {
 
             // get the image_url from the response
             String[] responseArray = response.toString().split(",");
-            String imageUrl = responseArray[3].split(":")[2].replace("\"", "");
-            System.out.println(imageUrl);
-            // close the input stream
-
-            System.out.println(response);
-            return response.toString();
+            String imageurlstringRes = responseArray[3].split(":")[2].replace("\"", "");
+            return imageurlstringRes;
         } else {
             return "User not found";
         }
