@@ -46,3 +46,15 @@ public class Sandwich {
     }
 }
 
+// SandwichTest class
+class SandwichTest {
+    public static void main(String[] args) {
+        Sandwich sandwich1 = new Sandwich("tuna", "white", 20300);
+        Sandwich sandwich2 = new Sandwich("cheese", "wheat", 20.20);
+        Sandwich sandwich3 = new Sandwich("ham", "rye", 3.00);
+
+        System.out.println(sandwich1);
+        System.out.println(sandwich2);
+        System.out.println(sandwich3);
+    }
+}
