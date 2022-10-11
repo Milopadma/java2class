@@ -33,13 +33,16 @@ public class Dog {
     // other methods
     // to person years methods
     // since 1 dog year is equivalent to 7 human years
-    public int toPersonYears() {
+    public int toPersonYears(int age) {
         return age * 7;
     }
 
     // toString
     public String toString() {
-        return "Dog [name = " + name + ", age = " + age + " with human years of " + toPersonYears() + "]";
+        return "Dog [name = " + name + ", age = " + age + ", with human years of " + toPersonYears(age) + "]";
+        // calling without passing a parameter
+        // feels wrong so ill just add it
+        // even though it would work the same hypothetically
     }
 
 }
