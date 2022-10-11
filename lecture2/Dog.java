@@ -48,7 +48,6 @@ public class Dog {
 }
 
 // DogTest class (Kennel?)
-
 class Kennel {
     public static void main(String[] args) {
         Dog dog1 = new Dog("Roger", 2);
