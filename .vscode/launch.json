@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch BoxTest",
+            "request": "launch",
+            "mainClass": "lecture2.BoxTest",
+            "projectName": "java2class_6f3721ec"
+        },
+        {
+            "type": "java",
             "name": "Launch FlightTest",
             "request": "launch",
             "mainClass": "lecture2.FlightTest",
