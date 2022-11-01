@@ -3,12 +3,17 @@ package lecture4.inheritance;
 public class Persegi extends BangunDatar{
     //constructor
     public Persegi(float s) {
+        setSisi(s);
     }
 
     //class variables
     float sisi;
 
     //class methods
+    public void setSisi(float s) {
+        sisi = s;
+    }
+
     @Override
     public double luas() {
         float luas = sisi * sisi;
