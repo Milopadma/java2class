@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch practice",
+            "request": "launch",
+            "mainClass": "lecture4.practice",
+            "projectName": "java2class_7a327dc0"
+        },
+        {
+            "type": "java",
+            "name": "Launch FlightTest",
+            "request": "launch",
+            "mainClass": "lecture2.FlightTest",
+            "projectName": "java2class_7a327dc0"
+        },
+        {
+            "type": "java",
+            "name": "Launch gui",
+            "request": "launch",
+            "mainClass": "gui",
+            "projectName": "java2class_7a327dc0"
+        },
+        {
+            "type": "java",
             "name": "Launch SandwichTest",
             "request": "launch",
             "mainClass": "lecture2.SandwichTest",
