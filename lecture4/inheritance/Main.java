@@ -6,8 +6,6 @@ public class Main{
     }
 }
 
-
-
 class Persegi extends BangunDatar {
     private double sisi;
 
