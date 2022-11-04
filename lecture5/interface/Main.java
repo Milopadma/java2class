@@ -5,11 +5,11 @@ public class Main {
     // new Phone object
 
     Phone xiaomiRedMi10 = new Xiaomi();
-    Phone iPhone = new iPhone();
+    // Phone iPhone = new iPhone();
 
     // users
     PhoneUser user1 = new PhoneUser("user1", xiaomiRedMi10);
-    PhoneUser user2 = new PhoneUser("user2", iPhone);
+    // PhoneUser user2 = new PhoneUser("user2", iPhone);
 
     user1.turnOnThePhone();
     Scanner scanner = new Scanner(System.in);

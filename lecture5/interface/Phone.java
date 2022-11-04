@@ -1,4 +1,3 @@
-package interface;
 
 public interface Phone {
 

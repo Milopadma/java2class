@@ -1,5 +1,3 @@
-package lecture5.interface; 
-
 public class Xiaomi implements Phone {
     private boolean isOn;
     private boolean isPowerOn;

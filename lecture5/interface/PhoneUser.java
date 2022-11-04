@@ -1,5 +1,3 @@
-package lecture5.interface;
-
 public class PhoneUser {
   private Phone phone;
   private String name;
