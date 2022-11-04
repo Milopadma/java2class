@@ -36,12 +36,13 @@ public class Main {
       } else if (input.equalsIgnoreCase("4")) {
         user1.volumeDown();
       } else if (input.equalsIgnoreCase("5")) {
+        scanner.close();
         break;
       } else {
         System.out.println("Invalid input");
       }
 
-      scanner.close();
+      // scanner.close();
     }
 
   }
