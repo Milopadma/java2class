@@ -11,14 +11,17 @@ public class SchoolHELPConsole {
     // for the admin-specific cli menu
     public static void displayAdminMenu(){
         System.out.println("Welcome to the SchoolHELP Admin Menu");
-        System.out.println("Please select an option from the menu below:");
-        System.out.println("1. Add a new school");
-        System.out.println("2. Add a new volunteer");
-        System.out.println("3. Remove a school");
-        System.out.println("4. Remove a volunteer");
-        System.out.println("5. View all schools");
-        System.out.println("6. View all volunteers");
-        System.out.println("7. Exit");
+        Stream.of("1. Add a new school", "2. Add a new volunteer", "3. Remove a school", "4. Remove a volunteer", "5. View all schools", "6. View all volunteers", "7. Exit").forEach(System.out::println);
+        Stream.of("Please enter your choice: ").forEach(System.out::println);
+        // await user input
+        int choice = Integer.parseInt(System.console().readLine());
+
+        //switch statement to handle user input
+        switch(choice){
+            case 1:
+                //adding new school
+                //TODO
+        }
     }
 
     // for the volunteer-specific cli menu
