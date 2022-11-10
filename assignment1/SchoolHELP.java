@@ -9,7 +9,8 @@ public class SchoolHELP {
 
     // class constructor
     public SchoolHELP() {
-        //TODO ? i dont even know what to put here 
+        //default ArrayList constructor with a single default SchoolAdmin user
+        users.add(new SchoolAdmin("admin", "admin", "default admin", "defaultadmin@milopadma.com", 000, 1, "Admin"));
     }
 
     // class setter and getter methods

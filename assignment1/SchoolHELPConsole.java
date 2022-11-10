@@ -10,6 +10,15 @@ public class SchoolHELPConsole {
     // console class methods 
     // for the admin-specific cli menu
     public static void displayAdminMenu(){
+        System.out.println("Welcome to the SchoolHELP Admin Menu");
+        System.out.println("Please select an option from the menu below:");
+        System.out.println("1. Add a new school");
+        System.out.println("2. Add a new volunteer");
+        System.out.println("3. Remove a school");
+        System.out.println("4. Remove a volunteer");
+        System.out.println("5. View all schools");
+        System.out.println("6. View all volunteers");
+        System.out.println("7. Exit");
     }
 
     // for the volunteer-specific cli menu
