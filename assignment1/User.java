@@ -61,4 +61,13 @@ public class User {
             return "User [email=" + email + ", fullname=" + fullname + ", password=" + password + ", phone=" + phone
                     + ", username=" + username + "]";
         }
+
+        //each user can be a SchoolAdmin or a Volunteer
+        //to check if this user is a school admin or not
+        public boolean isSchoolAdmin(){
+            if (this instanceof SchoolAdmin){
+                return true;
+            }
+            return false;
+        }
     }

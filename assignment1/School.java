@@ -1,10 +1,17 @@
-    // School class
+import java.util.ArrayList;
+
+// School class
 public class School{
-        // class variables
+    // this class manages School data and also SchoolAdmin classes 
+
+    // class variables
         private String schoolName;
         private int schoolID;
         private String address;
         private String city;
+
+        // each school has multiple SchoolAdmins
+        private ArrayList<SchoolAdmin> schoolAdmins = new ArrayList<SchoolAdmin>();
 
         // class constructor
         public School(String schoolName, int schoolID, String address, String city){

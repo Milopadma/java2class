@@ -49,7 +49,8 @@ public class SchoolHELP {
 
     // functional class methods
     public static boolean isUserAdmin(User user){
-        if(user.getAdmin() == true){
+        // check if this user instance is a SchoolAdmin or not
+        if(user.isSchoolAdmin() == true){
             return true;
         }else{
             return false;
