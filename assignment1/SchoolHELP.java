@@ -48,7 +48,7 @@ public class SchoolHELP {
     }
 
     // functional class methods
-    public static boolean isUserAdmin(String adminUsername, String adminPassword){
+    public boolean isUserAdmin(String adminUsername, String adminPassword){
         // find this user in the users arraylist
         User user = users.stream().filter(u -> u.getUsername().equals(adminUsername) && u.getPassword().equals(adminPassword)).findAny().orElse(null);
         // check if this user instance is a SchoolAdmin or not
@@ -59,7 +59,7 @@ public class SchoolHELP {
         }
     }
 
-    public static boolean isUserVolunteer(String volunteerUsername, String volunteerPassword){
+    public boolean isUserVolunteer(String volunteerUsername, String volunteerPassword){
         // find this user in the users arraylist
         User user = users.stream().filter(u -> u.getUsername().equals(volunteerUsername) && u.getPassword().equals(volunteerPassword)).findAny().orElse(null);
         // check if this user instance is a Volunteer or not
