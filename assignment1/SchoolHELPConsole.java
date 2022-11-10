@@ -1,6 +1,8 @@
-package assignment1;
-
 public class SchoolHELPConsole {
+    // creating a single instance of the SchoolHELP class
+    
+    private static SchoolHELP schoolHELP = new SchoolHELP();
+
     public static void main(String[] args) {
         System.out.println("Welcome to the School Help System");
         System.out.println("Please enter your name");
