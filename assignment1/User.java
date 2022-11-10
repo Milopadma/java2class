@@ -65,7 +65,7 @@ public class User {
         //each user can be a SchoolAdmin or a Volunteer
         //to check if this user is a school admin or not
         public boolean isSchoolAdmin(){
-            if (this instanceof SchoolAdmin){
+            if (this instanceof SchoolAdmin){ //basically checks if 'this' is an instance of SchoolAdmin
                 return true;
             }
             return false;
@@ -73,7 +73,7 @@ public class User {
 
         //to check if this user is a volunteer or not
         public boolean isVolunteer(){
-            if (this instanceof Volunteer){
+            if (this instanceof Volunteer){ //basically checks if 'this' is an instance of Volunteer
                 return true;
             }
             return false;

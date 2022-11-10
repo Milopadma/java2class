@@ -9,8 +9,7 @@ public class SchoolHELP {
 
     // class constructor
     public SchoolHELP() {
-        
-
+        //TODO ? i dont even know what to put here 
     }
 
     // class setter and getter methods
@@ -48,7 +47,9 @@ public class SchoolHELP {
     }
 
     // functional class methods
-    public static boolean isUserAdmin(User user){
+    public static boolean isUserAdmin(String adminUsername, String adminPassword){
+        // find this user in the users arraylist
+        User user = users.stream().filter(u -> u.getUsername().equals(adminUsername) && u.getPassword().equals(adminPassword)).findAny().orElse(null);
         // check if this user instance is a SchoolAdmin or not
         if(user.isSchoolAdmin() == true){
             return true;
@@ -57,7 +58,9 @@ public class SchoolHELP {
         }
     }
 
-    public static boolean isUserVolunteer(User user){
+    public static boolean isUserVolunteer(String volunteerUsername, String volunteerPassword){
+        // find this user in the users arraylist
+        User user = users.stream().filter(u -> u.getUsername().equals(volunteerUsername) && u.getPassword().equals(volunteerPassword)).findAny().orElse(null);
         // check if this user instance is a Volunteer or not
         if(user.isVolunteer() == true){
             return true;
