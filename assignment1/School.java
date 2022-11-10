@@ -1,0 +1,57 @@
+    // School class
+public class School{
+        // class variables
+        private String schoolName;
+        private int schoolID;
+        private String address;
+        private String city;
+
+        // class constructor
+        public School(String schoolName, int schoolID, String address, String city){
+            this.schoolName = schoolName;
+            this.schoolID = schoolID;
+            this.address = address;
+            this.city = city;
+        }
+
+        // class setter and getter methods
+        public String getSchoolName() {
+            return schoolName;
+        }
+
+        public void setSchoolName(String schoolName) {
+            this.schoolName = schoolName;
+        }
+
+        public int getSchoolID() {
+            return schoolID;
+        }
+
+        public void setSchoolID(int schoolID) {
+            this.schoolID = schoolID;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        // toString method
+        @Override
+        public String toString() {
+            return "School [address=" + address + ", city=" + city + ", schoolID=" + schoolID + ", schoolName="
+                    + schoolName + "]";
+        }
+    }
+

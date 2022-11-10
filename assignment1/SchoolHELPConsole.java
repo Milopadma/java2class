@@ -4,22 +4,17 @@ import java.util.stream.Stream;
 public class SchoolHELPConsole {
     // creating a single instance of the SchoolHELP class
     
-    private static SchoolHELP schoolHELP = new SchoolHELP();
+    private static SchoolHELP SchoolHELP = new SchoolHELP();
 	private static Object isUserAdminOrVolunteer;
 
     // console class methods 
+    // for the admin-specific cli menu
     public static void displayAdminMenu(){
-        System.out.println("
-        1. Add a new user
-        2. Delete a user
-        3. Update a user
-        4. View all users
-        5. View all volunteers
-        ");
     }
 
-
-
+    // for the volunteer-specific cli menu
+    public static void displayVolunteerMenu(){
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to the School Help System");
@@ -34,11 +29,11 @@ public class SchoolHELPConsole {
             case 1:
                 // admin login
                 System.out.println("--ADMIN-- Enter your username: ");
-                String username = System.console().readLine();
+                String adminUsername = System.console().readLine();
                 System.out.println("--ADMIN-- Enter your password: ");
-                String password = System.console().readLine();
+                String adminPassword = System.console().readLine();
                 // check if user is admin
-                if (schoolHELP.isUserAdmin(username, password)) {
+                if (SchoolHELP.isUserAdmin(adminUsername, adminPassword)) {
                     // if user is admin, display admin menu
                     displayAdminMenu();
                 } else {
@@ -48,9 +43,9 @@ public class SchoolHELPConsole {
                 break;
             case 2:
                 // volunteer login
-                System.out.println("Enter your username: ");
+                System.out.println("--VOLUNTEER-- Enter your username: ");
                 String username = System.console().readLine();
-                System.out.println("Enter your password: ");
+                System.out.println("--VOLUNTEER-- Enter your password: ");
                 String password = System.console().readLine();
                 // check if user is volunteer
                 if (schoolHELP.isUserVolunteer(username, password)) {

@@ -1,127 +1,61 @@
+import java.util.ArrayList;
+
 public class SchoolHELP {
+    // this class manages instances of User and School classes
 
-    class User {
-        private String username;
-        private String password;
-        private String fullname;
-        private String email;
-        private int phone; 
+    // class variables
+    private static ArrayList<User> users = new ArrayList<User>();
+    private static ArrayList<School> schools = new ArrayList<School>();
 
-        // User class constructor
-        public User(String username, String password, String fullname, String email, int phone){
-            this.username = username;
-            this.password = password;
-            this.fullname = fullname;
-            this.email = email;
-            this.phone = phone;
-        }
+    // class constructor
+    public SchoolHELP() {
+        
 
-        //class setter and getter methods
-        public String getUsername() {
-            return username;
-        }
+    }
 
-        public void setUsername(String username) {
-            this.username = username;
-        }
+    // class setter and getter methods
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
 
-        public String getPassword() {
-            return password;
-        }
+    public static void setUsers(ArrayList<User> users) {
+        SchoolHELP.users = users;
+    }
 
-        public void setPassword(String password) {
-            this.password = password;
-        }
+    public static ArrayList<School> getSchools() {
+        return schools;
+    }
 
-        public String getFullname(){
-            return fullname;
-        }
+    public static void setSchools(ArrayList<School> schools) {
+        SchoolHELP.schools = schools;
+    }
 
-        public void setFullname(String fullname){
-            this.fullname = fullname;
-        }
+    // class methods
+    public static void addUser(User user){
+        users.add(user);
+    }
 
-        public String getEmail(){
-            return email;
-        }
+    public static void addSchool(School school){
+        schools.add(school);
+    }
 
-        public void setEmail(String email){
-            this.email = email;
-        }
+    public static void removeUser(User user){
+        users.remove(user);
+    }
 
-        public int getPhone(){
-            return phone;
-        }
+    public static void removeSchool(School school){
+        schools.remove(school);
+    }
 
-        public void setPhone(int phone){
-            this.phone = phone;
-        }
-
-        // toString method
-        @Override
-        public String toString() {
-            return "User [email=" + email + ", fullname=" + fullname + ", password=" + password + ", phone=" + phone
-                    + ", username=" + username + "]";
+    // functional class methods
+    public static boolean isUserAdmin(User user){
+        if(user.getAdmin() == true){
+            return true;
+        }else{
+            return false;
         }
     }
-    
-    // School class
-    public class School{
-        // class variables
-        private String schoolName;
-        private int schoolID;
-        private String address;
-        private String city;
 
-        // class constructor
-        public School(String schoolName, int schoolID, String address, String city){
-            this.schoolName = schoolName;
-            this.schoolID = schoolID;
-            this.address = address;
-            this.city = city;
-        }
-
-        // class setter and getter methods
-        public String getSchoolName() {
-            return schoolName;
-        }
-
-        public void setSchoolName(String schoolName) {
-            this.schoolName = schoolName;
-        }
-
-        public int getSchoolID() {
-            return schoolID;
-        }
-
-        public void setSchoolID(int schoolID) {
-            this.schoolID = schoolID;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
-        }
-
-        // toString method
-        @Override
-        public String toString() {
-            return "School [address=" + address + ", city=" + city + ", schoolID=" + schoolID + ", schoolName="
-                    + schoolName + "]";
-        }
-
-    } 
 
 }
 
