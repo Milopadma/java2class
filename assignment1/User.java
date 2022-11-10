@@ -70,4 +70,12 @@ public class User {
             }
             return false;
         }
+
+        //to check if this user is a volunteer or not
+        public boolean isVolunteer(){
+            if (this instanceof Volunteer){
+                return true;
+            }
+            return false;
+        }
     }

@@ -48,7 +48,7 @@ public class SchoolHELPConsole {
                 System.out.println("--VOLUNTEER-- Enter your password: ");
                 String password = System.console().readLine();
                 // check if user is volunteer
-                if (schoolHELP.isUserVolunteer(username, password)) {
+                if (SchoolHELP.isUserVolunteer(username, password)) {
                     // if user is volunteer, display volunteer menu
                     displayVolunteerMenu();
                 } else {

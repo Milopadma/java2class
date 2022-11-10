@@ -57,6 +57,14 @@ public class SchoolHELP {
         }
     }
 
+    public static boolean isUserVolunteer(User user){
+        // check if this user instance is a Volunteer or not
+        if(user.isVolunteer() == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }
 
