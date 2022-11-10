@@ -5,8 +5,8 @@ public class ResourceRequest extends Request{
     private int numRequired;
 
     // class constructor
-    public ResourceRequest(String requestType, String requestStatus, String requestDate, String remarks, String resourceType, int numRequired){
-        super(requestType, requestStatus, requestDate, remarks);
+    public ResourceRequest(int requestID, int requestDate, String requestStatus, String desription, String resourceType, int numRequired){
+        super(requestID, requestDate, requestStatus, desription);
         this.resourceType = resourceType;
         this.numRequired = numRequired;
     }
