@@ -1,11 +1,12 @@
-public class SchoolAdmin extends User{
-    //this class manages SchoolAdmin data 
+public class SchoolAdmin extends User {
+    // this class manages SchoolAdmin data
     // class variables
     private int staffID;
     private String position;
 
     // class constructor
-    public SchoolAdmin(String username, String password, String fullname, String email, int phone, int staffID, String position){
+    public SchoolAdmin(String username, String password, String fullname, String email, int phone, int staffID,
+            String position) {
         super(username, password, fullname, email, phone);
         this.staffID = staffID;
         this.position = position;

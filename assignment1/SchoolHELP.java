@@ -9,7 +9,7 @@ public class SchoolHELP {
 
     // class constructor
     public SchoolHELP() {
-        //default ArrayList constructor with a single default SchoolAdmin user
+        // default ArrayList constructor with a single default SchoolAdmin user
         users.add(new SchoolAdmin("admin", "admin", "default admin", "defaultadmin@milopadma.com", 000, 1, "Admin"));
     }
 
@@ -31,49 +31,52 @@ public class SchoolHELP {
     }
 
     // class methods
-    public static void addUser(User user){
+    public static void addUser(User user) {
         users.add(user);
     }
 
-    public static void addSchool(School school){
+    public static void addSchool(School school) {
         schools.add(school);
     }
 
-    public static void removeUser(User user){
+    public static void removeUser(User user) {
         users.remove(user);
     }
 
-    public static void removeSchool(School school){
+    public static void removeSchool(School school) {
         schools.remove(school);
     }
 
     // functional class methods
-    public boolean isUserAdmin(String adminUsername, String adminPassword){
+    public boolean isUserAdmin(String adminUsername, String adminPassword) {
         // find this user in the users arraylist
-        User user = users.stream().filter(u -> u.getUsername().equals(adminUsername) && u.getPassword().equals(adminPassword)).findAny().orElse(null);
+        User user = users.stream()
+                .filter(u -> u.getUsername().equals(adminUsername) && u.getPassword().equals(adminPassword)).findAny()
+                .orElse(null);
         if (user == null) {
             return false;
         }
         // check if this user instance is a SchoolAdmin or not
-        if(user.isSchoolAdmin()){
+        if (user.isSchoolAdmin()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public boolean isUserVolunteer(String volunteerUsername, String volunteerPassword){
+    public boolean isUserVolunteer(String volunteerUsername, String volunteerPassword) {
         // find this user in the users arraylist
-        User user = users.stream().filter(u -> u.getUsername().equals(volunteerUsername) && u.getPassword().equals(volunteerPassword)).findAny().orElse(null);
+        User user = users.stream()
+                .filter(u -> u.getUsername().equals(volunteerUsername) && u.getPassword().equals(volunteerPassword))
+                .findAny().orElse(null);
         if (user == null) {
             return false;
-        }       // check if this user instance is a Volunteer or not
-        if(user.isVolunteer() == true){
+        } // check if this user instance is a Volunteer or not
+        if (user.isVolunteer() == true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
 }
-
