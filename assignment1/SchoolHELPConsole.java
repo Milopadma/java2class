@@ -3,11 +3,10 @@ import java.util.stream.Stream;
 
 public class SchoolHELPConsole {
     // creating a single instance of the SchoolHELP class
-    
-    private static SchoolHELP SchoolHELP = new SchoolHELP();
-	private static Object isUserAdminOrVolunteer;
 
-    // console class methods 
+    private static SchoolHELP SchoolHELP = new SchoolHELP();
+
+    // console class methods
     // for the admin-specific cli menu
     public static void displayAdminMenu(){
         System.out.println("\nWelcome to the SchoolHELP Admin Menu");
@@ -35,7 +34,7 @@ public class SchoolHELPConsole {
         Stream.of("Enter your choice: ").forEach(System.out::print);
         // await user input
         int choice = Integer.parseInt(System.console().readLine());
-        
+
         // switch statement to handle user input
         switch (choice) {
             case 1:
