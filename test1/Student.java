@@ -54,4 +54,19 @@ public class Student {
         return this.subjects.stream().filter(subject -> subject.getCode().startsWith(code))
                 .collect(Collectors.toList());
     }
+
+    // sortSubjects method that sorts the subjects in the collection by name, no
+    // sorting, or according to subject type followed by subjetc name.
+    public void sortSubjects(String type) {
+        if (type.equals("name")) {
+            this.subjects.sort(Comparator.comparing(Subject::getName));
+        } else if (type.equals("type")) {
+            this.subjects.sort(Comparator.comparing(Subject::getClass).thenComparing(Subject::getName));
+        } else if (type.equals("original")) {
+            // do nothing, literally...
+        } else {
+            // catch edge case where nothing is passed in or an invalid string is passed in
+            System.out.println("Invalid type");
+        }
+    }
 }
