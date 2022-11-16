@@ -90,7 +90,7 @@ public class Student {
         if (type.equals("name")) {
             this.subjects.sort(Comparator.comparing(Subject::getName));
         } else if (type.equals("type")) {
-            this.subjects.sort(Comparator.comparing(Subject::getClass).thenComparing(Subject::getName));
+            this.subjects.sort(Comparator.comparing(Subject::getCode).thenComparing(Subject::getName));
         } else if (type.equals("original")) {
             // do nothing, literally...
         } else {
