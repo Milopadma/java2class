@@ -3,11 +3,13 @@
 // imports
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Student {
     // class headers
     private String name;
     private int studentNumber;
+    private ArrayList<Subject> subjects;
 
     // class contructors (with args)
     public Student(String name) {
@@ -17,6 +19,9 @@ public class Student {
         // "student number is automatically generated"
         this.studentNumber = (int) (Math.random() * 1000000);
     }
+
+    // class getters and setters
+    
 
     // addSubject that adds the passed in Subject to the collection of Subjects
     public void addSubject(Subject subject) {
@@ -52,7 +57,7 @@ public class Student {
     // subjectCodeSearch method that takes the first three characters of a subject
     // code and returns a list that contains all the subjects that matches
     public ArrayList<Subject> subjectCodeSearch(String code) {
-        return this.subjects.stream().filter(subject -> subject.getCode().startsWith(code))
+        return (ArrayList<Subject>) this.subjects.stream().filter(subject -> subject.getCode().startsWith(code))
                 .collect(Collectors.toList());
     }
 
