@@ -29,6 +29,23 @@ public class Student {
         this.name = name;
     }
 
+    public int getStudentNumber() {
+        return this.studentNumber;
+    }
+
+    public void setStudentNumber(int studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
+    public ArrayList<Subject> getSubjects() {
+        return this.subjects;
+    }
+
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    // class methods
     // addSubject that adds the passed in Subject to the collection of Subjects
     public void addSubject(Subject subject) {
         subjects.add(subject);
