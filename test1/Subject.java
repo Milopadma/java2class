@@ -43,4 +43,21 @@ public class Subject {
         this.points = points;
     }
 
+    // toString method
+    @Override
+    public String toString() {
+        return getCode() + " " + getName() + " with " + getPoints() + " credit points.";
+    }
+
+    // equals method
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (!(obj instanceof Subject)) {
+            return false;
+        }
+        Subject subject = (Subject) obj;
+        return Objects.equals(name, subject.name) && Objects.equals(code, subject.code) && points == subject.points;
+    }
 }
