@@ -3,7 +3,7 @@ public class FullFeeSubject extends Subject {
     private double Fee;
 
     // class contructors (with args)
-    public FullFeeSubject(String name, String code, integer points, double Fee) {
+    public FullFeeSubject(String name, String code, int points, double Fee) {
         super(name, code, points);
         this.Fee = Fee;
     }

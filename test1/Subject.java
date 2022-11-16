@@ -2,10 +2,10 @@ public class Subject {
     // class headers
     private String name;
     private String code;
-    private integer points;
+    private int points;
 
     // class contructors
-    public Subject(String name, String code, integer points) {
+    public Subject(String name, String code, int points) {
         this.name = name;
         this.code = code;
         this.points = points;
@@ -35,11 +35,11 @@ public class Subject {
         this.code = code;
     }
 
-    public integer getPoints() {
+    public int getPoints() {
         return this.points;
     }
 
-    public void setPoints(integer points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 
