@@ -1,3 +1,5 @@
+
+// I GUSTI BAGUS MILO PADMA WIJAYA // e2000426
 public class FullFeeSubject extends Subject {
     // class headers
     private double Fee;

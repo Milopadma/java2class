@@ -1,3 +1,4 @@
+// I GUSTI BAGUS MILO PADMA WIJAYA // e2000426
 public class Subject {
     // class headers
     private String name;
