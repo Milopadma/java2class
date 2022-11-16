@@ -80,8 +80,8 @@ public class Student {
     // subjectCodeSearch method that takes the first three characters of a subject
     // code and returns a list that contains all the subjects that matches
     public ArrayList<Subject> subjectCodeSearch(String code) {
-        return (ArrayList<Subject>) this.subjects.stream().filter(subject -> subject.getCode().startsWith(code))
-                .collect(Collectors.toList());
+        return this.subjects.stream().filter(subject -> subject.getCode().startsWith(code))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     // sortSubjects method that sorts the subjects in the collection by name, no
