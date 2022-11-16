@@ -58,6 +58,7 @@ public class Subject {
             return false;
         }
         Subject subject = (Subject) obj;
-        return Objects.equals(name, subject.name) && Objects.equals(code, subject.code) && points == subject.points;
+        // they are equal if they have the same subject code
+        return subject.getCode().equals(getCode());
     }
 }
