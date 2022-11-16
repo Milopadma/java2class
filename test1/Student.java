@@ -21,7 +21,13 @@ public class Student {
     }
 
     // class getters and setters
-    
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     // addSubject that adds the passed in Subject to the collection of Subjects
     public void addSubject(Subject subject) {
