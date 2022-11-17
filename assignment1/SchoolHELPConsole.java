@@ -80,6 +80,7 @@ public class SchoolHELPConsole {
                 Stream.of("Which detail would you like to change? ").forEach(System.out::println);
                 Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone")
                         .forEach(System.out::println);
+                Stream.of("Please enter your choice: ").forEach(System.out::println);
                 int detailChangeChoice = Integer.parseInt(System.console().readLine());
                 // switch statement to handle user input
                 switch (detailChangeChoice) {
@@ -156,8 +157,6 @@ public class SchoolHELPConsole {
                 if (SchoolHELP.isUserAdmin(adminUsername, adminPassword)) {
                     // setting the current logged in user of this instance
                     currentUser = SchoolHELP.getUser(adminUsername, adminPassword);
-                    // print out the above user's details
-                    Stream.of(currentUser.toString()).forEach(System.out::println);
                     
                     // if user is admin, display admin menu
                     displayAdminMenu();
