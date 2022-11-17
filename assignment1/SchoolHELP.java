@@ -32,7 +32,6 @@ public class SchoolHELP {
         return null;
     }
 
-
     public ArrayList<School> getSchools() {
         return schools;
     }
@@ -59,6 +58,8 @@ public class SchoolHELP {
     }
 
     // functional class methods
+
+    // to check if the user is an admin in the user list array or not
     public boolean isUserAdmin(String adminUsername, String adminPassword) {
         // find this user in the users arraylist
         User user = users.stream()
@@ -75,6 +76,7 @@ public class SchoolHELP {
         }
     }
 
+    // to check if the user is a volunteer in the user list array or not
     public boolean isUserVolunteer(String volunteerUsername, String volunteerPassword) {
         // find this user in the users arraylist
         User user = users.stream()
@@ -90,4 +92,13 @@ public class SchoolHELP {
         }
     }
 
+    // to check if that username exists in the ArrayList already or not
+    public boolean isUsernameTaken(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
