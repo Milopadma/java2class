@@ -207,43 +207,59 @@ public class SchoolHELPConsole {
                         Stream.of("Please enter the description of the tutorial request: ")
                                 .forEach(System.out::println);
                         String description = (System.console().readLine());
-                        // proposed date of the tutorial request
-                        Stream.of("Please enter the proposed date of the tutorial request: ")
-                                .forEach(System.out::println);
-                        int proposedDate = Integer.parseInt(System.console().readLine());
-                        // proposed time of the tutorial request
-                        Stream.of("Please enter the proposed time of the tutorial request: ")
-                                .forEach(System.out::println);
-                        int proposedTime = Integer.parseInt(System.console().readLine());
-                        // student level
-                        Stream.of("Please enter the student level: ").forEach(System.out::println);
-                        int studentLevel = Integer.parseInt(System.console().readLine());
-                        // number of students expected
-                        Stream.of("Please enter the number of students expected: ").forEach(System.out::println);
-                        int numberOfStudents = Integer.parseInt(System.console().readLine());
 
-                        // current time for the request
-                        LocalDateTime requestDate = LocalDateTime.now();
+                        // try/catch while loop since these are parseInts and its scary typing for these
+                        // when
+                        // testing
+                        while (true) {
+                            try {
+                                // proposed date of the tutorial request
+                                Stream.of("Please enter the proposed date of the tutorial request: ")
+                                        .forEach(System.out::println);
+                                int proposedDate = Integer.parseInt(System.console().readLine());
+                                // proposed time of the tutorial request
+                                Stream.of("Please enter the proposed time of the tutorial request: ")
+                                        .forEach(System.out::println);
+                                int proposedTime = Integer.parseInt(System.console().readLine());
+                                // student level
+                                Stream.of("Please enter the student level: ").forEach(System.out::println);
+                                int studentLevel = Integer.parseInt(System.console().readLine());
+                                // number of students expected
+                                Stream.of("Please enter the number of students expected: ")
+                                        .forEach(System.out::println);
+                                int numberOfStudents = Integer.parseInt(System.console().readLine());
 
-                        // random requestID
-                        int requestID = (int) (Math.random() * 1000000);
+                                // current time for the request
+                                LocalDateTime requestDate = LocalDateTime.now();
 
-                        // request status is set to "NEW"
-                        String requestStatus = "NEW";
+                                // random requestID
+                                int requestID = (int) (Math.random() * 1000000);
 
-                        try {
-                            // passing the values above to the TutorialRequest constructor
-                            TutorialRequest tutorialRequest = new TutorialRequest(requestID, requestDate, requestStatus,
-                                    description, proposedDate, proposedTime, studentLevel, numberOfStudents);
+                                // request status is set to "NEW"
+                                String requestStatus = "NEW";
 
-                            currentUserAdmin.getSchool().addRequest(tutorialRequest);
+                                try {
+                                    // passing the values above to the TutorialRequest constructor
+                                    TutorialRequest tutorialRequest = new TutorialRequest(requestID, requestDate,
+                                            requestStatus,
+                                            description, proposedDate, proposedTime, studentLevel, numberOfStudents);
 
-                        } catch (Exception e) {
-                            System.out.println("\nError: " + e.getMessage());
+                                    currentUserAdmin.getSchool().addRequest(tutorialRequest);
+
+                                } catch (Exception e) {
+                                    System.out.println("\nError: " + e.getMessage());
+                                }
+
+                                // giving the user feedback that the request was successfully submitted
+                                Stream.of("\nRequest successfully submitted!\n").forEach(System.out::println);
+
+                                break;
+
+                            } catch (Exception e) {
+                                System.out.println("\nTypeError: " + e.getMessage());
+                                continue;
+                            }
                         }
-
-                        // giving the user feedback that the request was successfully submitted
-                        Stream.of("\nRequest successfully submitted!\n").forEach(System.out::println);
 
                 }
 
