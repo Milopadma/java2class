@@ -58,8 +58,8 @@ public class User {
         // toString method
         @Override
         public String toString() {
-            return "User [email=" + email + ", fullname=" + fullname + ", password=" + password + ", phone=" + phone
-                    + ", username=" + username + "]";
+            return "User [username: " + username + ", password: " + password + ", fullname: " + fullname + ", email: " + email
+                    + ", phone number: " + phone + "]";
         }
 
         //each user can be a SchoolAdmin or a Volunteer
