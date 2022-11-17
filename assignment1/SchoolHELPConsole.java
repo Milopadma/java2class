@@ -40,6 +40,7 @@ public class SchoolHELPConsole {
                 // add the school to the school list in the SchoolHELP class
                 SchoolHELP.addSchool(school);
                 break;
+
             case 2:
                 // Registering a new school admin
                 // school admin username
@@ -77,11 +78,12 @@ public class SchoolHELPConsole {
                 Stream.of(currentUser.toString()).forEach(System.out::println);
                 // asking the user which detail they want to change
                 Stream.of("Which detail would you like to change? ").forEach(System.out::println);
-                Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone").forEach(System.out::println);
+                Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone")
+                        .forEach(System.out::println);
                 int detailChangeChoice = Integer.parseInt(System.console().readLine());
                 // switch statement to handle user input
                 switch (detailChangeChoice) {
-                    case 1: 
+                    case 1:
                         // username change
                         Stream.of("Please enter the new username: ").forEach(System.out::println);
                         String newUsername = (System.console().readLine());
@@ -126,10 +128,6 @@ public class SchoolHELPConsole {
                         Stream.of("Invalid choice").forEach(System.out::println);
                         break;
                 }
-
-
-                
-
         }
 
     }
@@ -156,6 +154,11 @@ public class SchoolHELPConsole {
                 String adminPassword = System.console().readLine();
                 // check if user is admin
                 if (SchoolHELP.isUserAdmin(adminUsername, adminPassword)) {
+                    // setting the current logged in user of this instance
+                    currentUser = SchoolHELP.getUser(adminUsername, adminPassword);
+                    // print out the above user's details
+                    Stream.of(currentUser.toString()).forEach(System.out::println);
+                    
                     // if user is admin, display admin menu
                     displayAdminMenu();
                 } else {
@@ -163,6 +166,7 @@ public class SchoolHELPConsole {
                     System.out.println("Invalid username or password");
                 }
                 break;
+
             case 2:
                 // volunteer login
                 System.out.println("--VOLUNTEER-- Enter your username: ");
@@ -178,10 +182,12 @@ public class SchoolHELPConsole {
                     System.out.println("Invalid username or password");
                 }
                 break;
+
             case 3:
                 // exit program
                 System.exit(0);
                 break;
+
             default:
                 // display error message
                 System.out.println("Invalid choice");

@@ -22,6 +22,17 @@ public class SchoolHELP {
         SchoolHELP.users = users;
     }
 
+    // singular user
+    public User getUser(String adminUsername, String adminPassword) {
+        for (User user : users) {
+            if (user.getUsername().equals(adminUsername)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+
     public ArrayList<School> getSchools() {
         return schools;
     }
