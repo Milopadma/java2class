@@ -17,7 +17,7 @@ public class SchoolHELPConsole {
                     "4. Submit a request for assistance",
                     "5. Review offers for requests", "7. Exit").forEach(System.out::println);
             Stream.of("Please enter your choice: ").forEach(System.out::println);
-            // await user input, wrap in try/catch
+            // await user input, wrapped in try/catch to 'sanitize' user input
             try {
                 int choice = Integer.parseInt(System.console().readLine());
 
@@ -76,7 +76,7 @@ public class SchoolHELPConsole {
                             // adding the school admin to the users list in the SchoolHELP class
                             SchoolHELP.addUser(schoolAdmin);
                         } catch (Exception e) {
-                            System.out.println("Error: " + e.getMessage());
+                            System.out.println("\nError: " + e.getMessage());
                         }
                         // give user feedback that this was successful
                         Stream.of("School admin successfully registered!").forEach(System.out::println);
@@ -121,7 +121,7 @@ public class SchoolHELPConsole {
                                         break;
 
                                     } catch (Exception e) {
-                                        System.out.println("Error: " + e.getMessage());
+                                        System.out.println("\nError: " + e.getMessage());
                                         // we shall stay in the loop !!!!!!!!
                                         continue;
                                     }
@@ -166,20 +166,29 @@ public class SchoolHELPConsole {
                                         break;
 
                                     } catch (Exception e) {
-                                        Stream.of("Error : " + e.getMessage() + "\n").forEach(System.out::println);
+                                        Stream.of("\nError : " + e.getMessage() + "\n").forEach(System.out::println);
                                         continue;
                                     }
                                 }
 
                             default:
                                 // if the user enters an invalid choice
-                                Stream.of("Invalid choice").forEach(System.out::println);
+                                Stream.of("Detail change error; Invalid choice").forEach(System.out::println);
                                 break;
                         }
+                        break;
+
+                    case 4:
+                        // Submitting a request for assistance
+                        // description of the tutorial request 
+                        Stream.of("Please enter the description of the tutorial request: ").forEach(System.out::println);
+                        String description = (System.console().readLine());
+
+                        // proposed date and time of the tutorial request
                 }
 
             } catch (Exception e) {
-                System.out.println("\n Error: " + e.getMessage());
+                System.out.println("\nError: " + e.getMessage());
                 continue;
             }
         }
