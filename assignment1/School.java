@@ -21,6 +21,14 @@ public class School{
             this.city = city;
         }
 
+        // class constructor without args
+        public School(){
+            this.schoolName = "default school";
+            this.schoolID = 000;
+            this.address = "default address";
+            this.city = "default city";
+        }
+
         // class setter and getter methods
         public String getSchoolName() {
             return schoolName;

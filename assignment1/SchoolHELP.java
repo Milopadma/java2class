@@ -14,36 +14,36 @@ public class SchoolHELP {
     }
 
     // class setter and getter methods
-    public static ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
 
-    public static void setUsers(ArrayList<User> users) {
+    public void setUsers(ArrayList<User> users) {
         SchoolHELP.users = users;
     }
 
-    public static ArrayList<School> getSchools() {
+    public ArrayList<School> getSchools() {
         return schools;
     }
 
-    public static void setSchools(ArrayList<School> schools) {
+    public void setSchools(ArrayList<School> schools) {
         SchoolHELP.schools = schools;
     }
 
     // class methods
-    public static void addUser(User user) {
+    public void addUser(User user) {
         users.add(user);
     }
 
-    public static void addSchool(School school) {
+    public void addSchool(School school) {
         schools.add(school);
     }
 
-    public static void removeUser(User user) {
+    public void removeUser(User user) {
         users.remove(user);
     }
 
-    public static void removeSchool(School school) {
+    public void removeSchool(School school) {
         schools.remove(school);
     }
 

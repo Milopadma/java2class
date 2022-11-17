@@ -1,4 +1,3 @@
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // this whole class' purpose is to be a user interface
@@ -10,8 +9,9 @@ public class SchoolHELPConsole {
     // for the admin-specific cli menu
     public static void displayAdminMenu() {
         System.out.println("\nWelcome to the SchoolHELP Admin Menu");
-        Stream.of("1. Add a new school", "2. Add a new volunteer", "3. Remove a school", "4. Remove a volunteer",
-                "5. View all schools", "6. View all volunteers", "7. Exit").forEach(System.out::println);
+        Stream.of("1. Register a new school", "2. Register a new school admin", "3. Edit profile",
+                "4. Submit a request for assistance",
+                "5. Review offers for requests", "7. Exit").forEach(System.out::println);
         Stream.of("Please enter your choice: ").forEach(System.out::println);
         // await user input
         int choice = Integer.parseInt(System.console().readLine());
@@ -22,24 +22,52 @@ public class SchoolHELPConsole {
                 // adding new school
                 // init a new instance of School class
                 School school = new School();
-                // user input section, lambda expressions and stream() is required
-                // get school name
+                // school name
                 Stream.of("Please enter the school name: ").forEach(System.out::println);
-                school.setName(System.console().readLine());
-                // get school address
+                school.setSchoolName(System.console().readLine());
+                // school ID
+                Stream.of("Please enter the school ID: ").forEach(System.out::println);
+                school.setSchoolID(Integer.parseInt(System.console().readLine()));
+                // school address
                 Stream.of("Please enter the school address: ").forEach(System.out::println);
                 school.setAddress(System.console().readLine());
-                // get school phone number
-                Stream.of("Please enter the school ID:").forEach(System.out::println);
-                school.setSchoolID(System.console().readLine());
                 // get school email
                 Stream.of("Please enter the school city: ").forEach(System.out::println);
                 school.setCity(System.console().readLine());
 
                 // add the school to the school list in the SchoolHELP class
-                SchoolHELP.addSchool(schoolName, schoolID, schoolAddres, schoolCity);
+                SchoolHELP.addSchool(school);
                 break;
+            case 2:
+                // Registering a new school admin
+                // school admin username
+                Stream.of("Please enter the school admin username: ").forEach(System.out::println);
+                String adminUsername = (System.console().readLine());
+                // school admin password
+                Stream.of("Please enter the school admin password: ").forEach(System.out::println);
+                String adminPassword = (System.console().readLine());
+                // school admin fullname
+                Stream.of("Please enter the school admin fullname: ").forEach(System.out::println);
+                String adminFullname = (System.console().readLine());
+                // school admin email
+                Stream.of("Please enter the school admin email: ").forEach(System.out::println);
+                String adminEmail = (System.console().readLine());
+                // school admin phone
+                Stream.of("Please enter the school admin phone: ").forEach(System.out::println);
+                int adminPhone = Integer.parseInt(System.console().readLine());
+                // school admin ID
+                Stream.of("Please enter the school admin ID: ").forEach(System.out::println);
+                int adminID = Integer.parseInt(System.console().readLine());
+
+                // passing all the values above to the SchoolAdmin constructor
+                SchoolAdmin schoolAdmin = new SchoolAdmin(adminUsername, adminPassword, adminFullname, adminEmail,
+                        adminPhone,
+                        adminID, "Admin");
+
+                // adding the school admin to the users list in the SchoolHELP class
+                SchoolHELP.addUser(schoolAdmin);
         }
+
     }
 
     // for the volunteer-specific cli menu
