@@ -1,9 +1,9 @@
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+// this whole class' purpose is to be a user interface
 public class SchoolHELPConsole {
-    // creating a single instance of the SchoolHELP class
-
+    // init a single instance of the SchoolHELP class
     private static SchoolHELP SchoolHELP = new SchoolHELP();
 
     // console class methods
@@ -20,7 +20,25 @@ public class SchoolHELPConsole {
         switch (choice) {
             case 1:
                 // adding new school
-                // TODO
+                // init a new instance of School class
+                School school = new School();
+                // user input section, lambda expressions and stream() is required
+                // get school name
+                Stream.of("Please enter the school name: ").forEach(System.out::println);
+                school.setName(System.console().readLine());
+                // get school address
+                Stream.of("Please enter the school address: ").forEach(System.out::println);
+                school.setAddress(System.console().readLine());
+                // get school phone number
+                Stream.of("Please enter the school ID:").forEach(System.out::println);
+                school.setSchoolID(System.console().readLine());
+                // get school email
+                Stream.of("Please enter the school city: ").forEach(System.out::println);
+                school.setCity(System.console().readLine());
+
+                // add the school to the school list in the SchoolHELP class
+                SchoolHELP.addSchool(schoolName, schoolID, schoolAddres, schoolCity);
+                break;
         }
     }
 
