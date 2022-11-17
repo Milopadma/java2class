@@ -20,6 +20,10 @@ public class SchoolHELPConsole {
                     "4. Review offers for requests", "5. Exit").forEach(System.out::println);
             Stream.of("Please enter your choice: ").forEach(System.out::println);
             // await user input, wrapped in try/catch to 'sanitize' user input
+
+            // in this function scope, currentUser will be of type SchoolAdmin
+            SchoolAdmin currentUserAdmin = (SchoolAdmin) currentUser;
+
             try {
                 int choice = Integer.parseInt(System.console().readLine());
 
@@ -106,7 +110,7 @@ public class SchoolHELPConsole {
                         // Editing the profile of the current user admin profile
                         // display their current profile details of the current user in this instance
                         Stream.of("Current profile details: ").forEach(System.out::println);
-                        Stream.of(currentUser.toString()).forEach(System.out::println);
+                        Stream.of(currentUserAdmin.toString()).forEach(System.out::println);
                         // asking the user which detail they want to change
                         Stream.of("Which detail would you like to change? ").forEach(System.out::println);
                         Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone")
@@ -132,7 +136,7 @@ public class SchoolHELPConsole {
 
                                         } else {
                                             // if it doesn't, change the username
-                                            currentUser.setUsername(newUsername);
+                                            currentUserAdmin.setUsername(newUsername);
                                             // give the user feedback that the username was changed
                                             Stream.of("Username successfully changed!\n").forEach(System.out::println);
                                         }
@@ -151,7 +155,7 @@ public class SchoolHELPConsole {
                                 Stream.of("Please enter the new password: ").forEach(System.out::println);
                                 String newPassword = (System.console().readLine());
                                 // set the new password
-                                currentUser.setPassword(newPassword);
+                                currentUserAdmin.setPassword(newPassword);
                                 break;
 
                             case 3:
@@ -159,7 +163,7 @@ public class SchoolHELPConsole {
                                 Stream.of("Please enter the new fullname: ").forEach(System.out::println);
                                 String newFullname = (System.console().readLine());
                                 // set the new fullname
-                                currentUser.setFullname(newFullname);
+                                currentUserAdmin.setFullname(newFullname);
                                 break;
 
                             case 4:
@@ -167,7 +171,7 @@ public class SchoolHELPConsole {
                                 Stream.of("Please enter the new email: ").forEach(System.out::println);
                                 String newEmail = (System.console().readLine());
                                 // set the new email
-                                currentUser.setEmail(newEmail);
+                                currentUserAdmin.setEmail(newEmail);
                                 break;
 
                             case 5:
@@ -180,7 +184,7 @@ public class SchoolHELPConsole {
                                         Stream.of("Please enter the new phone number: ").forEach(System.out::println);
                                         int newPhoneNumber = Integer.parseInt(System.console().readLine());
                                         // set the new phone
-                                        currentUser.setPhone(newPhoneNumber);
+                                        currentUserAdmin.setPhone(newPhoneNumber);
                                         Stream.of("Phone number successfully changed!\n").forEach(System.out::println);
                                         break;
 
@@ -227,11 +231,20 @@ public class SchoolHELPConsole {
                         // request status is set to "NEW"
                         String requestStatus = "NEW";
 
-                        // passing the values above to the TutorialRequest constructor
-                        TutorialRequest tutorialRequest = new TutorialRequest(requestID, requestDate, requestStatus,
-                                description, proposedDate, proposedTime, studentLevel, numberOfStudents);
+                        try {
+                            // passing the values above to the TutorialRequest constructor
+                            TutorialRequest tutorialRequest = new TutorialRequest(requestID, requestDate, requestStatus,
+                                    description, proposedDate, proposedTime, studentLevel, numberOfStudents);
 
-                        // TODO: set the tutorialRequest to the current user's school
+                            currentUserAdmin.getSchool().addRequest(tutorialRequest);
+
+                        } catch (Exception e) {
+                            System.out.println("\nError: " + e.getMessage());
+                        }
+
+                        // giving the user feedback that the request was successfully submitted
+                        Stream.of("\nRequest successfully submitted!\n").forEach(System.out::println);
+
                 }
 
             } catch (Exception e) {
