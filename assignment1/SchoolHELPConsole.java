@@ -4,6 +4,8 @@ import java.util.stream.Stream;
 public class SchoolHELPConsole {
     // init a single instance of the SchoolHELP class
     private static SchoolHELP SchoolHELP = new SchoolHELP();
+    // global var to keep track of who's currently logged in in this instance
+    private static User currentUser = null;
 
     // console class methods
     // for the admin-specific cli menu
@@ -66,6 +68,68 @@ public class SchoolHELPConsole {
 
                 // adding the school admin to the users list in the SchoolHELP class
                 SchoolHELP.addUser(schoolAdmin);
+                break;
+
+            case 3:
+                // Editing the profile of the current user admin profile
+                // display their current profile details of the current user in this instance
+                Stream.of("Current profile details: ").forEach(System.out::println);
+                Stream.of(currentUser.toString()).forEach(System.out::println);
+                // asking the user which detail they want to change
+                Stream.of("Which detail would you like to change? ").forEach(System.out::println);
+                Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone").forEach(System.out::println);
+                int detailChangeChoice = Integer.parseInt(System.console().readLine());
+                // switch statement to handle user input
+                switch (detailChangeChoice) {
+                    case 1: 
+                        // username change
+                        Stream.of("Please enter the new username: ").forEach(System.out::println);
+                        String newUsername = (System.console().readLine());
+                        // set the new username
+                        currentUser.setUsername(newUsername);
+                        break;
+
+                    case 2:
+                        // password change
+                        Stream.of("Please enter the new password: ").forEach(System.out::println);
+                        String newPassword = (System.console().readLine());
+                        // set the new password
+                        currentUser.setPassword(newPassword);
+                        break;
+
+                    case 3:
+                        // fullname change
+                        Stream.of("Please enter the new fullname: ").forEach(System.out::println);
+                        String newFullname = (System.console().readLine());
+                        // set the new fullname
+                        currentUser.setFullname(newFullname);
+                        break;
+
+                    case 4:
+                        // email change
+                        Stream.of("Please enter the new email: ").forEach(System.out::println);
+                        String newEmail = (System.console().readLine());
+                        // set the new email
+                        currentUser.setEmail(newEmail);
+                        break;
+
+                    case 5:
+                        // phone change
+                        Stream.of("Please enter the new phone: ").forEach(System.out::println);
+                        int newPhone = Integer.parseInt(System.console().readLine());
+                        // set the new phone
+                        currentUser.setPhone(newPhone);
+                        break;
+
+                    default:
+                        // if the user enters an invalid choice
+                        Stream.of("Invalid choice").forEach(System.out::println);
+                        break;
+                }
+
+
+                
+
         }
 
     }
