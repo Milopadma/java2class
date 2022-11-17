@@ -89,6 +89,11 @@ public class School {
         schoolAdmins.add(schoolAdmin);
     }
 
+    // add a Request to the school (singular)
+    public void addRequest(Request request) {
+        requests.add(request);
+    }
+
     // toString method
     @Override
     public String toString() {

@@ -7,6 +7,7 @@ public class SchoolHELPConsole {
     private static SchoolHELP SchoolHELP = new SchoolHELP();
     // global var to keep track of who's currently logged in in this instance
     private static User currentUser = null;
+    // private static SchoolAdmin currentUserAdmin = null;
 
     // console class methods
     // for the admin-specific cli menu
@@ -28,6 +29,7 @@ public class SchoolHELPConsole {
                         // adding new school
                         // init a new instance of School class
                         School school = new School();
+
                         // school name
                         Stream.of("Please enter the school name: ").forEach(System.out::println);
                         school.setSchoolName(System.console().readLine());
@@ -38,8 +40,12 @@ public class SchoolHELPConsole {
                         Stream.of("Please enter the school city: ").forEach(System.out::println);
                         school.setCity(System.console().readLine());
 
-                        // schoolID is randomly generated
+                        // schoolID is randomly generated, even though this can be done in the class
+                        // constructor itself, i prefer to have it here
                         school.setSchoolID((int) (Math.random() * 1000));
+
+                        // giving user feedback that this was successful
+                        Stream.of("\nSchool added successfully!").forEach(System.out::println);
 
                         // Registering a new school admin
                         // school admin username
@@ -71,12 +77,13 @@ public class SchoolHELPConsole {
                             SchoolAdmin schoolAdmin = new SchoolAdmin(adminUsername, adminPassword, adminFullname,
                                     adminEmail,
                                     adminPhone,
-                                    adminID, adminPosition);
+                                    adminID, adminPosition, school);
 
                             // adding the school admin to the users list in the SchoolHELP class
                             // as it counts as being a user, and all user instances are held in the
                             // SchoolHELP class
                             SchoolHELP.addUser(schoolAdmin);
+
                             // adding the newly created schoolAdmin to this school's instance
                             school.addSchoolAdmin(schoolAdmin);
 
@@ -88,8 +95,11 @@ public class SchoolHELPConsole {
                             System.out.println("\nError: " + e.getMessage());
                         }
                         // giving user feedback that this was successful
-                        Stream.of("\nSchool added successfully!").forEach(System.out::println);
                         Stream.of("\nSchool admin successfully registered!").forEach(System.out::println);
+
+                        // display the main menu again
+                        main(null);
+
                         break;
 
                     case 2:
@@ -220,6 +230,8 @@ public class SchoolHELPConsole {
                         // passing the values above to the TutorialRequest constructor
                         TutorialRequest tutorialRequest = new TutorialRequest(requestID, requestDate, requestStatus,
                                 description, proposedDate, proposedTime, studentLevel, numberOfStudents);
+
+                        // TODO: set the tutorialRequest to the current user's school
                 }
 
             } catch (Exception e) {

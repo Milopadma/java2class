@@ -1,16 +1,22 @@
 import java.util.ArrayList;
 
+/**
+ * {@summary} This class manages instances of User and School classes, both in
+ * ArrayLists.
+ * 
+ */
 public class SchoolHELP {
-    // this class manages instances of User and School classes
-
     // class variables
     private static ArrayList<User> users = new ArrayList<User>();
     private static ArrayList<School> schools = new ArrayList<School>();
 
     // class constructor
     public SchoolHELP() {
+        // default ArrayList constructor with a single default school
+        schools.add(new School("HELP", 1, "Jalan Damansara", "Kuala Lumpur"));
         // default ArrayList constructor with a single default SchoolAdmin user
-        users.add(new SchoolAdmin("admin", "admin", "default admin", "defaultadmin@milopadma.com", 000, 1, "SchoolHELPAdmin"));
+        users.add(new SchoolAdmin("admin", "admin", "default admin", "defaultadmin@milopadma.com", 000, 1,
+                "SchoolHELPAdmin", schools.get(0)));
     }
 
     // class setter and getter methods
@@ -62,7 +68,7 @@ public class SchoolHELP {
     // to check if the user is an admin in the user list array or not
     /**
      * @param adminUsername
-     * @param adminPassword 
+     * @param adminPassword
      * @return boolean
      */
     public boolean isUserAdmin(String adminUsername, String adminPassword) {

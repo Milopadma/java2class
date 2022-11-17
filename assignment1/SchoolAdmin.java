@@ -4,12 +4,17 @@ public class SchoolAdmin extends User {
     private int staffID;
     private String position;
 
+    // a many-to-one relationship with Schoo, since each school has many
+    // schooladmins
+    private School thisSchool;
+
     // class constructor
     public SchoolAdmin(String username, String password, String fullname, String email, int phone, int staffID,
-            String position) {
+            String position, School school) {
         super(username, password, fullname, email, phone);
         this.staffID = staffID;
         this.position = position;
+        this.thisSchool = school;
     }
 
     // class setter and getter methods
@@ -27,6 +32,14 @@ public class SchoolAdmin extends User {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public School getSchool() {
+        return thisSchool;
+    }
+
+    public void setSchool(School thisSchool) {
+        this.thisSchool = thisSchool;
     }
 
     // toString method
