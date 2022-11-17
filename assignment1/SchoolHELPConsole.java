@@ -14,9 +14,9 @@ public class SchoolHELPConsole {
         // this shall be a looop!!!!
         while (true) {
             System.out.println("\nWelcome to the SchoolHELP Admin Menu");
-            Stream.of("1. Register a new school", "2. Register a new school admin", "3. Edit profile",
-                    "4. Submit a request for assistance",
-                    "5. Review offers for requests", "7. Exit").forEach(System.out::println);
+            Stream.of("1. Register a new school", "2. Edit profile",
+                    "3. Submit a request for assistance",
+                    "4. Review offers for requests", "5. Exit").forEach(System.out::println);
             Stream.of("Please enter your choice: ").forEach(System.out::println);
             // await user input, wrapped in try/catch to 'sanitize' user input
             try {
@@ -31,9 +31,6 @@ public class SchoolHELPConsole {
                         // school name
                         Stream.of("Please enter the school name: ").forEach(System.out::println);
                         school.setSchoolName(System.console().readLine());
-                        // school ID
-                        Stream.of("Please enter the school ID: ").forEach(System.out::println);
-                        school.setSchoolID(Integer.parseInt(System.console().readLine()));
                         // school address
                         Stream.of("Please enter the school address: ").forEach(System.out::println);
                         school.setAddress(System.console().readLine());
@@ -41,11 +38,9 @@ public class SchoolHELPConsole {
                         Stream.of("Please enter the school city: ").forEach(System.out::println);
                         school.setCity(System.console().readLine());
 
-                        // add the school to the school list in the SchoolHELP class
-                        SchoolHELP.addSchool(school);
-                        break;
+                        // schoolID is randomly generated
+                        school.setSchoolID((int) (Math.random() * 1000));
 
-                    case 2:
                         // Registering a new school admin
                         // school admin username
                         Stream.of("Please enter the school admin username: ").forEach(System.out::println);
@@ -65,26 +60,39 @@ public class SchoolHELPConsole {
                         // school admin ID
                         Stream.of("Please enter the school admin ID: ").forEach(System.out::println);
                         int adminID = Integer.parseInt(System.console().readLine());
+                        // school admin position
+                        Stream.of("Please enter the school admin position: ").forEach(System.out::println);
+                        String adminPosition = (System.console().readLine());
 
-                        // wrap this in a try/catch block to catch any exceptions
+                        // wrap this in a try/catch block to catch any exceptions when adding new
+                        // SchoolAdmin and School instances
                         try {
                             // passing all the values above to the SchoolAdmin constructor
                             SchoolAdmin schoolAdmin = new SchoolAdmin(adminUsername, adminPassword, adminFullname,
                                     adminEmail,
                                     adminPhone,
-                                    adminID, "Admin");
+                                    adminID, adminPosition);
 
                             // adding the school admin to the users list in the SchoolHELP class
+                            // as it counts as being a user, and all user instances are held in the
+                            // SchoolHELP class
                             SchoolHELP.addUser(schoolAdmin);
+                            // adding the newly created schoolAdmin to this school's instance
+                            school.addSchoolAdmin(schoolAdmin);
+
+                            // add the school to the school list in the SchoolHELP class,
+                            // since SchoolHELP is the only class that is a static instance
+                            SchoolHELP.addSchool(school);
+
                         } catch (Exception e) {
                             System.out.println("\nError: " + e.getMessage());
                         }
-                        // give user feedback that this was successful
-                        Stream.of("School admin successfully registered!").forEach(System.out::println);
-
+                        // giving user feedback that this was successful
+                        Stream.of("\nSchool added successfully!").forEach(System.out::println);
+                        Stream.of("\nSchool admin successfully registered!").forEach(System.out::println);
                         break;
 
-                    case 3:
+                    case 2:
                         // Editing the profile of the current user admin profile
                         // display their current profile details of the current user in this instance
                         Stream.of("Current profile details: ").forEach(System.out::println);
@@ -179,7 +187,7 @@ public class SchoolHELPConsole {
                         }
                         break;
 
-                    case 4:
+                    case 3:
                         // Submitting a request for assistance
                         // description of the tutorial request
                         Stream.of("Please enter the description of the tutorial request: ")

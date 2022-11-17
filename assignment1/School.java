@@ -82,6 +82,13 @@ public class School {
         this.requests = requests;
     }
 
+    // class methods
+
+    // add a SchoolAdmin to the school (singular)
+    public void addSchoolAdmin(SchoolAdmin schoolAdmin) {
+        schoolAdmins.add(schoolAdmin);
+    }
+
     // toString method
     @Override
     public String toString() {

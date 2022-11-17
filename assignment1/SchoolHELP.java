@@ -10,7 +10,7 @@ public class SchoolHELP {
     // class constructor
     public SchoolHELP() {
         // default ArrayList constructor with a single default SchoolAdmin user
-        users.add(new SchoolAdmin("admin", "admin", "default admin", "defaultadmin@milopadma.com", 000, 1, "Admin"));
+        users.add(new SchoolAdmin("admin", "admin", "default admin", "defaultadmin@milopadma.com", 000, 1, "SchoolHELPAdmin"));
     }
 
     // class setter and getter methods
