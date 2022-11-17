@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 // this whole class' purpose is to be a user interface
@@ -180,11 +181,37 @@ public class SchoolHELPConsole {
 
                     case 4:
                         // Submitting a request for assistance
-                        // description of the tutorial request 
-                        Stream.of("Please enter the description of the tutorial request: ").forEach(System.out::println);
+                        // description of the tutorial request
+                        Stream.of("Please enter the description of the tutorial request: ")
+                                .forEach(System.out::println);
                         String description = (System.console().readLine());
+                        // proposed date of the tutorial request
+                        Stream.of("Please enter the proposed date of the tutorial request: ")
+                                .forEach(System.out::println);
+                        int proposedDate = Integer.parseInt(System.console().readLine());
+                        // proposed time of the tutorial request
+                        Stream.of("Please enter the proposed time of the tutorial request: ")
+                                .forEach(System.out::println);
+                        int proposedTime = Integer.parseInt(System.console().readLine());
+                        // student level
+                        Stream.of("Please enter the student level: ").forEach(System.out::println);
+                        int studentLevel = Integer.parseInt(System.console().readLine());
+                        // number of students expected
+                        Stream.of("Please enter the number of students expected: ").forEach(System.out::println);
+                        int numberOfStudents = Integer.parseInt(System.console().readLine());
 
-                        // proposed date and time of the tutorial request
+                        // current time for the request
+                        LocalDateTime requestDate = LocalDateTime.now();
+
+                        // random requestID
+                        int requestID = (int) (Math.random() * 1000000);
+
+                        // request status is set to "NEW"
+                        String requestStatus = "NEW";
+
+                        // passing the values above to the TutorialRequest constructor
+                        TutorialRequest tutorialRequest = new TutorialRequest(requestID, requestDate, requestStatus,
+                                description, proposedDate, proposedTime, studentLevel, numberOfStudents);
                 }
 
             } catch (Exception e) {

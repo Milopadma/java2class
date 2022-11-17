@@ -1,13 +1,15 @@
+import java.time.LocalDateTime;
+
 public class Request {
     // this class receives from the Offer class and each School class has multiple Requests
     // class variables
     private int requestID;
-    private int requestDate;
+    private LocalDateTime requestDate;
     private String requestStatus;
     private String description;
 
     // class constructor
-    public Request(int requestID, int requestDate, String requestStatus, String description){
+    public Request(int requestID, LocalDateTime requestDate, String requestStatus, String description){
         this.requestID = requestID;
         this.requestDate = requestDate;
         this.requestStatus = requestStatus;
@@ -23,11 +25,11 @@ public class Request {
         this.requestID = requestID;
     }
 
-    public int getRequestDate() {
+    public LocalDateTime getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(int requestDate) {
+    public void setRequestDate(LocalDateTime requestDate) {
         this.requestDate = requestDate;
     }
 

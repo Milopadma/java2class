@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class TutorialRequest extends Request {
     // this class handles all things about the tutorial request and its data
 
@@ -8,7 +10,7 @@ public class TutorialRequest extends Request {
     private int numStudents;
 
     // class constructor
-    public TutorialRequest(int requestID, int requestDate, String requestStatus, String desription, int proposedDate,
+    public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription, int proposedDate,
             int proposedTime, int studentLevel, int numStudents) {
         super(requestID, requestDate, requestStatus, desription);
         this.proposedDate = proposedDate;
