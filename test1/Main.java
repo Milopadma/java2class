@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
+        // exmaples for printing out the items inside array list
         ArrayList<Student> students = new ArrayList<Student>();
 
         students.add(new Student("I Gusti Bagus Milo Padma Wijaya"));
