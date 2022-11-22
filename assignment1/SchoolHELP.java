@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * {@summary} This class manages instances of User and School classes, both in
  * ArrayLists.
- * 
+ *
  */
 public class SchoolHELP {
     // class variables

@@ -1,8 +1,20 @@
 // I GUSTI BAGUS MILO PADMA WIJAYA // e2000426
 // this Main class is used to test the class of the program
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+
+        ArrayList<Student> students = new ArrayList<Student>();
+
+        students.add(new Student("I Gusti Bagus Milo Padma Wijaya"));
+        students.add(new Student("I Gusti Bagus Agung Wijaya"));
+        students.add(new Student("I Gusti Bagus Agung Wijaya"));
+
+        System.out.println("Students:");
+        for (Student student : students) {
+            System.out.println(student.getName());
+        }
 
         // 1. create a student object
         Student miloStudent = new Student("I Gusti Bagus Milo Padma Wijaya");
