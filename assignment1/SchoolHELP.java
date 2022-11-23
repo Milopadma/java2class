@@ -55,12 +55,41 @@ public class SchoolHELP {
         schools.add(school);
     }
 
+    /**
+     * {@summary} A method of SchoolHELP, gets the school by school name string, and
+     * returns the school object if it exists.
+     * 
+     * @param schoolName
+     * @return
+     */
+    public School getSchool(String schoolName) {
+        for (School school : schools) {
+            if (school.getSchoolName().equals(schoolName)) {
+                return school;
+            }
+        }
+        return null;
+    }
+
     public void removeUser(User user) {
         users.remove(user);
     }
 
     public void removeSchool(School school) {
         schools.remove(school);
+    }
+
+    /**
+     * {@summary} A method of SchoolHELP, gets all the requests of all the schools
+     * in the Array List.
+     * 
+     * @return ArrayList of type Request
+     */
+    public ArrayList<Request> getAllRequests() {
+        for (School school : schools) {
+            return school.getRequests();
+        }
+        return null;
     }
 
     // functional class methods
@@ -122,9 +151,12 @@ public class SchoolHELP {
         return false;
     }
 
-    public void getAllRequests() {
+    public boolean isSchool(String schoolName) {
         for (School school : schools) {
-            school.getRequests();
+            if (school.getSchoolName().equals(schoolName)) {
+                return true;
+            }
         }
+        return false;
     }
 }

@@ -423,9 +423,9 @@ public class SchoolHELPConsole {
         while (true) {
             try {
                 // volunteer login
-                System.out.println("--VOLUNTEER-- Enter your username: ");
+                Stream.of("\n--VOLUNTEER--", "Enter your username: ").forEach(System.out::println);
                 String username = System.console().readLine();
-                System.out.println("--VOLUNTEER-- Enter your password: ");
+                Stream.of("\n--VOLUNTEER--", "Enter your password: ").forEach(System.out::println);
                 String password = System.console().readLine();
                 // check if user is volunteer
                 if (SchoolHELP.isUserVolunteer(username, password)) {
@@ -446,13 +446,47 @@ public class SchoolHELPConsole {
      * {@summary} Shows all the requests that are currently in the system
      */
     private static void ViewRequests() {
-        // View requests that have been submitted, ever.
-        // basically, display all requests that exists in the system
-        SchoolHELP.getSchools().forEach(school -> {
-            school.getRequests().forEach(request -> {
-                System.out.println(request);
-            });
-        });
+        while (true) {
+            try {
+                // View requests that have been submitted, ever.
+                // basically, display all requests that exists in the system
+                SchoolHELP.getSchools().forEach(school -> {
+                    school.getRequests().forEach(request -> {
+                        System.out.println(request);
+                    });
+                });
+
+                // choice to choose to view requests by school, by city, or by request date
+                Stream.of(
+                        "\n--VOLUNTEER--",
+                        "Please choose an option: \n1. View requests by school \n2. View requests by city \n3. View requests by request date \n4. Cancel")
+                        .forEach(System.out::println);
+                int choice = Integer.parseInt(System.console().readLine());
+                switch (choice) {
+                    case 1:
+                        // view requests by school
+                        Stream.of("Please enter the name of the school (case-sensitive): ")
+                                .forEach(System.out::println);
+                        String schoolName = System.console().readLine();
+                        // check if school exists
+                        if (SchoolHELP.isSchool(schoolName)) { // to confirm wether its ACTUALLY a school or not because
+                                                               // you can never trust the user
+                            // if school exists, display all requests for that school
+                            SchoolHELP.getSchool(schoolName).getRequests().forEach(request -> {
+                                System.out.println(request);
+                            });
+                        } else {
+                            // if school does not exist, display error message
+                            Stream.of("School does not exist").forEach(System.out::println);
+                        }
+                        break;
+                }
+
+            } catch (Exception e) {
+                System.out.println("\nError: " + e.getMessage());
+                continue;
+            }
+        }
 
     }
 
@@ -499,7 +533,7 @@ public class SchoolHELPConsole {
                         // Register As Volunteer
                         Stream.of("Please enter your username (1/7): ").forEach(System.out::println);
                         String username = System.console().readLine();
-                        Stream.of("Please enter your passwod (2/7): ").forEach(System.out::println);
+                        Stream.of("Please enter your password (2/7): ").forEach(System.out::println);
                         String password = System.console().readLine();
                         Stream.of("Please enter your fullname (3/7): ").forEach(System.out::println);
                         String fullname = System.console().readLine();
@@ -563,9 +597,9 @@ public class SchoolHELPConsole {
                                     .forEach(System.out::print);
                         }
                         // admin login
-                        System.out.println("--ADMIN-- Enter your username: ");
+                        Stream.of("\n--ADMIN--", "Please enter your username: ").forEach(System.out::print);
                         String adminUsername = System.console().readLine();
-                        System.out.println("--ADMIN-- Enter your password: ");
+                        Stream.of("\n--ADMIN--", "Please enter your password: ").forEach(System.out::print);
                         String adminPassword = System.console().readLine();
                         // check if user is admin
                         if (SchoolHELP.isUserAdmin(adminUsername, adminPassword)) {
