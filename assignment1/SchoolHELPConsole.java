@@ -93,8 +93,11 @@ public class SchoolHELPConsole {
                         adminPhone,
                         adminID, adminPosition, school);
 
+                // giving user feedback that this was successful
+                Stream.of("\nSchool admin successfully registered!").forEach(System.out::println);
                 // returning the newly freshly created SchoolAdmin object
                 return schoolAdmin;
+
             } catch (Exception e) {
                 System.out.println("\nError: " + e.getMessage());
             }
@@ -102,10 +105,22 @@ public class SchoolHELPConsole {
     }
 
     // for the admin-specific cli menu
+    /**
+     * {@summary} This method displays the menu and receives user input for the
+     * SchoolAdmin user type.
+     */
     public static void displayAdminMenu() {
         // this shall be a looop!!!!
         while (true) {
             System.out.println("\nWelcome to the SchoolHELP Admin Menu");
+
+            // to show the current user's name and position
+            System.out.println("Logged in as: " + currentUser.getFullname() + ", position: ("
+                    + ((SchoolAdmin) currentUser).getPosition() + ")");
+            // to show the current school's name
+            System.out.println("School ID: " + ((SchoolAdmin) currentUser).getSchool().getSchoolID() + ", School Name: "
+                    + ((SchoolAdmin) currentUser).getSchool().getSchoolName());
+
             Stream.of("1. Register a new school", "2. Edit profile",
                     "3. Submit a request for assistance",
                     "4. Review offers for requests", "5. Exit").forEach(System.out::println);
@@ -118,8 +133,6 @@ public class SchoolHELPConsole {
                 // switch statement to handle user input
                 switch (choice) {
                     case 1:
-                        // adding new school
-                        // init a new instance of School class
                         try {
                             // wrap this in a try/catch block to catch any exceptions when adding new
                             // SchoolAdmin and School instances
@@ -145,15 +158,12 @@ public class SchoolHELPConsole {
                             } catch (Exception e) {
                                 System.out.println("\nError: " + e.getMessage());
                             }
-                            // giving user feedback that this was successful
-                            Stream.of("\nSchool admin successfully registered!").forEach(System.out::println);
 
                             // display the main menu again
                             main(null);
                         } catch (Exception e) {
                             System.out.println("\nError: " + e.getMessage());
                         }
-
                         break;
 
                     case 2:
@@ -163,7 +173,7 @@ public class SchoolHELPConsole {
                         Stream.of(currentUserAdmin.toString()).forEach(System.out::println);
                         // asking the user which detail they want to change
                         Stream.of("Which detail would you like to change? ").forEach(System.out::println);
-                        Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone")
+                        Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone", "6. Cancel")
                                 .forEach(System.out::println);
                         Stream.of("Please enter your choice: ").forEach(System.out::println);
                         int detailChangeChoice = Integer.parseInt(System.console().readLine());
@@ -173,7 +183,6 @@ public class SchoolHELPConsole {
                                 // this shall be a loooooop!!
                                 while (true) {
                                     try {
-
                                         // username change
                                         Stream.of("Please enter the new username: ").forEach(System.out::println);
                                         String newUsername = (System.console().readLine());
@@ -189,10 +198,8 @@ public class SchoolHELPConsole {
                                             currentUserAdmin.setUsername(newUsername);
                                             // give the user feedback that the username was changed
                                             Stream.of("Username successfully changed!\n").forEach(System.out::println);
+                                            break;
                                         }
-
-                                        break;
-
                                     } catch (Exception e) {
                                         System.out.println("\nError: " + e.getMessage());
                                         // we shall stay in the loop !!!!!!!!
@@ -244,6 +251,10 @@ public class SchoolHELPConsole {
                                     }
                                 }
 
+                            case 6:
+                                // cancel
+                                break;
+
                             default:
                                 // if the user enters an invalid choice
                                 Stream.of("Detail change error; Invalid choice").forEach(System.out::println);
@@ -258,121 +269,132 @@ public class SchoolHELPConsole {
                         while (true) {
                             try {
                                 // ask if the user wants to do a Tutorial Request or a Resource Request
-                                Stream.of("Is this a tutorial request or a resource request?")
+                                Stream.of("\nIs this a tutorial request or a resource request?")
                                         .forEach(System.out::println);
-                                Stream.of("1. Tutorial Request", "2. Resource Request").forEach(System.out::println);
+                                Stream.of("1. Tutorial Request", "2. Resource Request", "3. Back")
+                                        .forEach(System.out::println);
                                 Stream.of("Please enter your choice: ").forEach(System.out::println);
                                 int requestTypeChoice = Integer.parseInt(System.console().readLine());
 
-                                switch (requestTypeChoice) {
-                                    case 1:
-                                        try {
-                                            // description of the tutorial request
-                                            Stream.of("Please enter the description of the tutorial request: ")
-                                                    .forEach(System.out::println);
-                                            String tutorialDescription = (System.console().readLine());
-                                            // proposed date of the tutorial request
-                                            Stream.of("Please enter the proposed date of the tutorial request: ")
-                                                    .forEach(System.out::println);
-                                            int proposedDate = Integer.parseInt(System.console().readLine());
-                                            // proposed time of the tutorial request
-                                            Stream.of("Please enter the proposed time of the tutorial request: ")
-                                                    .forEach(System.out::println);
-                                            int proposedTime = Integer.parseInt(System.console().readLine());
-                                            // student level
-                                            Stream.of("Please enter the student level: ").forEach(System.out::println);
-                                            int studentLevel = Integer.parseInt(System.console().readLine());
-                                            // number of students expected
-                                            Stream.of("Please enter the number of students expected: ")
-                                                    .forEach(System.out::println);
-                                            int numberOfStudents = Integer.parseInt(System.console().readLine());
-
-                                            // current time for the request
-                                            LocalDateTime requestDate = LocalDateTime.now();
-
-                                            // random requestID
-                                            int requestID = (int) (Math.random() * 1000000);
-
-                                            // request status is set to "NEW"
-                                            String requestStatus = "NEW";
+                                while (true) {
+                                    switch (requestTypeChoice) {
+                                        case 1:
                                             try {
-                                                // passing the values above to the TutorialRequest constructor
-                                                TutorialRequest tutorialRequest = new TutorialRequest(requestID,
-                                                        requestDate,
-                                                        requestStatus,
-                                                        tutorialDescription, proposedDate, proposedTime, studentLevel,
-                                                        numberOfStudents);
+                                                // description of the tutorial request
+                                                Stream.of("Please enter the description of the tutorial request: ")
+                                                        .forEach(System.out::println);
+                                                String tutorialDescription = (System.console().readLine());
+                                                // proposed date of the tutorial request
+                                                Stream.of("Please enter the proposed date of the tutorial request: ")
+                                                        .forEach(System.out::println);
+                                                int proposedDate = Integer.parseInt(System.console().readLine());
+                                                // proposed time of the tutorial request
+                                                Stream.of("Please enter the proposed time of the tutorial request: ")
+                                                        .forEach(System.out::println);
+                                                int proposedTime = Integer.parseInt(System.console().readLine());
+                                                // student level
+                                                Stream.of("Please enter the student level: ")
+                                                        .forEach(System.out::println);
+                                                int studentLevel = Integer.parseInt(System.console().readLine());
+                                                // number of students expected
+                                                Stream.of("Please enter the number of students expected: ")
+                                                        .forEach(System.out::println);
+                                                int numberOfStudents = Integer.parseInt(System.console().readLine());
 
-                                                currentUserAdmin.getSchool().addRequest(tutorialRequest);
+                                                // current time for the request
+                                                LocalDateTime requestDate = LocalDateTime.now();
 
+                                                // random requestID
+                                                int requestID = (int) (Math.random() * 1000000);
+
+                                                // request status is set to "NEW"
+                                                String requestStatus = "NEW";
+                                                try {
+                                                    // passing the values above to the TutorialRequest constructor
+                                                    TutorialRequest tutorialRequest = new TutorialRequest(requestID,
+                                                            requestDate,
+                                                            requestStatus,
+                                                            tutorialDescription, proposedDate, proposedTime,
+                                                            studentLevel,
+                                                            numberOfStudents);
+
+                                                    currentUserAdmin.getSchool().addRequest(tutorialRequest);
+
+                                                } catch (Exception e) {
+                                                    System.out.println("\nError: " + e.getMessage());
+                                                }
+
+                                                // giving the user feedback that the request was successfully submitted
+                                                Stream.of("\nRequest successfully submitted!\n")
+                                                        .forEach(System.out::println);
                                             } catch (Exception e) {
                                                 System.out.println("\nError: " + e.getMessage());
+                                                continue;
                                             }
+                                            break;
 
-                                            // giving the user feedback that the request was successfully submitted
-                                            Stream.of("\nRequest successfully submitted!\n")
-                                                    .forEach(System.out::println);
-                                        } catch (Exception e) {
-                                            System.out.println("\nError: " + e.getMessage());
-                                            continue;
-                                        }
-                                        break;
-
-                                    case 2:
-                                        try {
-                                            // description of the resource request
-                                            Stream.of("Please enter the description of the resource request: ")
-                                                    .forEach(System.out::println);
-                                            String resourceDescription = (System.console().readLine());
-                                            // resource type
-                                            Stream.of(
-                                                    "Please enter the resource type: (mobile device/personal computer/networking equipment)")
-                                                    .forEach(System.out::println);
-                                            String resourceType = (System.console().readLine());
-                                            // number of resources expected
-                                            Stream.of("Please enter the number of resources expected: ")
-                                                    .forEach(System.out::println);
-                                            int numberOfResources = Integer.parseInt(System.console().readLine());
-
-                                            // current time for the request
-                                            LocalDateTime requestDateResource = LocalDateTime.now();
-
-                                            // random requestID
-                                            int requestIDResource = (int) (Math.random() * 1000000);
-
-                                            // request status is set to "NEW"
-                                            String requestStatusResource = "NEW";
-
+                                        case 2:
                                             try {
-                                                // passing the values above to the ResourceRequest constructor
-                                                ResourceRequest resourceRequest = new ResourceRequest(requestIDResource,
-                                                        requestDateResource,
-                                                        requestStatusResource,
-                                                        resourceDescription, resourceType, numberOfResources);
+                                                // description of the resource request
+                                                Stream.of("Please enter the description of the resource request: ")
+                                                        .forEach(System.out::println);
+                                                String resourceDescription = (System.console().readLine());
+                                                // resource type
+                                                Stream.of(
+                                                        "Please enter the resource type: (mobile device/personal computer/networking equipment)")
+                                                        .forEach(System.out::println);
+                                                String resourceType = (System.console().readLine());
+                                                // number of resources expected
+                                                Stream.of("Please enter the number of resources expected: ")
+                                                        .forEach(System.out::println);
+                                                int numberOfResources = Integer.parseInt(System.console().readLine());
 
-                                                currentUserAdmin.getSchool().addRequest(resourceRequest);
+                                                // current time for the request
+                                                LocalDateTime requestDateResource = LocalDateTime.now();
 
+                                                // random requestID
+                                                int requestIDResource = (int) (Math.random() * 1000000);
+
+                                                // request status is set to "NEW"
+                                                String requestStatusResource = "NEW";
+
+                                                try {
+                                                    // passing the values above to the ResourceRequest constructor
+                                                    ResourceRequest resourceRequest = new ResourceRequest(
+                                                            requestIDResource,
+                                                            requestDateResource,
+                                                            requestStatusResource,
+                                                            resourceDescription, resourceType, numberOfResources);
+
+                                                    currentUserAdmin.getSchool().addRequest(resourceRequest);
+
+                                                } catch (Exception e) {
+                                                    System.out.println("\nError: " + e.getMessage());
+                                                }
+
+                                                // giving the user feedback that the request was successfully submitted
+                                                Stream.of("\nRequest successfully submitted!\n")
+                                                        .forEach(System.out::println);
                                             } catch (Exception e) {
                                                 System.out.println("\nError: " + e.getMessage());
+                                                continue;
                                             }
+                                            break;
 
-                                            // giving the user feedback that the request was successfully submitted
-                                            Stream.of("\nRequest successfully submitted!\n")
-                                                    .forEach(System.out::println);
-                                        } catch (Exception e) {
-                                            System.out.println("\nError: " + e.getMessage());
-                                            continue;
-                                        }
-                                        break;
+                                        case 3:
+                                            // cancel
+                                            displayAdminMenu();
+                                            break;
 
-                                    default:
-                                        // if the user enters an invalid choice
-                                        Stream.of("Request error; Invalid choice").forEach(System.out::println);
-                                        break;
+                                        default:
+                                            // if the user enters an invalid choice
+                                            Stream.of("Request error; Invalid choice").forEach(System.out::println);
+                                            break;
 
+                                    }
+
+                                    break;
                                 }
-
-                                break;
 
                             } catch (Exception e) {
                                 System.out.println("\nTypeError: " + e.getMessage());
@@ -381,7 +403,7 @@ public class SchoolHELPConsole {
                         }
                     case 5:
                         // logout
-                        Stream.of("Logging out...").forEach(System.out::println);
+                        Stream.of("\nLogging out...").forEach(System.out::println);
                         main(null);
                 }
 
@@ -400,7 +422,7 @@ public class SchoolHELPConsole {
     public static void main(String[] args) {
         while (true) {
 
-            System.out.println("\nWelcome to the School Help System");
+            System.out.println("\n--Welcome to the School Help System--");
             // using lambda expressions and stream() to get user input
             Stream.of("1. Admin", "2. Volunteer", "3. View All Users, in detail.", "4. View All Requests", "5. Exit")
                     .forEach(System.out::println);

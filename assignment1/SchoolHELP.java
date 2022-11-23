@@ -15,7 +15,7 @@ public class SchoolHELP {
         // default ArrayList constructor with a single default school
         schools.add(new School("HELP", 1, "Jalan Damansara", "Kuala Lumpur"));
         // default ArrayList constructor with a single default SchoolAdmin user
-        users.add(new SchoolAdmin("admin", "admin", "default admin", "defaultadmin@milopadma.com", 000, 1,
+        users.add(new SchoolAdmin("admin", "admin", "MILO PADMA", "defaultadmin@milopadma.com", 000, 001,
                 "SchoolHELPAdmin", schools.get(0)));
     }
 
