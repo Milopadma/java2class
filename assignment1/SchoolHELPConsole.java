@@ -260,7 +260,10 @@ public class SchoolHELPConsole {
                                 continue;
                             }
                         }
-
+                    case 5:
+                        // logout
+                        Stream.of("Logging out...").forEach(System.out::println);
+                        main(null);
                 }
 
             } catch (Exception e) {
