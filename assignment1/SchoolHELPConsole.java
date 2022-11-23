@@ -442,12 +442,56 @@ public class SchoolHELPConsole {
         }
     }
 
+    /**
+     * {@summary} Shows all the requests that are currently in the system
+     */
+    private static void ViewRequests() {
+        // View requests that have been submitted, ever.
+        // basically, display all requests that exists in the system
+        SchoolHELP.getSchools().forEach(school -> {
+            school.getRequests().forEach(request -> {
+                System.out.println(request);
+            });
+        });
+
+    }
+
+    /**
+     * {@summary} Displays the volunteer menu
+     */
+    private static void displayVolunteerMenu() {
+        // at this point, the user is a volunteer, and is logged in.
+        while (true) {
+            try {
+                // show the volunteer only menu!!
+                Stream.of("\n--VOLUNTEER--", "1. View Requests", "2. Back").forEach(System.out::println);
+                int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
+                switch (volunteerMenuChoice) {
+                    case 1:
+                        ViewRequests();
+                        break;
+                    case 2:
+                        // back
+                        main(null);
+                        break;
+                    default:
+                        // if the user enters an invalid choice
+                        Stream.of("Request error; Invalid choice").forEach(System.out::println);
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("\nError: " + e.getMessage());
+                continue;
+            }
+        }
+    }
+
     // for the volunteer-specific cli menu
-    public static void displayVolunteerMenu() {
+    public static void displayVolunteerAccountHandler() {
         // Volunteer Menu
         while (true) {
             try {
-                Stream.of("\n--VOLUNTEER MENU--", "1. Register As Volunteer", "2. Login", "3. Logout")
+                Stream.of("\n--VOLUNTEER MENU--", "1. Register As Volunteer", "2. Login", "3. Back")
                         .forEach(System.out::println);
                 int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
                 switch (volunteerMenuChoice) {
@@ -480,14 +524,17 @@ public class SchoolHELPConsole {
                         Stream.of("\nSuccessfully registered!").forEach(System.out::println);
 
                         // display volunteer menu
-                        displayVolunteerMenu();
+                        displayVolunteerAccountHandler();
                         break;
 
                     case 2:
                         // Login
                         displayVolunteerLogin();
                         break;
-
+                    case 3:
+                        // Logout
+                        main(null);
+                        break;
                 }
             } catch (Exception e) {
                 System.out.println("\nError: " + e.getMessage());
@@ -540,7 +587,7 @@ public class SchoolHELPConsole {
 
                     case 2:
 
-                        displayVolunteerMenu();
+                        displayVolunteerAccountHandler();
                         break;
 
                     case 3:
