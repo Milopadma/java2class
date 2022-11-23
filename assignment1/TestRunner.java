@@ -134,6 +134,7 @@ public class TestRunner {
         schoolHELP.addUser(volunteer);
 
         Offer offer = new Offer(12345, "testRemarks", "testStatus", volunteer);
+        volunteer.addOffer(offer);
 
         // check if the offer is added to the volunteer
         if (volunteer.getOffers().contains(offer)) {
@@ -167,9 +168,24 @@ public class TestRunner {
                 "TestPosition");
         schoolHELP.addUser(volunteer);
 
-        Offer offer = new Offer(12345, "testRemarks", "testStatus");
+        Offer offer = new Offer(12345, "testRemarks", "testStatus", volunteer);
+        // add this offer to the volunteer
+        volunteer.addOffer(offer);
 
-        // get all offers from
+        // check if the offer is added to the volunteer
+        if (volunteer.getOffers().contains(offer)) {
+            System.out.println("TESTCASE6: PASSED");
+            for (User user : schoolHELP.getUsers()) {
+                if (user instanceof Volunteer) {
+                    for (Offer offer1 : ((Volunteer) user).getOffers()) {
+                        System.out.println(offer1);
+                    }
+                }
+            }
+        } else {
+            System.out.println("TESTCASE6: FAILED");
+        }
+
     }
 
     public static void main(String[] args) {
@@ -184,6 +200,8 @@ public class TestRunner {
         TESTCASE4();
         // test for the fifth use case, which is Submitting an Offer
         TESTCASE5();
+        // test for the sixth use case, which is Reviewing Offers
+        TESTCASE6();
 
     }
 }
