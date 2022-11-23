@@ -47,16 +47,66 @@ public class TestRunner {
         TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
                 290);
 
-        ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription", "TestType",
+        ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
+                "TestType",
                 12);
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
-        
+
         // check if the request is added to the school
-        if (currentUserAdmin.getSchool().getRequests().contains(tutorialRequest) && currentUserAdmin.getSchool().getRequests().contains(resourceRequestTest)) {
+        if (currentUserAdmin.getSchool().getRequests().contains(tutorialRequest)
+                && currentUserAdmin.getSchool().getRequests().contains(resourceRequestTest)) {
             System.out.println("TESTCASE2: PASSED");
         } else {
             System.out.println("TESTCASE2: FAILED");
+        }
+    }
+
+    // TESTCASE3: Registering as a Volunteer
+    public static void TESTCASE3() {
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+                "TestPosition");
+        schoolHELP.addUser(volunteer);
+        // check if the volunteer is added to the user list
+        if (schoolHELP.getUsers().contains(volunteer)) {
+            System.out.println("TESTCASE3: PASSED");
+        } else {
+            System.out.println("TESTCASE3: FAILED");
+        }
+    }
+
+    // TESTCASE4: Allowing a Volunteer usersession to view requests that have been
+    // submitted
+    public static void TESTCASE4() {
+        School school = new School("TestSchool", 123, "TestAddress", "TestCity");
+        SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
+                12345, 123,
+                "TestPosition", school);
+        schoolHELP.addUser(testSchoolAdmin);
+        schoolHELP.addSchool(school);
+        school.addSchoolAdmin(testSchoolAdmin);
+
+        TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
+                290);
+
+        ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
+                "TestType",
+                12);
+        currentUserAdmin.getSchool().addRequest(tutorialRequest);
+        currentUserAdmin.getSchool().addRequest(resourceRequestTest);
+
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+                "TestPosition");
+        schoolHELP.addUser(volunteer);
+
+        // check if the volunteer is added to the user list, and if the request is added
+        // to the school
+        if (schoolHELP.getUsers().contains(volunteer)
+                && currentUserAdmin.getSchool().getRequests().contains(tutorialRequest)
+                && currentUserAdmin.getSchool().getRequests().contains(resourceRequestTest)) {
+            System.out.println("TESTCASE3: PASSED");
+        } else {
+            System.out.println("TESTCASE3: FAILED");
         }
     }
 
@@ -65,6 +115,8 @@ public class TestRunner {
         TESTCASE1();
         // test for the second use case, which is Submitting a Request
         TESTCASE2();
+        // test for the third use case, which is Registering as a Volunteer
+        TESTCASE3();
 
     }
 }

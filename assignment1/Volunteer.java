@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Volunteer extends User{
     //this class manages SchoolAdmin data 
     // class variables
@@ -31,5 +33,12 @@ public class Volunteer extends User{
     @Override
     public String toString() {
         return "Volunteer [dateOfBirth=" + dateOfBirth + ", occupation=" + occupation + "]";
+    }
+    public ArrayList viewAllRequests(ArrayList<School> schools) {
+        ArrayList<Request> allRequests = new ArrayList<Request>();
+        for (School school : schools) {
+            allRequests.addAll(school.getRequests());
+        }
+        return allRequests;
     }
 }
