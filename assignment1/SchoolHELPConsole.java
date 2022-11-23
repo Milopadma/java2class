@@ -462,6 +462,44 @@ public class SchoolHELPConsole {
                             Stream.of("School does not exist").forEach(System.out::println);
                         }
                         break;
+
+                    case 2:
+                        // view requests by city
+                        Stream.of("Please enter the name of the city (case-sensitive): ")
+                                .forEach(System.out::println);
+                        String cityName = System.console().readLine();
+                        // check if city exists
+                        if (SchoolHELP.isCity(cityName)) { // to confirm wether its ACTUALLY a city or not because you
+                                                           // can
+                                                           // never trust the user
+                            // if city exists, display all requests for that city
+                            SchoolHELP.getRequestsByCity(cityName).forEach(request -> {
+                                System.out.println(request);
+                            });
+                        } else {
+                            // if city does not exist, display error message
+                            Stream.of("City does not exist").forEach(System.out::println);
+                        }
+                        break;
+
+                    case 3:
+                        // view requests by request date
+                        Stream.of("Please enter the request date (YYYY-MM-DD): ").forEach(System.out::println);
+                        int requestDate = Integer.parseInt(System.console().readLine());
+                        // check if date valid date
+                        if (SchoolHELP.isValidDate(requestDate)) { // to confirm wether its ACTUALLY a date or not
+                                                                   // because
+                                                                   // you can
+                                                                   // never trust the user
+                            // if date valid, display all requests for that date
+                            SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
+                                System.out.println(request);
+                            });
+                        } else {
+                            // if date does not exist, display error message
+                            Stream.of("Date does not exist").forEach(System.out::println);
+                        }
+                        break;
                 }
 
             } catch (Exception e) {
@@ -545,7 +583,7 @@ public class SchoolHELPConsole {
                         String fullname = System.console().readLine();
                         Stream.of("Please enter your email (4/7): ").forEach(System.out::println);
                         String email = System.console().readLine();
-                        Stream.of("Please enter your phone number (e.g 62 8112912, without +) (5/7): ")
+                        Stream.of("Please enter your phone number (e.g 628112912, without +) (5/7): ")
                                 .forEach(System.out::println);
                         int phoneNumber = Integer.parseInt(System.console().readLine());
                         Stream.of("Please enter your occupation (6/7): ").forEach(System.out::println);

@@ -1,4 +1,8 @@
+
+// I GUSTI BAGUS MILO PADMA WIJAYA //E2000426
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 /**
  * {@summary} This class manages instances of User and School classes, both in
@@ -158,5 +162,61 @@ public class SchoolHELP {
             }
         }
         return false;
+    }
+
+    public boolean isCity(String cityName) {
+        for (School school : schools) {
+            if (school.getCity().equals(cityName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * {@summary} A method of SchoolHELP, get the school by receiving cityName as a
+     * param, then returns the schools in that city, if they exist.
+     * 
+     * @param cityName
+     * @return
+     */
+    public Stream<Object> getRequestsByCity(String cityName) {
+        return schools.stream().filter(s -> s.getCity().equals(cityName)).map(s -> s.getRequests());
+    }
+
+    public boolean isValidDate(int requestDate) {
+        // the basic date format is DDMMYY or DDMMYYYY,
+        // where DD is the date, MM is the month, and YYYY is the year
+        // DD must not be above 31, MM must not be above 12, and YYYY should be fine as
+        // first, check if the int its a 8 digit number or not
+        if (requestDate < 10000000 || requestDate > 99999999) {
+            return false;
+        } else {
+            // then, break the date into DD, MM
+            int DD = requestDate / 10000;
+            int MM = (requestDate % 10000) / 100;
+
+            // then, check if DD is above 31, MM is above 12, and YY
+            if (DD > 31 || MM > 12) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    /**
+     * {@summary} to return all the requests in the ArrayList of type Request,
+     * that has the same date
+     * 
+     * @param requestDate
+     * @return
+     */
+    public Stream<Request> getRequestsByDate(int requestDate) {
+        // convert the int to a LocalDateTime format
+        LocalDateTime date = LocalDateTime.of(requestDate / 10000, (requestDate % 10000) / 100, requestDate % 100, 0,
+                0);
+        return getAllRequests().stream().filter(r -> r.getRequestDate() == date);
+
     }
 }
