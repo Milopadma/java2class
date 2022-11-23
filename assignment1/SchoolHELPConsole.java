@@ -68,26 +68,27 @@ public class SchoolHELPConsole {
         while (true) {
             try {
                 Stream.of("\n--Creating a new School Admin (2/2)--",
-                        "Please enter the school admin username: ")
+                        "Please enter the school admin username (1/7): ")
                         .forEach(System.out::println);
                 String adminUsername = (System.console().readLine());
                 // school admin password
-                Stream.of("Please enter the school admin password: ").forEach(System.out::println);
+                Stream.of("Please enter the school admin password (2/7): ").forEach(System.out::println);
                 String adminPassword = (System.console().readLine());
                 // school admin fullname
-                Stream.of("Please enter the school admin fullname: ").forEach(System.out::println);
+                Stream.of("Please enter the school admin fullname (3/7): ").forEach(System.out::println);
                 String adminFullname = (System.console().readLine());
                 // school admin email
-                Stream.of("Please enter the school admin email: ").forEach(System.out::println);
+                Stream.of("Please enter the school admin email (4/7): ").forEach(System.out::println);
                 String adminEmail = (System.console().readLine());
                 // school admin phone
-                Stream.of("Please enter the school admin phone: ").forEach(System.out::println);
+                Stream.of("Please enter the school admin phone (e.g 62 8112912, without +) (5/7): ")
+                        .forEach(System.out::println);
                 int adminPhone = Integer.parseInt(System.console().readLine());
                 // school admin ID
-                Stream.of("Please enter the school admin ID: ").forEach(System.out::println);
+                Stream.of("Please enter the school admin ID (6/7): ").forEach(System.out::println);
                 int adminID = Integer.parseInt(System.console().readLine());
                 // school admin position
-                Stream.of("Please enter the school admin position: ").forEach(System.out::println);
+                Stream.of("Please enter the school admin position (7/7): ").forEach(System.out::println);
                 String adminPosition = (System.console().readLine());
 
                 // passing all the values above to the SchoolAdmin constructor
@@ -241,7 +242,8 @@ public class SchoolHELPConsole {
                                     // throw an exception and thats bad :(
                                     try {
                                         // phone change
-                                        Stream.of("Please enter the new phone number: ").forEach(System.out::println);
+                                        Stream.of("Please enter the new phone number (e.g 62 8112912, without +): ")
+                                                .forEach(System.out::println);
                                         int newPhoneNumber = Integer.parseInt(System.console().readLine());
                                         // set the new phone
                                         currentUserAdmin.setPhone(newPhoneNumber);
@@ -285,23 +287,26 @@ public class SchoolHELPConsole {
                                         case 1:
                                             try {
                                                 // description of the tutorial request
-                                                Stream.of("Please enter the description of the tutorial request: ")
+                                                Stream.of(
+                                                        "Please enter the description of the tutorial request (1/5): ")
                                                         .forEach(System.out::println);
                                                 String tutorialDescription = (System.console().readLine());
                                                 // proposed date of the tutorial request
-                                                Stream.of("Please enter the proposed date of the tutorial request: ")
+                                                Stream.of(
+                                                        "Please enter the proposed date of the tutorial request (2/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedDate = Integer.parseInt(System.console().readLine());
                                                 // proposed time of the tutorial request
-                                                Stream.of("Please enter the proposed time of the tutorial request: ")
+                                                Stream.of(
+                                                        "Please enter the proposed time of the tutorial request (3/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedTime = Integer.parseInt(System.console().readLine());
                                                 // student level
-                                                Stream.of("Please enter the student level: ")
+                                                Stream.of("Please enter the student level (4/5): ")
                                                         .forEach(System.out::println);
                                                 int studentLevel = Integer.parseInt(System.console().readLine());
                                                 // number of students expected
-                                                Stream.of("Please enter the number of students expected: ")
+                                                Stream.of("Please enter the number of students expected (5/5): ")
                                                         .forEach(System.out::println);
                                                 int numberOfStudents = Integer.parseInt(System.console().readLine());
 
@@ -512,6 +517,7 @@ public class SchoolHELPConsole {
                 } else {
                     // if user is not volunteer, display error message
                     System.out.println("Invalid username or password");
+                    displayVolunteerAccountHandler();
                 }
             } catch (Exception e) {
                 System.out.println("\nError: " + e.getMessage());
@@ -539,11 +545,12 @@ public class SchoolHELPConsole {
                         String fullname = System.console().readLine();
                         Stream.of("Please enter your email (4/7): ").forEach(System.out::println);
                         String email = System.console().readLine();
-                        Stream.of("Please enter your phone number (5/7): ").forEach(System.out::println);
+                        Stream.of("Please enter your phone number (e.g 62 8112912, without +) (5/7): ")
+                                .forEach(System.out::println);
                         int phoneNumber = Integer.parseInt(System.console().readLine());
                         Stream.of("Please enter your occupation (6/7): ").forEach(System.out::println);
                         String occupation = System.console().readLine();
-                        Stream.of("Please enter your date of birth (7/7): ").forEach(System.out::println);
+                        Stream.of("Please enter your date of birth (e.g 221122)(7/7): ").forEach(System.out::println);
                         int dateOfBirth = Integer.parseInt(System.console().readLine());
 
                         // create volunteer object
@@ -597,9 +604,9 @@ public class SchoolHELPConsole {
                                     .forEach(System.out::print);
                         }
                         // admin login
-                        Stream.of("\n--ADMIN--", "Please enter your username: ").forEach(System.out::print);
+                        Stream.of("\n--ADMIN--", "Please enter your username: ").forEach(System.out::println);
                         String adminUsername = System.console().readLine();
-                        Stream.of("\n--ADMIN--", "Please enter your password: ").forEach(System.out::print);
+                        Stream.of("\n--ADMIN--", "Please enter your password: ").forEach(System.out::println);
                         String adminPassword = System.console().readLine();
                         // check if user is admin
                         if (SchoolHELP.isUserAdmin(adminUsername, adminPassword)) {
