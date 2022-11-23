@@ -1,8 +1,13 @@
+import java.util.ArrayList;
+
 public class Volunteer extends User {
     // this class manages Volunteer data
     // class variables
     private int dateOfBirth;
     private String occupation;
+
+    // each volunteer can have multiple offers
+    private ArrayList<Offer> offers = new ArrayList<Offer>();
 
     // class constructor
     public Volunteer(String username, String password, String fullname, String email, int phone, int dateOfBirth,
@@ -27,6 +32,18 @@ public class Volunteer extends User {
 
     public void setOccupation(String occupation) {
         this.occupation = occupation;
+    }
+
+    public ArrayList<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(ArrayList<Offer> offers) {
+        this.offers = offers;
+    }
+
+    public void addOffer(Offer offer){
+        offers.add(offer);
     }
 
     // toString method

@@ -104,10 +104,72 @@ public class TestRunner {
         if (schoolHELP.getUsers().contains(volunteer)
                 && currentUserAdmin.getSchool().getRequests().contains(tutorialRequest)
                 && currentUserAdmin.getSchool().getRequests().contains(resourceRequestTest)) {
-            System.out.println("TESTCASE3: PASSED");
+            System.out.println("TESTCASE4: PASSED");
         } else {
-            System.out.println("TESTCASE3: FAILED");
+            System.out.println("TESTCASE4: FAILED");
         }
+    }
+
+    // TESTCASE5: Submitting an Offer
+    public static void TESTCASE5() {
+        School school = new School("TestSchool", 123, "TestAddress", "TestCity");
+        SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
+                12345, 123,
+                "TestPosition", school);
+        schoolHELP.addUser(testSchoolAdmin);
+        schoolHELP.addSchool(school);
+        school.addSchoolAdmin(testSchoolAdmin);
+
+        TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
+                290);
+
+        ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
+                "TestType",
+                12);
+        currentUserAdmin.getSchool().addRequest(tutorialRequest);
+        currentUserAdmin.getSchool().addRequest(resourceRequestTest);
+
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+                "TestPosition");
+        schoolHELP.addUser(volunteer);
+
+        Offer offer = new Offer(12345, "testRemarks", "testStatus", volunteer);
+
+        // check if the offer is added to the volunteer
+        if (volunteer.getOffers().contains(offer)) {
+            System.out.println("TESTCASE5: PASSED");
+        } else {
+            System.out.println("TESTCASE5: FAILED");
+        }
+    }
+
+    // TESTCASE6: Reviewing Offers, to allow school admins to review offers and
+    // change the status of the offer
+    public static void TESTCASE6() {
+        School school = new School("TestSchool", 123, "TestAddress", "TestCity");
+        SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
+                12345, 123,
+                "TestPosition", school);
+        schoolHELP.addUser(testSchoolAdmin);
+        schoolHELP.addSchool(school);
+        school.addSchoolAdmin(testSchoolAdmin);
+
+        TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
+                290);
+
+        ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
+                "TestType",
+                12);
+        currentUserAdmin.getSchool().addRequest(tutorialRequest);
+        currentUserAdmin.getSchool().addRequest(resourceRequestTest);
+
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+                "TestPosition");
+        schoolHELP.addUser(volunteer);
+
+        Offer offer = new Offer(12345, "testRemarks", "testStatus");
+
+        // get all offers from
     }
 
     public static void main(String[] args) {
@@ -117,6 +179,11 @@ public class TestRunner {
         TESTCASE2();
         // test for the third use case, which is Registering as a Volunteer
         TESTCASE3();
+        // test for the fourth use case, which is Allowing a Volunteer usersession to
+        // view requests that have been submitted
+        TESTCASE4();
+        // test for the fifth use case, which is Submitting an Offer
+        TESTCASE5();
 
     }
 }

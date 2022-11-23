@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Request {
     // this class receives from the Offer class and each School class has multiple Requests
@@ -7,6 +8,9 @@ public class Request {
     private LocalDateTime requestDate;
     private String requestStatus;
     private String description;
+
+    // class Request has a 1-many relationship with the Offer class
+    private ArrayList<Offer> offers = new ArrayList<Offer>();
 
     // class constructor
     public Request(int requestID, LocalDateTime requestDate, String requestStatus, String description){
@@ -47,6 +51,18 @@ public class Request {
 
     public void setDescription(String description) {
         this.description = description;
+    } 
+
+    public ArrayList<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(ArrayList<Offer> offers) {
+        this.offers = offers;
+    }
+
+    public void addOffer(Offer offer) {
+        offers.add(offer);
     }
 
     // toString method

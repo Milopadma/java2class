@@ -5,11 +5,15 @@ public class Offer{
     private String remarks;
     private String offerStatus;
 
+    // each offer instance is owned by a volunteer instance
+    private Volunteer isOwnedBy;
+
     // class constructor
-    public Offer(int offerDate, String remarks, String offerStatus){
+    public Offer(int offerDate, String remarks, String offerStatus, Volunteer isOwnedBy) {
         this.offerDate = offerDate;
         this.remarks = remarks;
         this.offerStatus = offerStatus;
+        this.isOwnedBy = isOwnedBy;
     }
 
     // class setter and getter methods
@@ -35,6 +39,14 @@ public class Offer{
 
     public void setOfferStatus(String offerStatus) {
         this.offerStatus = offerStatus;
+    }
+
+    public Volunteer getIsOwnedBy() {
+        return isOwnedBy;
+    }
+
+    public void setIsOwnedBy(Volunteer isOwnedBy) {
+        this.isOwnedBy = isOwnedBy;
     }
 
     // toString method
