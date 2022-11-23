@@ -9,6 +9,9 @@ public class SchoolHELPConsole {
     private static User currentUser = null;
     // private static SchoolAdmin currentUserAdmin = null;
 
+    // to check if its the first time login or not
+    private static boolean isFirstTimeLogin = true;
+
     // console class methods
     /**
      * {@summary} This method is responsible for displayed the school creation menu
@@ -112,7 +115,7 @@ public class SchoolHELPConsole {
     public static void displayAdminMenu() {
         // this shall be a looop!!!!
         while (true) {
-            System.out.println("\nWelcome to the SchoolHELP Admin Menu");
+            System.out.println("\n--Welcome to the SchoolHELP Admin Menu--");
 
             // to show the current user's name and position
             System.out.println("Logged in as: " + currentUser.getFullname() + ", position: ("
@@ -123,7 +126,7 @@ public class SchoolHELPConsole {
 
             Stream.of("1. Register a new school", "2. Edit profile",
                     "3. Submit a request for assistance",
-                    "4. Review offers for requests", "5. Exit").forEach(System.out::println);
+                    "4. Review offers for requests", "5. Back").forEach(System.out::println);
             Stream.of("Please enter your choice: ").forEach(System.out::println);
             // await user input, wrapped in try/catch to 'sanitize' user input
             // in this function scope, currentUser will be of type SchoolAdmin
@@ -269,7 +272,8 @@ public class SchoolHELPConsole {
                         while (true) {
                             try {
                                 // ask if the user wants to do a Tutorial Request or a Resource Request
-                                Stream.of("\nIs this a tutorial request or a resource request?")
+                                Stream.of("\n--Adding a new request--",
+                                        "Is this a tutorial request or a resource request?")
                                         .forEach(System.out::println);
                                 Stream.of("1. Tutorial Request", "2. Resource Request", "3. Back")
                                         .forEach(System.out::println);
@@ -415,16 +419,89 @@ public class SchoolHELPConsole {
 
     }
 
+    public static void displayVolunteerLogin() {
+        while (true) {
+            try {
+                // volunteer login
+                System.out.println("--VOLUNTEER-- Enter your username: ");
+                String username = System.console().readLine();
+                System.out.println("--VOLUNTEER-- Enter your password: ");
+                String password = System.console().readLine();
+                // check if user is volunteer
+                if (SchoolHELP.isUserVolunteer(username, password)) {
+                    // if user is volunteer, display volunteer menu
+                    displayVolunteerMenu();
+                } else {
+                    // if user is not volunteer, display error message
+                    System.out.println("Invalid username or password");
+                }
+            } catch (Exception e) {
+                System.out.println("\nError: " + e.getMessage());
+                continue;
+            }
+        }
+    }
+
     // for the volunteer-specific cli menu
     public static void displayVolunteerMenu() {
+        // Volunteer Menu
+        while (true) {
+            try {
+                Stream.of("\n--VOLUNTEER MENU--", "1. Register As Volunteer", "2. Login", "3. Logout")
+                        .forEach(System.out::println);
+                int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
+                switch (volunteerMenuChoice) {
+                    case 1:
+                        // Register As Volunteer
+                        Stream.of("Please enter your username (1/7): ").forEach(System.out::println);
+                        String username = System.console().readLine();
+                        Stream.of("Please enter your passwod (2/7): ").forEach(System.out::println);
+                        String password = System.console().readLine();
+                        Stream.of("Please enter your fullname (3/7): ").forEach(System.out::println);
+                        String fullname = System.console().readLine();
+                        Stream.of("Please enter your email (4/7): ").forEach(System.out::println);
+                        String email = System.console().readLine();
+                        Stream.of("Please enter your phone number (5/7): ").forEach(System.out::println);
+                        int phoneNumber = Integer.parseInt(System.console().readLine());
+                        Stream.of("Please enter your occupation (6/7): ").forEach(System.out::println);
+                        String occupation = System.console().readLine();
+                        Stream.of("Please enter your date of birth (7/7): ").forEach(System.out::println);
+                        int dateOfBirth = Integer.parseInt(System.console().readLine());
+
+                        // create volunteer object
+                        Volunteer newVolunteer = new Volunteer(username, password, fullname, email, phoneNumber,
+                                dateOfBirth,
+                                occupation);
+
+                        // add volunteer to the user list
+                        SchoolHELP.addUser(newVolunteer);
+
+                        // display success message
+                        Stream.of("\nSuccessfully registered!").forEach(System.out::println);
+
+                        // display volunteer menu
+                        displayVolunteerMenu();
+                        break;
+
+                    case 2:
+                        // Login
+                        displayVolunteerLogin();
+                        break;
+
+                }
+            } catch (Exception e) {
+                System.out.println("\nError: " + e.getMessage());
+                continue;
+            }
+        }
+
     }
 
     public static void main(String[] args) {
         while (true) {
-
-            System.out.println("\n--Welcome to the School Help System--");
             // using lambda expressions and stream() to get user input
-            Stream.of("1. Admin", "2. Volunteer", "3. View All Users, in detail.", "4. View All Requests", "5. Exit")
+            Stream.of("\n--Welcome to the School Help System--", "Please enter your choice: ", "1. Admin",
+                    "2. Volunteer", "3. View All Users, in detail.", "4. View All Requests", "5. Exit")
                     .forEach(System.out::println);
             Stream.of("Enter your choice: ").forEach(System.out::print);
             // await user input
@@ -433,6 +510,11 @@ public class SchoolHELPConsole {
 
                 switch (choice) {
                     case 1:
+                        if (isFirstTimeLogin) {
+                            Stream.of(
+                                    "Detected first time login, default login is (admin, admin), please change this after configuration.")
+                                    .forEach(System.out::print);
+                        }
                         // admin login
                         System.out.println("--ADMIN-- Enter your username: ");
                         String adminUsername = System.console().readLine();
@@ -445,26 +527,20 @@ public class SchoolHELPConsole {
 
                             // if user is admin, display admin menu
                             displayAdminMenu();
+
+                            // at this point, first time login is no more!
+                            isFirstTimeLogin = false;
+
                         } else {
                             // if user is not admin, display error message
                             System.out.println("Invalid username or password");
                         }
+
                         break;
 
                     case 2:
-                        // volunteer login
-                        System.out.println("--VOLUNTEER-- Enter your username: ");
-                        String username = System.console().readLine();
-                        System.out.println("--VOLUNTEER-- Enter your password: ");
-                        String password = System.console().readLine();
-                        // check if user is volunteer
-                        if (SchoolHELP.isUserVolunteer(username, password)) {
-                            // if user is volunteer, display volunteer menu
-                            displayVolunteerMenu();
-                        } else {
-                            // if user is not volunteer, display error message
-                            System.out.println("Invalid username or password");
-                        }
+
+                        displayVolunteerMenu();
                         break;
 
                     case 3:
