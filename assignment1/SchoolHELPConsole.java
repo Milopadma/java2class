@@ -10,6 +10,97 @@ public class SchoolHELPConsole {
     // private static SchoolAdmin currentUserAdmin = null;
 
     // console class methods
+    /**
+     * {@summary} This method is responsible for displayed the school creation menu
+     * and returning the school object that was created.
+     * 
+     * @return School object
+     */
+    public static School displaySchoolCreationMenu() {
+        School school = new School();
+        while (true) {
+            try {
+                // school name
+                Stream.of("\n--Registering a new School (1/2)--", "Please enter the school name: ")
+                        .forEach(System.out::println);
+                String schoolInput = System.console().readLine();
+                if (SchoolHELP.getSchools().stream().anyMatch(s -> s.getSchoolName().equals(schoolInput))) {
+                    Stream.of("\nSchool already exists, skipping to Registering a new SchoolAdmin.")
+                            .forEach(System.out::println);
+                    return school;
+                } else {
+                    school.setSchoolName(schoolInput);
+                }
+                // school address
+                Stream.of("Please enter the school address: ").forEach(System.out::println);
+                school.setAddress(System.console().readLine());
+                // get school email
+                Stream.of("Please enter the school city: ").forEach(System.out::println);
+                school.setCity(System.console().readLine());
+
+                // schoolID is randomly generated, even though this can be done in the class
+                // constructor itself, i prefer to have it here
+                school.setSchoolID((int) (Math.random() * 1000));
+
+                // giving user feedback that this was successful
+                Stream.of("\nSchool added successfully!").forEach(System.out::println);
+                return school;
+
+            } catch (Exception e) {
+                System.out.println("\nError: " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * {@summary} This method displays the menu for registering a new SchoolAdmin
+     * and returning the SchoolAdmin object that was created.
+     * 
+     * @param school
+     * @return SchoolAdmin object
+     */
+    private static SchoolAdmin displaySchoolAdminCreationMenu(School school) {
+        // Registering a new school admin
+        // school admin username
+        while (true) {
+            try {
+                Stream.of("\n--Creating a new School Admin (2/2)--",
+                        "Please enter the school admin username: ")
+                        .forEach(System.out::println);
+                String adminUsername = (System.console().readLine());
+                // school admin password
+                Stream.of("Please enter the school admin password: ").forEach(System.out::println);
+                String adminPassword = (System.console().readLine());
+                // school admin fullname
+                Stream.of("Please enter the school admin fullname: ").forEach(System.out::println);
+                String adminFullname = (System.console().readLine());
+                // school admin email
+                Stream.of("Please enter the school admin email: ").forEach(System.out::println);
+                String adminEmail = (System.console().readLine());
+                // school admin phone
+                Stream.of("Please enter the school admin phone: ").forEach(System.out::println);
+                int adminPhone = Integer.parseInt(System.console().readLine());
+                // school admin ID
+                Stream.of("Please enter the school admin ID: ").forEach(System.out::println);
+                int adminID = Integer.parseInt(System.console().readLine());
+                // school admin position
+                Stream.of("Please enter the school admin position: ").forEach(System.out::println);
+                String adminPosition = (System.console().readLine());
+
+                // passing all the values above to the SchoolAdmin constructor
+                SchoolAdmin schoolAdmin = new SchoolAdmin(adminUsername, adminPassword, adminFullname,
+                        adminEmail,
+                        adminPhone,
+                        adminID, adminPosition, school);
+
+                // returning the newly freshly created SchoolAdmin object
+                return schoolAdmin;
+            } catch (Exception e) {
+                System.out.println("\nError: " + e.getMessage());
+            }
+        }
+    }
+
     // for the admin-specific cli menu
     public static void displayAdminMenu() {
         // this shall be a looop!!!!
@@ -29,61 +120,15 @@ public class SchoolHELPConsole {
                     case 1:
                         // adding new school
                         // init a new instance of School class
-                        School school = new School();
                         try {
-                            // school name
-                            Stream.of("Please enter the school name: ").forEach(System.out::println);
-                            String schoolInput = System.console().readLine();
-                            if (SchoolHELP.getSchools().stream().anyMatch(s -> s.getSchoolName().equals(schoolInput))) {
-                                throw new Exception("School already exists");
-                            } else {
-                                school.setSchoolName(System.console().readLine());
-                            }
-                            // school address
-                            Stream.of("Please enter the school address: ").forEach(System.out::println);
-                            school.setAddress(System.console().readLine());
-                            // get school email
-                            Stream.of("Please enter the school city: ").forEach(System.out::println);
-                            school.setCity(System.console().readLine());
-
-                            // schoolID is randomly generated, even though this can be done in the class
-                            // constructor itself, i prefer to have it here
-                            school.setSchoolID((int) (Math.random() * 1000));
-
-                            // giving user feedback that this was successful
-                            Stream.of("\nSchool added successfully!").forEach(System.out::println);
-
-                            // Registering a new school admin
-                            // school admin username
-                            Stream.of("Please enter the school admin username: ").forEach(System.out::println);
-                            String adminUsername = (System.console().readLine());
-                            // school admin password
-                            Stream.of("Please enter the school admin password: ").forEach(System.out::println);
-                            String adminPassword = (System.console().readLine());
-                            // school admin fullname
-                            Stream.of("Please enter the school admin fullname: ").forEach(System.out::println);
-                            String adminFullname = (System.console().readLine());
-                            // school admin email
-                            Stream.of("Please enter the school admin email: ").forEach(System.out::println);
-                            String adminEmail = (System.console().readLine());
-                            // school admin phone
-                            Stream.of("Please enter the school admin phone: ").forEach(System.out::println);
-                            int adminPhone = Integer.parseInt(System.console().readLine());
-                            // school admin ID
-                            Stream.of("Please enter the school admin ID: ").forEach(System.out::println);
-                            int adminID = Integer.parseInt(System.console().readLine());
-                            // school admin position
-                            Stream.of("Please enter the school admin position: ").forEach(System.out::println);
-                            String adminPosition = (System.console().readLine());
-
                             // wrap this in a try/catch block to catch any exceptions when adding new
                             // SchoolAdmin and School instances
                             try {
-                                // passing all the values above to the SchoolAdmin constructor
-                                SchoolAdmin schoolAdmin = new SchoolAdmin(adminUsername, adminPassword, adminFullname,
-                                        adminEmail,
-                                        adminPhone,
-                                        adminID, adminPosition, school);
+                                // call the method responsible for that wall of text
+                                School school = displaySchoolCreationMenu();
+                                // then, call the method responsible for the other wall of text that takes the
+                                // school object because its necessary
+                                SchoolAdmin schoolAdmin = displaySchoolAdminCreationMenu(school);
 
                                 // adding the school admin to the users list in the SchoolHELP class
                                 // as it counts as being a user, and all user instances are held in the
