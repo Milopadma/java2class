@@ -419,29 +419,6 @@ public class SchoolHELPConsole {
 
     }
 
-    public static void displayVolunteerLogin() {
-        while (true) {
-            try {
-                // volunteer login
-                Stream.of("\n--VOLUNTEER--", "Enter your username: ").forEach(System.out::println);
-                String username = System.console().readLine();
-                Stream.of("\n--VOLUNTEER--", "Enter your password: ").forEach(System.out::println);
-                String password = System.console().readLine();
-                // check if user is volunteer
-                if (SchoolHELP.isUserVolunteer(username, password)) {
-                    // if user is volunteer, display volunteer menu
-                    displayVolunteerMenu();
-                } else {
-                    // if user is not volunteer, display error message
-                    System.out.println("Invalid username or password");
-                }
-            } catch (Exception e) {
-                System.out.println("\nError: " + e.getMessage());
-                continue;
-            }
-        }
-    }
-
     /**
      * {@summary} Shows all the requests that are currently in the system
      */
@@ -512,6 +489,29 @@ public class SchoolHELPConsole {
                         // if the user enters an invalid choice
                         Stream.of("Request error; Invalid choice").forEach(System.out::println);
                         break;
+                }
+            } catch (Exception e) {
+                System.out.println("\nError: " + e.getMessage());
+                continue;
+            }
+        }
+    }
+
+    public static void displayVolunteerLogin() {
+        while (true) {
+            try {
+                // volunteer login
+                Stream.of("\n--VOLUNTEER--", "Enter your username: ").forEach(System.out::println);
+                String username = System.console().readLine();
+                Stream.of("\n--VOLUNTEER--", "Enter your password: ").forEach(System.out::println);
+                String password = System.console().readLine();
+                // check if user is volunteer
+                if (SchoolHELP.isUserVolunteer(username, password)) {
+                    // if user is volunteer, display volunteer menu
+                    displayVolunteerMenu();
+                } else {
+                    // if user is not volunteer, display error message
+                    System.out.println("Invalid username or password");
                 }
             } catch (Exception e) {
                 System.out.println("\nError: " + e.getMessage());
