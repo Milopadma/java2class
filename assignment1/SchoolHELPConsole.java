@@ -638,7 +638,7 @@ public class SchoolHELPConsole {
                     case 1:
                         if (isFirstTimeLogin) {
                             Stream.of(
-                                    "Detected first time login, default login is (admin, admin), please change this after configuration.")
+                                    "\nDetected first time login, default login is (admin, admin), it is advisable to change the default login to prevent unauthorized access.")
                                     .forEach(System.out::print);
                         }
                         // admin login
@@ -650,12 +650,10 @@ public class SchoolHELPConsole {
                         if (SchoolHELP.isUserAdmin(adminUsername, adminPassword)) {
                             // setting the current logged in user of this instance
                             currentUser = SchoolHELP.getUser(adminUsername, adminPassword);
-
-                            // if user is admin, display admin menu
-                            displayAdminMenu();
-
                             // at this point, first time login is no more!
                             isFirstTimeLogin = false;
+                            // if user is admin, display admin menu
+                            displayAdminMenu();
 
                         } else {
                             // if user is not admin, display error message
