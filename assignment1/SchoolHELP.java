@@ -121,4 +121,10 @@ public class SchoolHELP {
         }
         return false;
     }
+
+    public void getAllRequests() {
+        for (School school : schools) {
+            school.getRequests();
+        }
+    }
 }
