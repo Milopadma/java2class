@@ -416,12 +416,34 @@ public class SchoolHELPConsole {
                         // reviewing the offers for the school admins to change the statuses of them
                         while (true) {
                             try {
-                                // print out the list of requests for this current user's school and sort it by status and date
+                                // this prints out the list of requests for this current user's school
+                                // and sorts it by status and date
                                 currentUserAdmin.getSchool().getRequests().stream()
-                                        .sorted(Comparator.comparing(Request::getStatus)
+                                        .sorted(Comparator.comparing(Request::getRequestStatus)
                                                 .thenComparing(Request::getRequestDate))
                                         .forEach(System.out::println);
-                                        
+                                Stream.of("Please enter the request ID of the offer you would like to review: ")
+                                        .forEach(System.out::println);
+                                int requestID = Integer.parseInt(System.console().readLine());
+                                
+                                // this prints out the offer that the user has chosen
+                                currentUserAdmin.getSchool().getRequests().stream()
+                                        .filter(request -> request.getRequestID() == requestID)
+                                        .forEach(System.out::println);
+
+                                // then, let the user choose to accept or close the offer
+                                Stream.of("Please enter the status you would like to change the offer to: ")
+                                        .forEach(System.out::println);
+                                String requestStatus = (System.console().readLine());
+                                // this changes the status of the offer
+                                currentUserAdmin.getSchool().getRequests().stream()
+                                        .filter(request -> request.getRequestID() == requestID)
+                                        .forEach(request -> request.setRequestStatus(requestStatus));
+
+                                // giving the user feedback that the status was successfully changed
+                                Stream.of("\nStatus successfully changed!\n").forEach(System.out::println);
+
+
                             } catch (Exception e) {
                                 System.out.println("\nTypeError: " + e.getMessage());
                                 continue;
