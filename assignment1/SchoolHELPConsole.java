@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 // this whole class' purpose is to be a user interface
@@ -410,6 +411,23 @@ public class SchoolHELPConsole {
                                 continue;
                             }
                         }
+
+                    case 4:
+                        // reviewing the offers for the school admins to change the statuses of them
+                        while (true) {
+                            try {
+                                // print out the list of requests for this current user's school and sort it by status and date
+                                currentUserAdmin.getSchool().getRequests().stream()
+                                        .sorted(Comparator.comparing(Request::getStatus)
+                                                .thenComparing(Request::getRequestDate))
+                                        .forEach(System.out::println);
+                                        
+                            } catch (Exception e) {
+                                System.out.println("\nTypeError: " + e.getMessage());
+                                continue;
+                            }
+                        }
+
                     case 5:
                         // logout
                         Stream.of("\nLogging out...").forEach(System.out::println);
