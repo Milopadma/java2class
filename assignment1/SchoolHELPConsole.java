@@ -3,6 +3,11 @@ import java.util.Comparator;
 import java.util.stream.Stream;
 
 // this whole class' purpose is to be a user interface
+/**
+ * {@summary} This class is the top level main class of the
+ * SchoolHELPConsole.java file. This is what should be run first as it contains
+ * the main method.
+ */
 public class SchoolHELPConsole {
     // init a single instance of the SchoolHELP class
     private static SchoolHELP SchoolHELP = new SchoolHELP();
@@ -944,6 +949,12 @@ public class SchoolHELPConsole {
         }
     }
 
+    /**
+     * {@summary} Displays the volunteer login menu. Calls displayVolunteerMenu on
+     * login success and goes back to displayVolunteerAccountHandler on login
+     * failure.
+     * 
+     */
     public static void displayVolunteerLogin() {
         while (true) {
             try {
@@ -971,6 +982,11 @@ public class SchoolHELPConsole {
     }
 
     // for the volunteer-specific cli menu
+    /**
+     * {@summary} Displays the volunteer account handler menu. Handles volunteer
+     * account creation and login. Calls other methods. Can call
+     * displayVolunteerAccountHandler and displayVolunteerLogin.
+     */
     public static void displayVolunteerAccountHandler() {
         // Volunteer Menu
         while (true) {
@@ -1032,6 +1048,12 @@ public class SchoolHELPConsole {
 
     }
 
+    /**
+     * {@summary} The main method of the program, this runs first before anything
+     * else. This shows the first CLI menu.
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         while (true) {
             // using lambda expressions and stream() to get user input
@@ -1042,7 +1064,7 @@ public class SchoolHELPConsole {
             // await user input
             try {
                 int choice = Integer.parseInt(System.console().readLine());
-
+                // switch statement to handle user input
                 switch (choice) {
                     case 1:
                         if (isFirstTimeLogin) {
@@ -1094,8 +1116,5 @@ public class SchoolHELPConsole {
                 main(null);
             }
         }
-
-        // switch statement to handle user input
     }
-
 }

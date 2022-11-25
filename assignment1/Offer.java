@@ -1,6 +1,8 @@
+/**
+ * Offer class that manages data of Offers, sends for the request class, and is
+ * created by the Volunteer class.
+ */
 public class Offer {
-    // this class manages Offers data, sends for the Request class and is made by
-    // the Volunteer class
     // class variables
     private int offerDate;
     private String remarks;
@@ -14,6 +16,14 @@ public class Offer {
     private Volunteer isOwnedBy;
 
     // class constructor
+    /**
+     * {@summary} Offer class constructor, takes in all the required fields.
+     * 
+     * @param offerDate
+     * @param remarks
+     * @param offerStatus
+     * @param isOwnedBy
+     */
     public Offer(int offerDate, String remarks, String offerStatus, Volunteer isOwnedBy) {
         this.offerDate = offerDate;
         this.remarks = remarks;
@@ -23,47 +33,100 @@ public class Offer {
     }
 
     // class setter and getter methods
+    /**
+     * {@summary} Getter method for offerDate. Returns the offerDate.
+     * 
+     * @return int
+     */
     public int getOfferDate() {
         return offerDate;
     }
 
+    /**
+     * {@summary} Setter method for offerDate. Takes in an int.
+     * 
+     * @param offerDate
+     */
     public void setOfferDate(int offerDate) {
         this.offerDate = offerDate;
     }
 
+    /**
+     * {@summary} Getter method for remarks. Returns a String.
+     * 
+     * @return String
+     */
     public String getRemarks() {
         return remarks;
     }
 
+    /**
+     * {@summary} Setter method for remarks. Takes in a String.
+     * 
+     * @param remarks
+     */
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
+    /**
+     * {@summary} Getter method for offerStatus. Returns a String.
+     * 
+     * @return String
+     */
     public String getOfferStatus() {
         return offerStatus;
     }
 
+    /**
+     * {@summary} Setter method for offerStatus. Takes in a String.
+     * 
+     * @param offerStatus
+     */
     public void setOfferStatus(String offerStatus) {
         this.offerStatus = offerStatus;
     }
 
+    /**
+     * {@summary} Getter method for offerID. Returns a Volunteer object instance.
+     * 
+     * @return Volunteer
+     */
     public Volunteer getIsOwnedBy() {
         return isOwnedBy;
     }
 
+    /**
+     * {@summary} Setter method for isOwnedBy. Takes in a Volunteer object instance.
+     * 
+     * @param isOwnedBy
+     */
     public void setIsOwnedBy(Volunteer isOwnedBy) {
         this.isOwnedBy = isOwnedBy;
     }
 
+    /**
+     * {@summary} Getter method for offerID. Returns an int.
+     * 
+     * @return int
+     */
     public int getOfferID() {
         return offerID;
     }
 
+    /**
+     * {@summary} Setter method for offerID. Takes in an int.
+     * 
+     * @param offerID
+     */
     public void setOfferID(int offerID) {
         this.offerID = offerID;
     }
 
     // toString method
+    /**
+     * {@summary} toString method for Offer class. Returns a String.
+     */
     @Override
     public String toString() {
         return "Offer [offerDate: " + offerDate + ", offerStatus: " + offerStatus + ", remarks: " + remarks
