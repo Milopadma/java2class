@@ -2,7 +2,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Request {
-    // this class receives from the Offer class and each School class has multiple Requests
+    // this class receives from the Offer class and each School class has multiple
+    // Requests
     // class variables
     private int requestID;
     private LocalDateTime requestDate;
@@ -12,8 +13,11 @@ public class Request {
     // class Request has a 1-many relationship with the Offer class
     private ArrayList<Offer> offers = new ArrayList<Offer>();
 
+    // class Request also only has a 1-1 relationship with School class
+    private School school;
+
     // class constructor
-    public Request(int requestID, LocalDateTime requestDate, String requestStatus, String description){
+    public Request(int requestID, LocalDateTime requestDate, String requestStatus, String description) {
         this.requestID = requestID;
         this.requestDate = requestDate;
         this.requestStatus = requestStatus;
@@ -49,9 +53,9 @@ public class Request {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setRequestDescription(String description) {
         this.description = description;
-    } 
+    }
 
     public ArrayList<Offer> getOffers() {
         return offers;
@@ -65,6 +69,14 @@ public class Request {
         offers.add(offer);
     }
 
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
     // toString method
     @Override
     public String toString() {
@@ -72,4 +84,3 @@ public class Request {
                 + ", requestStatus=" + requestStatus + "]";
     }
 }
-

@@ -640,34 +640,54 @@ public class SchoolHELPConsole {
                     });
                 });
 
+                // breadcrumbs
+                System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests");
                 // choice to choose to view requests by school, by city, or by request date
                 Stream.of(
-                        "\n--VOLUNTEER--",
-                        "Please choose an option: \n1. View requests by school \n2. View requests by city \n3. View requests by request date \n4. Cancel")
+                        "--VOLUNTEER--",
+                        "Please choose an option: \n1. View requests by school \n2. View requests by city \n3. View requests by request date \n4. Back")
                         .forEach(System.out::println);
                 int choice = Integer.parseInt(System.console().readLine());
                 switch (choice) {
                     case 1:
                         // view requests by school
-                        Stream.of("Please enter the name of the school (case-sensitive): ")
+                        Stream.of("\n--Viewing Requests by School--",
+                                "Please enter the name of the school (case-sensitive): ")
                                 .forEach(System.out::println);
                         String schoolName = System.console().readLine();
                         // check if school exists
                         if (SchoolHELP.isSchool(schoolName)) { // to confirm wether its ACTUALLY a school or not because
                                                                // you can never trust the user
-                            // if school exists, display all requests for that school
-                            SchoolHELP.getSchool(schoolName).getRequests().forEach(request -> {
-                                System.out.println(request);
-                            });
+                            // if school exists, check if it has any requests
+                            if (SchoolHELP.getSchool(schoolName).getRequests().size() > 0) {
+                                // if school has requests, display only the RequestStatus of NEW, description,
+                                // school name and city
+                                SchoolHELP.getSchool(schoolName).getRequests().forEach(request -> {
+                                    if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                        System.out.println(
+                                                request.getRequestStatus() + " - " + request.getRequestDescription()
+                                                        + " - " + request.getSchool().getSchoolName() + " - "
+                                                        + request.getSchool().getCity());
+                                    }
+                                });
+                            } else {
+                                // if school has no requests
+                                Stream.of("\nThere are no requests for this school.",
+                                        "Going back to View Requests menu...").forEach(System.out::println);
+
+                                // go back to ViewRequests() method
+                                ViewRequests();
+                            }
                         } else {
                             // if school does not exist, display error message
-                            Stream.of("School does not exist").forEach(System.out::println);
+                            Stream.of("\nSchool does not exist").forEach(System.out::println);
                         }
                         break;
 
                     case 2:
                         // view requests by city
-                        Stream.of("Please enter the name of the city (case-sensitive): ")
+                        Stream.of("\n--Viewing Requests by City--",
+                                "Please enter the name of the city (case-sensitive): ")
                                 .forEach(System.out::println);
                         String cityName = System.console().readLine();
                         // check if city exists
@@ -680,28 +700,45 @@ public class SchoolHELPConsole {
                             });
                         } else {
                             // if city does not exist, display error message
-                            Stream.of("City does not exist").forEach(System.out::println);
+                            Stream.of("\nCity does not exist").forEach(System.out::println);
                         }
                         break;
 
                     case 3:
                         // view requests by request date
-                        Stream.of("Please enter the request date (YYYY-MM-DD): ").forEach(System.out::println);
+                        Stream.of("\n--Viewing Requests by Date--", "Please enter the request date (DD-MM-YYYY): ")
+                                .forEach(System.out::println);
                         int requestDate = Integer.parseInt(System.console().readLine());
                         // check if date valid date
                         if (SchoolHELP.isValidDate(requestDate)) { // to confirm wether its ACTUALLY a date or not
                                                                    // because
                                                                    // you can
                                                                    // never trust the user
-                            // if date valid, display all requests for that date
-                            SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
-                                System.out.println(request);
-                            });
+                            // if date valid, check if there are any requests for that date
+                            if (SchoolHELP.getRequestsByDate(requestDate) != null) {
+                                // if there are requests for that date, display them
+                                SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
+                                    System.out.println(request);
+                                });
+                            } else {
+                                // if there are no requests for that date, display error message
+                                Stream.of("\nThere are no requests for this date.").forEach(System.out::println);
+                            }
                         } else {
-                            // if date does not exist, display error message
-                            Stream.of("Date does not exist").forEach(System.out::println);
+                            // if date not valid, display error message
+                            Stream.of("\nDate not valid. Please use the DD-MM-YYYY format.")
+                                    .forEach(System.out::println);
                         }
-                        break;
+
+                    case 4:
+                        // go back
+                        Stream.of("\nGoing back to Volunteer Menu...").forEach(System.out::println);
+                        displayVolunteerMenu();
+
+                    default:
+                        // if user enters invalid choice
+                        Stream.of("\nInvalid choice. Please try again.").forEach(System.out::println);
+                        continue;
                 }
 
             } catch (Exception e) {
@@ -719,8 +756,14 @@ public class SchoolHELPConsole {
         // at this point, the user is a volunteer, and is logged in.
         while (true) {
             try {
+                // breadcrumbs
+                System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu");
+                // to show the current user's name and occupation
+                System.out.println("-------");
+                System.out.println("Logged in as: " + currentUser.getFullname() + ", position: ("
+                        + ((Volunteer) currentUser).getOccupation() + ")");
                 // show the volunteer only menu!!
-                Stream.of("\n--VOLUNTEER--", "1. View Requests", "2. Back").forEach(System.out::println);
+                Stream.of("--VOLUNTEER--", "1. View Requests", "2. Back").forEach(System.out::println);
                 int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
                 switch (volunteerMenuChoice) {
                     case 1:
@@ -752,11 +795,13 @@ public class SchoolHELPConsole {
                 String password = System.console().readLine();
                 // check if user is volunteer
                 if (SchoolHELP.isUserVolunteer(username, password)) {
+                    // set current user to the volunteer
+                    currentUser = SchoolHELP.getUser(username, password);
                     // if user is volunteer, display volunteer menu
                     displayVolunteerMenu();
                 } else {
                     // if user is not volunteer, display error message
-                    System.out.println("Invalid username or password");
+                    System.out.println("\nInvalid username or password");
                     displayVolunteerAccountHandler();
                 }
             } catch (Exception e) {
@@ -771,13 +816,16 @@ public class SchoolHELPConsole {
         // Volunteer Menu
         while (true) {
             try {
-                Stream.of("\n--VOLUNTEER MENU--", "1. Register As Volunteer", "2. Login", "3. Back")
+                // breadcrumbs
+                System.out.println("\n\n~/SchoolHELP Console > Volunteer Login");
+                Stream.of("--VOLUNTEER MENU--", "1. Register As Volunteer", "2. Login", "3. Back")
                         .forEach(System.out::println);
                 int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
                 switch (volunteerMenuChoice) {
                     case 1:
                         // Register As Volunteer
-                        Stream.of("Please enter your username (1/7): ").forEach(System.out::println);
+                        Stream.of("\n--Volunteer Account Creation--", "Please enter your username (1/7): ")
+                                .forEach(System.out::println);
                         String username = System.console().readLine();
                         Stream.of("Please enter your password (2/7): ").forEach(System.out::println);
                         String password = System.console().readLine();
