@@ -19,10 +19,10 @@ public class Offer {
     /**
      * {@summary} Offer class constructor, takes in all the required fields.
      * 
-     * @param offerDate
-     * @param remarks
-     * @param offerStatus
-     * @param isOwnedBy
+     * @param offerDate   int
+     * @param remarks     String
+     * @param offerStatus String
+     * @param isOwnedBy   Volunteer
      */
     public Offer(int offerDate, String remarks, String offerStatus, Volunteer isOwnedBy) {
         this.offerDate = offerDate;
