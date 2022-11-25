@@ -180,8 +180,13 @@ public class SchoolHELP {
      * @param cityName
      * @return
      */
-    public Stream<Object> getRequestsByCity(String cityName) {
-        return schools.stream().filter(s -> s.getCity().equals(cityName)).map(s -> s.getRequests());
+    public Stream<Request> getRequestsByCity(String cityName) {
+        for (School school : schools) {
+            if (school.getCity().equals(cityName)) {
+                return school.getRequests().stream();
+            }
+        }
+        return null;
     }
 
     public boolean isValidDate(int requestDate) {
@@ -218,5 +223,40 @@ public class SchoolHELP {
                 0);
         return getAllRequests().stream().filter(r -> r.getRequestDate() == date);
 
+    }
+
+    /**
+     * {@summary} Method of class SchoolHELP, to validate if the request is valid by
+     * passing a type int requestID param.
+     * 
+     * @param requestID
+     * @return
+     */
+    public boolean isRequest(int requestID) {
+        for (Request request : getAllRequests()) {
+            if (request.getRequestID() == requestID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * {@summary} Method of class SchoolHELP, to return a singular request from the
+     * ArrayList in School arrays. Traverses through the ArrayList of type School,
+     * and then the ArrayList of type Request, and returns the request if it exists.
+     * 
+     * @param requestID
+     * @return Request
+     */
+    public Request getRequest(int requestID) {
+        for (School school : schools) {
+            for (Request request : school.getRequests()) {
+                if (request.getRequestID() == requestID) {
+                    return request;
+                }
+            }
+        }
+        return null;
     }
 }

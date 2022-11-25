@@ -627,6 +627,84 @@ public class SchoolHELPConsole {
     }
 
     /**
+     * {@summary} This method displays and handles all functionality for submitting
+     * offers, takes no params, does not return anything.
+     */
+    private static void SubmitOffer() {
+        // volunteer user now can select the request by its ID to view MORE details
+        Stream.of("Please enter the ID of the request you would like to view: ")
+                .forEach(System.out::println);
+        int requestID = Integer.parseInt(System.console().readLine());
+
+        // check if request exists
+        if (SchoolHELP.isRequest(requestID)) {
+            while (true) {
+                try {
+                    // if request exists, display all the details of the request
+                    System.out.println(SchoolHELP.getRequest(requestID));
+
+                    // breadcrumbs
+                    System.out.println(
+                            "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests > View Request Details");
+                    // choice to choose to submit offers for the request, or go back to the
+                    // previous
+                    // menu
+                    Stream.of(
+                            "--VOLUNTEER--",
+                            "Please choose an option: \n1. Submit Offer for this request \n2. Back")
+                            .forEach(System.out::println);
+                    int choice2 = Integer.parseInt(System.console().readLine());
+                    switch (choice2) {
+                        case 1:
+                            // breadcrumbs
+                            System.out.println(
+                                    "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests > View Request Details > Submit Offer");
+                            // submit offer for the request
+                            Stream.of("\n--Submitting Offer for Request--",
+                                    "Please enter some remaks for this offer: ")
+                                    .forEach(System.out::println);
+                            String offerRemarks = System.console().readLine();
+                            // create the offer
+                            int offerDate = LocalDateTime.now().getDayOfYear();
+                            Offer offer = new Offer(offerDate, offerRemarks, "PENDING",
+                                    (Volunteer) currentUser);
+
+                            // add the offer to the request
+                            SchoolHELP.getRequest(requestID).addOffer(offer);
+
+                            // add the offer to the volunteer
+                            ((Volunteer) currentUser).addOffer(offer);
+
+                            // give the user feedback that the offer was successfully
+                            // submitted
+                            Stream.of("\nOffer successfully submitted!\n")
+                                    .forEach(System.out::println);
+                            // go back to the previous menu
+                            System.out.println("\nGoing back to the previous menu...");
+                            ViewRequests();
+                        case 2:
+                            // go back to the previous menu
+                            System.out.println("\nGoing back to the previous menu...");
+                            ViewRequests();
+                    }
+                } catch (Exception e) {
+                    System.out.println("\nError: " + e.getMessage());
+                    continue;
+                }
+            }
+
+        } else {
+            // if request does not exist
+            Stream.of("\nError: Request ID does not exist.").forEach(System.out::println);
+            // press any key to go back to the volunteer menu
+            Stream.of("Press any key to go back to the volunteer menu.")
+                    .forEach(System.out::println);
+            System.console().readLine();
+            displayVolunteerMenu();
+        }
+    }
+
+    /**
      * {@summary} Shows all the requests that are currently in the system
      */
     private static void ViewRequests() {
@@ -669,6 +747,10 @@ public class SchoolHELPConsole {
                                                         + " - " + request.getSchool().getSchoolName() + " - "
                                                         + request.getSchool().getCity());
                                     }
+
+                                    // call the method to submit offers
+                                    SubmitOffer();
+
                                 });
                             } else {
                                 // if school has no requests
@@ -694,10 +776,30 @@ public class SchoolHELPConsole {
                         if (SchoolHELP.isCity(cityName)) { // to confirm wether its ACTUALLY a city or not because you
                                                            // can
                                                            // never trust the user
-                            // if city exists, display all requests for that city
-                            SchoolHELP.getRequestsByCity(cityName).forEach(request -> {
-                                System.out.println(request);
-                            });
+                            // if city exists, check if there are any requests in the city
+                            if (SchoolHELP.getRequestsByCity(cityName) != null) {
+                                // if there are requests in the city, display only the RequestStatus of NEW,
+                                // description, school name and city
+                                SchoolHELP.getRequestsByCity(cityName).forEach(request -> {
+                                    if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                        System.out.println(
+                                                request.getRequestStatus() + " - " + request.getRequestDescription()
+                                                        + " - " + request.getSchool().getSchoolName() + " - "
+                                                        + request.getSchool().getCity());
+                                    }
+
+                                    // call the method to submit offers
+                                    SubmitOffer();
+
+                                });
+                            } else {
+                                // if there are no requests in the city
+                                Stream.of("\nThere are no requests for this city.",
+                                        "Going back to View Requests menu...").forEach(System.out::println);
+
+                                // go back to ViewRequests() method
+                                ViewRequests();
+                            }
                         } else {
                             // if city does not exist, display error message
                             Stream.of("\nCity does not exist").forEach(System.out::println);
@@ -716,9 +818,19 @@ public class SchoolHELPConsole {
                                                                    // never trust the user
                             // if date valid, check if there are any requests for that date
                             if (SchoolHELP.getRequestsByDate(requestDate) != null) {
-                                // if there are requests for that date, display them
+                                // if there are requests for that date, display only the RequestStatus of NEW,
+                                // description, school name and city
                                 SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
-                                    System.out.println(request);
+                                    if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                        System.out.println(
+                                                request.getRequestStatus() + " - " + request.getRequestDescription()
+                                                        + " - " + request.getSchool().getSchoolName() + " - "
+                                                        + request.getSchool().getCity());
+                                    }
+
+                                    // call the method to submit offers
+                                    SubmitOffer();
+
                                 });
                             } else {
                                 // if there are no requests for that date, display error message
