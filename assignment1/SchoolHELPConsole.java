@@ -728,118 +728,165 @@ public class SchoolHELPConsole {
                 int choice = Integer.parseInt(System.console().readLine());
                 switch (choice) {
                     case 1:
-                        // view requests by school
-                        Stream.of("\n--Viewing Requests by School--",
-                                "Please enter the name of the school (case-sensitive): ")
-                                .forEach(System.out::println);
-                        String schoolName = System.console().readLine();
-                        // check if school exists
-                        if (SchoolHELP.isSchool(schoolName)) { // to confirm wether its ACTUALLY a school or not because
-                                                               // you can never trust the user
-                            // if school exists, check if it has any requests
-                            if (SchoolHELP.getSchool(schoolName).getRequests().size() > 0) {
-                                // if school has requests, display only the RequestStatus of NEW, description,
-                                // school name and city
-                                SchoolHELP.getSchool(schoolName).getRequests().forEach(request -> {
-                                    if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
-                                        System.out.println(
-                                                request.getRequestStatus() + " - " + request.getRequestDescription()
-                                                        + " - " + request.getSchool().getSchoolName() + " - "
-                                                        + request.getSchool().getCity());
+                        while (true) {
+                            try {
+                                // breadcrumbs
+                                System.out.println(
+                                        "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by School");
+                                // view requests by school
+                                Stream.of("\n--Viewing Requests by School--",
+                                        "Please enter the name of the school (case-sensitive): ")
+                                        .forEach(System.out::println);
+                                String schoolName = System.console().readLine();
+                                // check if school exists
+                                if (SchoolHELP.isSchool(schoolName)) { // to confirm wether its ACTUALLY a school or not
+                                                                       // because
+                                                                       // you can never trust the user
+                                    // if school exists, check if it has any requests
+                                    if (SchoolHELP.getSchool(schoolName).getRequests().size() > 0) {
+                                        // if school has requests, display only the RequestStatus of NEW, description,
+                                        // school name and city
+                                        SchoolHELP.getSchool(schoolName).getRequests().forEach(request -> {
+                                            if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                                System.out.println(
+                                                        request.getRequestStatus() + " - "
+                                                                + request.getRequestDescription()
+                                                                + " - " + request.getSchool().getSchoolName() + " - "
+                                                                + request.getSchool().getCity());
+                                            }
+
+                                            // call the method to submit offers
+                                            SubmitOffer();
+
+                                        });
+                                    } else {
+                                        // if school has no requests
+                                        Stream.of("\nThere are no requests for this school.",
+                                                "Going back to View Requests menu...").forEach(System.out::println);
+
+                                        // go back to ViewRequests() method
+                                        ViewRequests();
+                                        break;
                                     }
-
-                                    // call the method to submit offers
-                                    SubmitOffer();
-
-                                });
-                            } else {
-                                // if school has no requests
-                                Stream.of("\nThere are no requests for this school.",
-                                        "Going back to View Requests menu...").forEach(System.out::println);
-
-                                // go back to ViewRequests() method
-                                ViewRequests();
+                                } else {
+                                    // if school does not exist, display error message
+                                    Stream.of("\nSchool does not exist").forEach(System.out::println);
+                                    // go back to ViewRequests() method
+                                    ViewRequests();
+                                    break;
+                                }
+                            } catch (Exception e) {
+                                System.out.println("\nError: " + e.getMessage());
+                                continue;
                             }
-                        } else {
-                            // if school does not exist, display error message
-                            Stream.of("\nSchool does not exist").forEach(System.out::println);
                         }
-                        break;
 
                     case 2:
-                        // view requests by city
-                        Stream.of("\n--Viewing Requests by City--",
-                                "Please enter the name of the city (case-sensitive): ")
-                                .forEach(System.out::println);
-                        String cityName = System.console().readLine();
-                        // check if city exists
-                        if (SchoolHELP.isCity(cityName)) { // to confirm wether its ACTUALLY a city or not because you
-                                                           // can
-                                                           // never trust the user
-                            // if city exists, check if there are any requests in the city
-                            if (SchoolHELP.getRequestsByCity(cityName) != null) {
-                                // if there are requests in the city, display only the RequestStatus of NEW,
-                                // description, school name and city
-                                SchoolHELP.getRequestsByCity(cityName).forEach(request -> {
-                                    if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
-                                        System.out.println(
-                                                request.getRequestStatus() + " - " + request.getRequestDescription()
-                                                        + " - " + request.getSchool().getSchoolName() + " - "
-                                                        + request.getSchool().getCity());
-                                    }
-
-                                    // call the method to submit offers
-                                    SubmitOffer();
-
-                                });
-                            } else {
-                                // if there are no requests in the city
-                                Stream.of("\nThere are no requests for this city.",
-                                        "Going back to View Requests menu...").forEach(System.out::println);
-
-                                // go back to ViewRequests() method
-                                ViewRequests();
-                            }
-                        } else {
-                            // if city does not exist, display error message
-                            Stream.of("\nCity does not exist").forEach(System.out::println);
-                        }
-                        break;
-
-                    case 3:
-                        // view requests by request date
-                        Stream.of("\n--Viewing Requests by Date--", "Please enter the request date (DD-MM-YYYY): ")
-                                .forEach(System.out::println);
-                        int requestDate = Integer.parseInt(System.console().readLine());
-                        // check if date valid date
-                        if (SchoolHELP.isValidDate(requestDate)) { // to confirm wether its ACTUALLY a date or not
-                                                                   // because
-                                                                   // you can
+                        while (true) {
+                            try {
+                                // breadcrumbs
+                                System.out.println(
+                                        "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by City");
+                                // view requests by city
+                                Stream.of("\n--Viewing Requests by City--",
+                                        "Please enter the name of the city (case-sensitive): ")
+                                        .forEach(System.out::println);
+                                String cityName = System.console().readLine();
+                                // check if city exists
+                                if (SchoolHELP.isCity(cityName)) { // to confirm wether its ACTUALLY a city or not
+                                                                   // because you
+                                                                   // can
                                                                    // never trust the user
-                            // if date valid, check if there are any requests for that date
-                            if (SchoolHELP.getRequestsByDate(requestDate) != null) {
-                                // if there are requests for that date, display only the RequestStatus of NEW,
-                                // description, school name and city
-                                SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
-                                    if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
-                                        System.out.println(
-                                                request.getRequestStatus() + " - " + request.getRequestDescription()
-                                                        + " - " + request.getSchool().getSchoolName() + " - "
-                                                        + request.getSchool().getCity());
+                                    // if city exists, check if there are any requests in the city
+                                    if (SchoolHELP.getRequestsByCity(cityName) != null) {
+                                        // if there are requests in the city, display only the RequestStatus of NEW,
+                                        // description, school name and city
+                                        SchoolHELP.getRequestsByCity(cityName).forEach(request -> {
+                                            if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                                System.out.println(
+                                                        request.getRequestStatus() + " - "
+                                                                + request.getRequestDescription()
+                                                                + " - " + request.getSchool().getSchoolName() + " - "
+                                                                + request.getSchool().getCity());
+                                            }
+
+                                            // call the method to submit offers
+                                            SubmitOffer();
+
+                                        });
+                                    } else {
+                                        // if there are no requests in the city
+                                        Stream.of("\nThere are no requests for this city.",
+                                                "Going back to View Requests menu...").forEach(System.out::println);
+
+                                        // go back to ViewRequests() method
+                                        ViewRequests();
                                     }
+                                } else {
+                                    // if city does not exist, display error message
+                                    Stream.of("\nCity does not exist").forEach(System.out::println);
+                                }
+                            } catch (Exception e) {
 
-                                    // call the method to submit offers
-                                    SubmitOffer();
-
-                                });
-                            } else {
-                                // if there are no requests for that date, display error message
-                                Stream.of("\nThere are no requests for this date.").forEach(System.out::println);
+                                System.out.println("\nError: " + e.getMessage());
+                                continue;
                             }
-                        } else {
-                            // if date not valid, display error message
-                            Stream.of("\nDate not valid. Please use the DD-MM-YYYY format.")
-                                    .forEach(System.out::println);
+                        }
+                    case 3:
+                        while (true) {
+                            try {
+                                // breadcrumbs
+                                System.out.println(
+                                        "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by Request Date");
+                                // view requests by request date
+                                Stream.of("\n--Viewing Requests by Date--",
+                                        "Please enter the request date (DD-MM-YYYY): ")
+                                        .forEach(System.out::println);
+                                int requestDate = Integer.parseInt(System.console().readLine());
+                                // check if date valid date
+                                if (SchoolHELP.isValidDate(requestDate)) { // to confirm wether its ACTUALLY a date or
+                                                                           // not
+                                                                           // because
+                                                                           // you can
+                                                                           // never trust the user
+                                    // if date valid, check if there are any requests for that date
+                                    if (SchoolHELP.getRequestsByDate(requestDate) != null) {
+                                        // if there are requests for that date, display only the RequestStatus of NEW,
+                                        // description, school name and city
+                                        SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
+                                            if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                                System.out.println(
+                                                        request.getRequestStatus() + " - "
+                                                                + request.getRequestDescription()
+                                                                + " - " + request.getSchool().getSchoolName() + " - "
+                                                                + request.getSchool().getCity());
+                                            }
+
+                                            // call the method to submit offers
+                                            SubmitOffer();
+
+                                        });
+                                    } else {
+                                        // if there are no requests for that date, display error message
+                                        Stream.of("\nThere are no requests for this date.")
+                                                .forEach(System.out::println);
+                                        // go back
+                                        Stream.of("\nGoing back to Volunteer Menu...").forEach(System.out::println);
+                                        ViewRequests();
+
+                                    }
+                                } else {
+                                    // if date not valid, display error message
+                                    Stream.of("\nDate not valid. Please use the DD-MM-YYYY format.")
+                                            .forEach(System.out::println);
+                                    // go back
+                                    Stream.of("\nGoing back to Volunteer Menu...").forEach(System.out::println);
+                                    ViewRequests();
+                                }
+                            } catch (Exception e) {
+                                System.out.println("\nError: " + e.getMessage());
+                                continue;
+                            }
                         }
 
                     case 4:
@@ -988,8 +1035,8 @@ public class SchoolHELPConsole {
     public static void main(String[] args) {
         while (true) {
             // using lambda expressions and stream() to get user input
-            Stream.of("\n\n--Welcome to the School Help System--", "1. Admin",
-                    "2. Volunteer", "3. View All Users, in detail.", "4. View All Requests", "5. Exit",
+            Stream.of("\n\n--Welcome to the School Help System--", "What are you logging in as?", "1. Admin",
+                    "2. Volunteer", "3. Exit",
                     "Please enter your choice: ")
                     .forEach(System.out::println);
             // await user input
@@ -1028,21 +1075,11 @@ public class SchoolHELPConsole {
                         break;
 
                     case 2:
-
+                        // volunteer login
                         displayVolunteerAccountHandler();
                         break;
 
                     case 3:
-                        // view all users
-                        SchoolHELP.getUsers();
-                        break;
-
-                    case 4:
-                        // view all requests
-                        SchoolHELP.getAllRequests();
-                        break;
-
-                    case 5:
                         // exit program
                         System.exit(0);
                         break;
