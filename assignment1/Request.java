@@ -45,7 +45,7 @@ public class Request {
         this.requestStatus = requestStatus;
     }
 
-    public String getDescription() {
+    public String getRequestDescription() {
         return description;
     }
 

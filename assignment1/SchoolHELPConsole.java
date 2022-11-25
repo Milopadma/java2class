@@ -117,7 +117,10 @@ public class SchoolHELPConsole {
     public static void displayAdminMenu() {
         // this shall be a looop!!!!
         while (true) {
-            System.out.println("\n--Welcome to the SchoolHELP Admin Menu--");
+            // adding breadcrumbs so the users don't get lost in the menus because i sure
+            // did
+            System.out.println("\n~/SchoolHELP Console > Admin Menu");
+            System.out.println("--Welcome to the SchoolHELP Admin Menu--");
 
             // to show the current user's name and position
             System.out.println("Logged in as: " + currentUser.getFullname() + ", position: ("
@@ -416,33 +419,144 @@ public class SchoolHELPConsole {
                         // reviewing the offers for the school admins to change the statuses of them
                         while (true) {
                             try {
+                                // TEST start //
+                                // adding dummy data into the requests system
+                                LocalDateTime NOW = LocalDateTime.now();
+                                Request request1 = new Request(12, NOW, "NEW", "testdesc");
+                                currentUserAdmin.getSchool().addRequest(request1);
+
+                                Volunteer volunteer1 = new Volunteer("guy", "guy", "guy", "guyemail", 123, 312, "null");
+                                Offer offer1 = new Offer(221122, "yes", "PENDING", volunteer1);
+                                // add this offer to the request1
+                                request1.addOffer(offer1);
+                                // TEST end //
+
                                 // this prints out the list of requests for this current user's school
                                 // and sorts it by status and date
-                                currentUserAdmin.getSchool().getRequests().stream()
-                                        .sorted(Comparator.comparing(Request::getRequestStatus)
-                                                .thenComparing(Request::getRequestDate))
+                                System.out.println(
+                                        "\n~/SchoolHELP Console > Admin Menu > Review Offers for submitted requests");
+                                Stream.of("\n--Request Reviews--",
+                                        "Now viewing the list of requests for school name: ("
+                                                + currentUserAdmin.getSchool().getSchoolName() + ")")
                                         .forEach(System.out::println);
-                                Stream.of("Please enter the request ID of the offer you would like to review: ")
+                                // if there are no requests, this prints out a message to let the user know
+                                if (currentUserAdmin.getSchool().getRequests() != null) {
+
+                                    currentUserAdmin.getSchool().getRequests().stream()
+                                            .sorted(Comparator.comparing(Request::getRequestStatus)
+                                                    .thenComparing(Request::getRequestDate))
+                                            .forEach(System.out::println);
+                                } else {
+                                    Stream.of("There are no requests for this school.").forEach(System.out::println);
+                                    // press any key to go back to the admin menu
+                                    Stream.of("Press any key to go back to the admin menu.")
+                                            .forEach(System.out::println);
+                                    System.console().readLine();
+                                    displayAdminMenu();
+                                }
+
+                                // the user selects one of the shown requests by requestID
+                                Stream.of(
+                                        "\nPlease enter the request ID of the request you would like to review (1/3): ")
                                         .forEach(System.out::println);
                                 int requestID = Integer.parseInt(System.console().readLine());
-                                
-                                // this prints out the offer that the user has chosen
-                                currentUserAdmin.getSchool().getRequests().stream()
-                                        .filter(request -> request.getRequestID() == requestID)
-                                        .forEach(System.out::println);
 
-                                // then, let the user choose to accept or close the offer
-                                Stream.of("Please enter the status you would like to change the offer to: ")
-                                        .forEach(System.out::println);
-                                String requestStatus = (System.console().readLine());
-                                // this changes the status of the offer
-                                currentUserAdmin.getSchool().getRequests().stream()
-                                        .filter(request -> request.getRequestID() == requestID)
-                                        .forEach(request -> request.setRequestStatus(requestStatus));
+                                // find out if it exists first before proceeding
+                                if (currentUserAdmin.getSchool().getRequests().stream()
+                                        .anyMatch(request -> request.getRequestID() == requestID)) {
+
+                                    // if it exists, find the request object
+                                    Request request = currentUserAdmin.getSchool().getRequests().stream()
+                                            .filter(request2 -> request2.getRequestID() == requestID).findFirst()
+                                            .get();
+
+                                    // print out the request details
+                                    Stream.of("\n--Request Details--").forEach(System.out::println);
+                                    System.out.println(request);
+
+                                    // print out the offers for this request
+                                    Stream.of("\n--Offers for Request ID of " + request.getRequestID() + "--")
+                                            .forEach(System.out::println);
+                                    // if there are no offers, this prints out a message to let the user know
+                                    if (request.getOffers() != null) {
+                                        request.getOffers().stream()
+                                                .sorted(Comparator.comparing(Offer::getOfferStatus))
+                                                .forEach(System.out::println);
+                                    } else {
+                                        Stream.of("There are no offers for this request.").forEach(System.out::println);
+                                        // press any key to go back to the admin menu
+                                        Stream.of("Press any key to go back to the admin menu.")
+                                                .forEach(System.out::println);
+                                        System.console().readLine();
+                                        displayAdminMenu();
+                                    }
+
+                                    // the user selects one of the shown offers by offerID
+                                    Stream.of(
+                                            "\nPlease enter the offer ID of the offer you would like to review (2/3): ")
+                                            .forEach(System.out::println);
+                                    int offerID = Integer.parseInt(System.console().readLine());
+
+                                    // find out if it exists first before proceeding
+                                    if (request.getOffers().stream().anyMatch(offer -> offer.getOfferID() == offerID)) {
+
+                                        // if it exists, find the offer object
+                                        Offer offer = request.getOffers().stream()
+                                                .filter(offer2 -> offer2.getOfferID() == offerID).findFirst().get();
+
+                                        // print out the offer details
+                                        Stream.of("\n--Offer Details--").forEach(System.out::println);
+                                        System.out.println(offer);
+
+                                        // the user selects the status of the offer
+                                        Stream.of("Please select the status of the offer (3/3): ",
+                                                "1. ACCEPT", "2. REJECT")
+                                                .forEach(System.out::println);
+                                        int offerStatusChoice = Integer.parseInt(System.console().readLine());
+                                        String offerStatus = "";
+                                        // just to make sure it will always be either of these two
+                                        switch (offerStatusChoice) {
+                                            case 1:
+                                                offerStatus = "ACCEPTED";
+                                                break;
+                                            case 2:
+                                                offerStatus = "REJECTED";
+                                                break;
+
+                                            default:
+                                                Stream.of("Request error; Invalid choice").forEach(System.out::println);
+                                                break;
+                                        }
+                                        // update the offer status
+                                        offer.setOfferStatus(offerStatus);
+
+                                    } else {
+                                        // if the offerID does not exist
+                                        Stream.of("Error: That Offer ID does not exist.").forEach(System.out::println);
+                                        // press any key to go back to admin menu
+                                        Stream.of("Press any key to go back to the admin menu.")
+                                                .forEach(System.out::println);
+                                        System.console().readLine();
+                                        displayAdminMenu();
+                                    }
+
+                                } else {
+                                    // if the requestID does not exist
+                                    Stream.of("Error: Request ID does not exist.").forEach(System.out::println);
+                                    // press any key to go back to admin menu
+                                    Stream.of("Press any key to go back to the admin menu.")
+                                            .forEach(System.out::println);
+                                    System.console().readLine();
+                                    displayAdminMenu();
+                                }
 
                                 // giving the user feedback that the status was successfully changed
                                 Stream.of("\nStatus successfully changed!\n").forEach(System.out::println);
 
+                                // press any key to go back to admin menu
+                                Stream.of("Press any key to go back to the admin menu.").forEach(System.out::println);
+                                System.console().readLine();
+                                displayAdminMenu();
 
                             } catch (Exception e) {
                                 System.out.println("\nTypeError: " + e.getMessage());
