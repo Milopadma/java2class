@@ -45,11 +45,11 @@ public class TestRunner {
         school.addSchoolAdmin(testSchoolAdmin);
 
         TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
-                290);
+                290, school);
 
         ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
                 "TestType",
-                12);
+                12, school);
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
 
@@ -87,11 +87,11 @@ public class TestRunner {
         school.addSchoolAdmin(testSchoolAdmin);
 
         TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
-                290);
+                290, school);
 
         ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
                 "TestType",
-                12);
+                12, school);
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
 
@@ -121,11 +121,11 @@ public class TestRunner {
         school.addSchoolAdmin(testSchoolAdmin);
 
         TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
-                290);
+                290, school);
 
         ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
                 "TestType",
-                12);
+                12, school);
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
 
@@ -156,11 +156,11 @@ public class TestRunner {
         school.addSchoolAdmin(testSchoolAdmin);
 
         TutorialRequest tutorialRequest = new TutorialRequest(12345, now, "TestStatus", "TestDescription", 1212, 12, 1,
-                290);
+                290, school);
 
         ResourceRequest resourceRequestTest = new ResourceRequest(12345, now, "TestStatus", "TestDescription",
                 "TestType",
-                12);
+                12, school);
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
 

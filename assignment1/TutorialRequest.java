@@ -10,9 +10,10 @@ public class TutorialRequest extends Request {
     private int numStudents;
 
     // class constructor
-    public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription, int proposedDate,
-            int proposedTime, int studentLevel, int numStudents) {
-        super(requestID, requestDate, requestStatus, desription);
+    public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
+            int proposedDate,
+            int proposedTime, int studentLevel, int numStudents, School school) {
+        super(requestID, requestDate, requestStatus, desription, school);
         this.proposedDate = proposedDate;
         this.proposedTime = proposedTime;
         this.studentLevel = studentLevel;

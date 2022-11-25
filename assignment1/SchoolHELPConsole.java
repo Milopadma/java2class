@@ -327,6 +327,9 @@ public class SchoolHELPConsole {
 
                                                 // request status is set to "NEW"
                                                 String requestStatus = "NEW";
+
+                                                // the school of this admin
+                                                School school = currentUserAdmin.getSchool();
                                                 try {
                                                     // passing the values above to the TutorialRequest constructor
                                                     TutorialRequest tutorialRequest = new TutorialRequest(requestID,
@@ -334,7 +337,8 @@ public class SchoolHELPConsole {
                                                             requestStatus,
                                                             tutorialDescription, proposedDate, proposedTime,
                                                             studentLevel,
-                                                            numberOfStudents);
+                                                            numberOfStudents,
+                                                            school);
 
                                                     currentUserAdmin.getSchool().addRequest(tutorialRequest);
 
@@ -376,13 +380,17 @@ public class SchoolHELPConsole {
                                                 // request status is set to "NEW"
                                                 String requestStatusResource = "NEW";
 
+                                                // this school of this admin
+                                                School school = currentUserAdmin.getSchool();
+
                                                 try {
                                                     // passing the values above to the ResourceRequest constructor
                                                     ResourceRequest resourceRequest = new ResourceRequest(
                                                             requestIDResource,
                                                             requestDateResource,
                                                             requestStatusResource,
-                                                            resourceDescription, resourceType, numberOfResources);
+                                                            resourceDescription, resourceType, numberOfResources,
+                                                            school);
 
                                                     currentUserAdmin.getSchool().addRequest(resourceRequest);
 
@@ -426,8 +434,11 @@ public class SchoolHELPConsole {
                             try {
                                 // TEST start //
                                 // adding dummy data into the requests system
+                                // this is for testing purposes only
                                 LocalDateTime NOW = LocalDateTime.now();
-                                Request request1 = new Request(12, NOW, "NEW", "testdesc");
+                                // this school
+                                School school = currentUserAdmin.getSchool();
+                                Request request1 = new Request(12, NOW, "NEW", "testdesc", school);
                                 currentUserAdmin.getSchool().addRequest(request1);
 
                                 Volunteer volunteer1 = new Volunteer("guy", "guy", "guy", "guyemail", 123, 312, "null");
@@ -935,7 +946,7 @@ public class SchoolHELPConsole {
                         break;
                     case 2:
                         // back
-                        main(null);
+                        displayVolunteerAccountHandler();
                         break;
                     default:
                         // if the user enters an invalid choice
@@ -1056,6 +1067,8 @@ public class SchoolHELPConsole {
      */
     public static void main(String[] args) {
         while (true) {
+            // breadcrumbs
+            System.out.println("\n\n~/SchoolHELP Console");
             // using lambda expressions and stream() to get user input
             Stream.of("\n\n--Welcome to the School Help System--", "What are you logging in as?", "1. Admin",
                     "2. Volunteer", "3. Exit",

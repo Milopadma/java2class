@@ -1,14 +1,16 @@
 import java.time.LocalDateTime;
 
-public class ResourceRequest extends Request{
-    // this class manages ResourceRequest data, !TODO not sure what this class really does
+public class ResourceRequest extends Request {
+    // this class manages ResourceRequest data,
+    // really does
     // class variables
     private String resourceType;
     private int numRequired;
 
     // class constructor
-    public ResourceRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription, String resourceType, int numRequired){
-        super(requestID, requestDate, requestStatus, desription);
+    public ResourceRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
+            String resourceType, int numRequired, School school) {
+        super(requestID, requestDate, requestStatus, desription, school);
         this.resourceType = resourceType;
         this.numRequired = numRequired;
     }

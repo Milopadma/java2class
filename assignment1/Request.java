@@ -17,11 +17,12 @@ public class Request {
     private School school;
 
     // class constructor
-    public Request(int requestID, LocalDateTime requestDate, String requestStatus, String description) {
+    public Request(int requestID, LocalDateTime requestDate, String requestStatus, String description, School school) {
         this.requestID = requestID;
         this.requestDate = requestDate;
         this.requestStatus = requestStatus;
         this.description = description;
+        this.school = school;
     }
 
     // class setter and getter methods
