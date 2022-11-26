@@ -971,7 +971,7 @@ public class SchoolHELPConsole {
                                 System.out.println(
                                         "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by City");
                                 // view requests by city
-                                Stream.of("\n--Viewing Requests by City--",
+                                Stream.of("--Viewing Requests by City--",
                                         "Please enter the name of the city (case-sensitive): ")
                                         .forEach(System.out::println);
                                 String cityName = System.console().readLine();
@@ -981,7 +981,7 @@ public class SchoolHELPConsole {
                                                                    // can
                                                                    // never trust the user
                                     // if city exists, check if there are any requests in the city
-                                    if (SchoolHELP.getRequestsByCity(cityName).isEmpty()) {
+                                    if (SchoolHELP.getRequestsByCity(cityName).isEmpty() == false) {
                                         // then check if there are any requests in the city that are NEW
                                         System.out.println("\n-------");
                                         // printing out only the requests with city of cityName
@@ -996,7 +996,7 @@ public class SchoolHELPConsole {
                                                                 DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                                                         + "   | "
                                                         + request.getSchool().getSchoolName() + "        | "
-                                                        + request.getSchool().getCity() + "| "
+                                                        + request.getSchool().getCity() + "     | "
                                                         + request.getRequestDescription());
 
                                             }
@@ -1033,7 +1033,7 @@ public class SchoolHELPConsole {
                                 System.out.println(
                                         "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by Request Date");
                                 // view requests by request date
-                                Stream.of("\n--Viewing Requests by Date--",
+                                Stream.of("--Viewing Requests by Date--",
                                         "Please enter the request date (YYYYMMDD): ")
                                         .forEach(System.out::println);
                                 int requestDate = Integer.parseInt(System.console().readLine());
@@ -1060,7 +1060,7 @@ public class SchoolHELPConsole {
                                                                 DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                                                         + "   | "
                                                         + request.getSchool().getSchoolName() + "        | "
-                                                        + request.getSchool().getCity() + "| "
+                                                        + request.getSchool().getCity() + "    | "
                                                         + request.getRequestDescription());
                                             }
                                         });

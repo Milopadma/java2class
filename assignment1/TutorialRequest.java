@@ -185,7 +185,7 @@ public class TutorialRequest extends Request {
      * @param String
      */
     public String getRequestDateAsString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         return requestDate.format(formatter);
     }
 

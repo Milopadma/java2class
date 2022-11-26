@@ -310,6 +310,10 @@ public class SchoolHELP {
         for (School school : schools) {
             for (Request request : school.getRequests()) {
                 if (request.getRequestDateAsString().equals(requestDateString)) {
+                    // !!DEBUG TODO REMOVE THIS LATER
+                    System.out.println("! DEBUG ! Request date: " + request.getRequestDateAsString());
+                    System.out.println("! DEBUG ! Request date: " + requestDateString);
+                    System.out.println("! DEBUG ! arraylist: " + requestsByDate);
                     requestsByDate.add(request);
                 }
             }
