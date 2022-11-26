@@ -664,7 +664,7 @@ public class SchoolHELPConsole {
      */
     private static void SubmitOffer() {
         // volunteer user now can select the request by its ID to view MORE details
-        Stream.of("Please enter the ID of the request you would like to view: ")
+        Stream.of("\nPlease enter the ID of the request you would like to view: ")
                 .forEach(System.out::println);
         int requestID = Integer.parseInt(System.console().readLine());
 
@@ -744,6 +744,7 @@ public class SchoolHELPConsole {
             try {
                 // breadcrumbs
                 System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests");
+                System.out.println("-------");
 
                 // View requests that have been submitted, ever.
                 // basically, display all requests that exists in the system
@@ -753,9 +754,11 @@ public class SchoolHELPConsole {
                     });
                 });
 
+                System.out.println("-------");
+
                 // choice to choose to view requests by school, by city, or by request date
                 Stream.of(
-                        "--VOLUNTEER--",
+                        "\n--VOLUNTEER--",
                         "Please choose an option: \n1. View requests by school \n2. View requests by city \n3. View requests by request date \n4. Back")
                         .forEach(System.out::println);
                 int choice = Integer.parseInt(System.console().readLine());
@@ -767,7 +770,7 @@ public class SchoolHELPConsole {
                                 System.out.println(
                                         "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by School");
                                 // view requests by school
-                                Stream.of("\n--Viewing Requests by School--",
+                                Stream.of("--Viewing Requests by School--",
                                         "Please enter the name of the school (case-sensitive): ")
                                         .forEach(System.out::println);
                                 String schoolName = System.console().readLine();
@@ -781,11 +784,14 @@ public class SchoolHELPConsole {
                                         // school name and city
                                         SchoolHELP.getSchool(schoolName).getRequests().forEach(request -> {
                                             if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                                System.out.println("\n-------");
                                                 System.out.println(
-                                                        request.getRequestStatus() + " - "
-                                                                + request.getRequestDescription()
-                                                                + " - " + request.getSchool().getSchoolName() + " - "
-                                                                + request.getSchool().getCity());
+                                                        " - Status: " + request.getRequestStatus()
+                                                                + " - Request ID: " + request.getRequestID()
+                                                                + " - Description: " + request.getRequestDescription()
+                                                                + " - School: " + request.getSchool().getSchoolName()
+                                                                + " - city:  " + request.getSchool().getCity());
+                                                System.out.println("-------");
 
                                                 // call the method to submit offers
                                                 SubmitOffer();
@@ -844,11 +850,15 @@ public class SchoolHELPConsole {
                                         // description, school name and city
                                         SchoolHELP.getRequestsByCity(cityName).forEach(request -> {
                                             if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                                System.out.println("\n-------");
                                                 System.out.println(
-                                                        request.getRequestStatus() + " - "
-                                                                + request.getRequestDescription()
-                                                                + " - " + request.getSchool().getSchoolName() + " - "
-                                                                + request.getSchool().getCity());
+                                                        " - Status: " + request.getRequestStatus()
+                                                                + " - Request ID: " + request.getRequestID()
+                                                                + " - Description: " + request.getRequestDescription()
+                                                                + " - School: " + request.getSchool().getSchoolName()
+                                                                + " - city:  " + request.getSchool().getCity());
+                                                System.out.println("-------");
+
                                                 // call the method to submit offers
                                                 SubmitOffer();
                                             } else {
@@ -902,11 +912,14 @@ public class SchoolHELPConsole {
                                         // description, school name and city
                                         SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
                                             if (request.getRequestStatus().equalsIgnoreCase("NEW")) {
+                                                System.out.println("\n-------");
                                                 System.out.println(
-                                                        request.getRequestStatus() + " - "
-                                                                + request.getRequestDescription()
-                                                                + " - " + request.getSchool().getSchoolName() + " - "
-                                                                + request.getSchool().getCity());
+                                                        " - Status: " + request.getRequestStatus()
+                                                                + " - Request ID: " + request.getRequestID()
+                                                                + " - Description: " + request.getRequestDescription()
+                                                                + " - School: " + request.getSchool().getSchoolName()
+                                                                + " - city:  " + request.getSchool().getCity());
+                                                System.out.println("-------");
 
                                                 // call the method to submit offers
                                                 SubmitOffer();
