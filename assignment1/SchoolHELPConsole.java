@@ -92,7 +92,7 @@ public class SchoolHELPConsole {
                         .forEach(System.out::println);
                 Long adminPhone = Long.parseLong(System.console().readLine());
                 // school admin ID
-                Stream.of("Please enter the school admin ID (6/7): ").forEach(System.out::println);
+                Stream.of("Please enter the school staff ID (6/7): ").forEach(System.out::println);
                 int adminID = Integer.parseInt(System.console().readLine());
                 // school admin position
                 Stream.of("Please enter the school admin position (7/7): ").forEach(System.out::println);
@@ -519,16 +519,16 @@ public class SchoolHELPConsole {
                                             .thenComparing(Request::getRequestDate));
                                     // print out the list of request
                                     Stream.of(
-                                            "ID     | Status | Request Date | Request Type  | City        | Description ")
+                                            "ID     | Status | Request Date | Request Type | City        | Description ")
                                             .forEach(System.out::println);
                                     for (Request request : currentUserAdmin.getSchool().getRequests()) {
                                         System.out.println(request.getRequestID() + " | "
                                                 + request.getRequestStatus() + "    | "
                                                 + request.getRequestDate()
-                                                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                                                        .format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                                                 + "   | "
                                                 + request.getRequestType() + "     | "
-                                                + request.getSchool().getCity() + "| "
+                                                + request.getSchool().getCity() + "   | "
                                                 + request.getRequestDescription());
                                     }
                                     System.out.println("-------");
@@ -779,7 +779,7 @@ public class SchoolHELPConsole {
                     Request request = SchoolHELP.getRequest(requestID);
                     System.out.println(request.getRequestID() + " | "
                             + request.getRequestStatus() + "    | "
-                            + request.getRequestDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "   | "
+                            + request.getRequestDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + "   | "
                             + request.getSchool().getSchoolName() + "        | "
                             + request.getSchool().getCity() + "| "
                             + request.getRequestDescription());
@@ -864,16 +864,20 @@ public class SchoolHELPConsole {
                     // if there are requests, displaying only the status, request date, description,
                     // school name and city.
                     // the user can select the request by its ID to view MORE details
+                    // and also, only requests with status of NEW are displayed
                     Stream.of("ID     | Status | Request Date | School Name | City        | Description ")
                             .forEach(System.out::println);
-                    SchoolHELP.getAllRequests().forEach(request -> {
-                        System.out.println(request.getRequestID() + " | "
-                                + request.getRequestStatus() + "    | "
-                                + request.getRequestDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + "   | "
-                                + request.getSchool().getSchoolName() + "        | "
-                                + request.getSchool().getCity() + "| "
-                                + request.getRequestDescription());
-                    });
+                    for (Request request : SchoolHELP.getAllRequests()) {
+                        if (request.getRequestStatus().equals("NEW")) {
+                            System.out.println(request.getRequestID() + " | "
+                                    + request.getRequestStatus() + "    | "
+                                    + request.getRequestDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+                                    + "   | "
+                                    + request.getSchool().getSchoolName() + "        | "
+                                    + request.getSchool().getCity() + "    | "
+                                    + request.getRequestDescription());
+                        }
+                    }
                 }
                 System.out.println("--------------"); // these are just dividers to make the CLI look better
 
@@ -900,8 +904,8 @@ public class SchoolHELPConsole {
                                 if (SchoolHELP.isSchool(schoolName)) { // to confirm wether its ACTUALLY a school or not
                                                                        // because
                                                                        // you can never trust the user
-                                    // if school exists, check if it has any requests
-                                    if (!SchoolHELP.getSchool(schoolName).getRequests().isEmpty()) {
+                                    // if school exists, check if it has any requests that are NEW
+                                    if (SchoolHELP.getSchool(schoolName).anyNewRequests() == true) {
                                         System.out.println("\n-------");
                                         // if school has requests, display all the requests with status NEW
                                         Stream.of(
@@ -912,7 +916,7 @@ public class SchoolHELPConsole {
                                                 System.out.println(request.getRequestID() + " | "
                                                         + request.getRequestStatus() + "    | "
                                                         + request.getRequestDate().format(
-                                                                DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                                                                DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                                                         + "   | "
                                                         + request.getSchool().getSchoolName() + "        | "
                                                         + request.getSchool().getCity() + "| "
@@ -974,7 +978,7 @@ public class SchoolHELPConsole {
                                                 System.out.println(request.getRequestID() + " | "
                                                         + request.getRequestStatus() + "    | "
                                                         + request.getRequestDate().format(
-                                                                DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                                                                DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                                                         + "   | "
                                                         + request.getSchool().getSchoolName() + "        | "
                                                         + request.getSchool().getCity() + "| "
@@ -1046,7 +1050,7 @@ public class SchoolHELPConsole {
                                                 System.out.println(request.getRequestID() + " | "
                                                         + request.getRequestStatus() + "    | "
                                                         + request.getRequestDate().format(
-                                                                DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                                                                DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                                                         + "   | "
                                                         + request.getSchool().getSchoolName() + "        | "
                                                         + request.getSchool().getCity() + "| "

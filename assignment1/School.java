@@ -92,8 +92,6 @@ public class School {
         return null;
     }
 
-    // class methods
-
     // add a SchoolAdmin to the school (singular)
     public void addSchoolAdmin(SchoolAdmin schoolAdmin) {
         schoolAdmins.add(schoolAdmin);
@@ -104,6 +102,22 @@ public class School {
         requests.add(request);
     }
 
+    // custom class methods
+    /**
+     * {@summary} This method returns a boolean value depending on wether there are
+     * any NEW requests in the school request array list or not.
+     * 
+     * @return boolean
+     */
+    public boolean anyNewRequests() {
+        for (Request request : requests) {
+            if (request.getRequestStatus().equals("NEW")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // toString method
     @Override
     public String toString() {
@@ -111,4 +125,5 @@ public class School {
                 + ", school name: "
                 + schoolName + "]";
     }
+
 }
