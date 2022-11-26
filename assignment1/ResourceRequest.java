@@ -35,6 +35,7 @@ public class ResourceRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "ResourceRequest [numRequired=" + numRequired + ", resourceType=" + resourceType + "]";
+        return "Resource Request | [Number of resources required: " + numRequired + ", resource type: " + resourceType
+                + "]";
     }
 }

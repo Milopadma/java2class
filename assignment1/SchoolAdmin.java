@@ -9,7 +9,7 @@ public class SchoolAdmin extends User {
     private School thisSchool;
 
     // class constructor
-    public SchoolAdmin(String username, String password, String fullname, String email, int phone, int staffID,
+    public SchoolAdmin(String username, String password, String fullname, String email, Long phone, int staffID,
             String position, School school) {
         super(username, password, fullname, email, phone);
         this.staffID = staffID;
@@ -45,6 +45,6 @@ public class SchoolAdmin extends User {
     // toString method
     @Override
     public String toString() {
-        return "SchoolAdmin [staffID=" + staffID + ", position=" + position + "], " + super.toString();
+        return "SchoolAdmin [staffID: " + staffID + ", position: " + position + "], " + super.toString();
     }
 }

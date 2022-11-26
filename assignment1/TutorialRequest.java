@@ -56,7 +56,8 @@ public class TutorialRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "TutorialRequest [numStudents=" + numStudents + ", proposedDate=" + proposedDate + ", proposedTime="
-                + proposedTime + ", studentLevel=" + studentLevel + "]";
+        return "Tutorial Request [Number of Students: " + numStudents + ", proposed date: " + proposedDate
+                + ", proposed time: "
+                + proposedTime + ", student level: " + studentLevel + "]";
     }
 }

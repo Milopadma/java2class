@@ -89,7 +89,7 @@ public class SchoolHELPConsole {
                 // school admin phone
                 Stream.of("Please enter the school admin phone (e.g 62 8112912, without +) (5/7): ")
                         .forEach(System.out::println);
-                int adminPhone = Integer.parseInt(System.console().readLine());
+                Long adminPhone = Long.parseLong(System.console().readLine());
                 // school admin ID
                 Stream.of("Please enter the school admin ID (6/7): ").forEach(System.out::println);
                 int adminID = Integer.parseInt(System.console().readLine());
@@ -253,7 +253,7 @@ public class SchoolHELPConsole {
                                         // phone change
                                         Stream.of("Please enter the new phone number (e.g 62 8112912, without +): ")
                                                 .forEach(System.out::println);
-                                        int newPhoneNumber = Integer.parseInt(System.console().readLine());
+                                        Long newPhoneNumber = Long.parseLong(System.console().readLine());
                                         // set the new phone
                                         currentUserAdmin.setPhone(newPhoneNumber);
                                         Stream.of("Phone number successfully changed!\n").forEach(System.out::println);
@@ -282,6 +282,9 @@ public class SchoolHELPConsole {
                         // when testing
                         while (true) {
                             try {
+                                // breadcrumbs
+                                Stream.of("\n\n~/SchoolHELP Console > Admin Menu > Adding a new Request")
+                                        .forEach(System.out::println);
                                 // ask if the user wants to do a Tutorial Request or a Resource Request
                                 Stream.of("\n--Adding a new request--",
                                         "Is this a tutorial request or a resource request?")
@@ -302,16 +305,16 @@ public class SchoolHELPConsole {
                                                 String tutorialDescription = (System.console().readLine());
                                                 // proposed date of the tutorial request
                                                 Stream.of(
-                                                        "Please enter the proposed date of the tutorial request (2/5): ")
+                                                        "Please enter the proposed date of the tutorial request (DDMMYYYY) (2/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedDate = Integer.parseInt(System.console().readLine());
                                                 // proposed time of the tutorial request
                                                 Stream.of(
-                                                        "Please enter the proposed time of the tutorial request (3/5): ")
+                                                        "Please enter the proposed time of the tutorial request (hhmm) (3/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedTime = Integer.parseInt(System.console().readLine());
                                                 // student level
-                                                Stream.of("Please enter the student level (4/5): ")
+                                                Stream.of("Please enter the student level (1-10) (4/5): ")
                                                         .forEach(System.out::println);
                                                 int studentLevel = Integer.parseInt(System.console().readLine());
                                                 // number of students expected
@@ -441,7 +444,8 @@ public class SchoolHELPConsole {
                                 Request request1 = new Request(12, NOW, "NEW", "testdesc", school);
                                 currentUserAdmin.getSchool().addRequest(request1);
 
-                                Volunteer volunteer1 = new Volunteer("guy", "guy", "guy", "guyemail", 123, 312, "null");
+                                Volunteer volunteer1 = new Volunteer("guy", "guy", "guy", "guyemail", 123L, 312,
+                                        "null");
                                 Offer offer1 = new Offer(221122, "yes", "PENDING", volunteer1);
                                 // add this offer to the request1
                                 request1.addOffer(offer1);
@@ -726,6 +730,9 @@ public class SchoolHELPConsole {
     private static void ViewRequests() {
         while (true) {
             try {
+                // breadcrumbs
+                System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests");
+
                 // View requests that have been submitted, ever.
                 // basically, display all requests that exists in the system
                 SchoolHELP.getSchools().forEach(school -> {
@@ -734,8 +741,6 @@ public class SchoolHELPConsole {
                     });
                 });
 
-                // breadcrumbs
-                System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests");
                 // choice to choose to view requests by school, by city, or by request date
                 Stream.of(
                         "--VOLUNTEER--",
@@ -1004,11 +1009,14 @@ public class SchoolHELPConsole {
             try {
                 // breadcrumbs
                 System.out.println("\n\n~/SchoolHELP Console > Volunteer Login");
-                Stream.of("--VOLUNTEER MENU--", "1. Register As Volunteer", "2. Login", "3. Back")
+                Stream.of("--VOLUNTEER MENU--", "1. Register As Volunteer", "2. Login", "3. Back",
+                        "Please enter your choice:")
                         .forEach(System.out::println);
                 int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
                 switch (volunteerMenuChoice) {
                     case 1:
+                        // breadcrumbs
+                        System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Register As Volunteer");
                         // Register As Volunteer
                         Stream.of("\n--Volunteer Account Creation--", "Please enter your username (1/7): ")
                                 .forEach(System.out::println);
@@ -1021,10 +1029,10 @@ public class SchoolHELPConsole {
                         String email = System.console().readLine();
                         Stream.of("Please enter your phone number (e.g 628112912, without +) (5/7): ")
                                 .forEach(System.out::println);
-                        int phoneNumber = Integer.parseInt(System.console().readLine());
+                        Long phoneNumber = Long.parseLong(System.console().readLine());
                         Stream.of("Please enter your occupation (6/7): ").forEach(System.out::println);
                         String occupation = System.console().readLine();
-                        Stream.of("Please enter your date of birth (e.g 221122)(7/7): ").forEach(System.out::println);
+                        Stream.of("Please enter your date of birth (e.g DDMMYY) (7/7): ").forEach(System.out::println);
                         int dateOfBirth = Integer.parseInt(System.console().readLine());
 
                         // create volunteer object
@@ -1070,7 +1078,7 @@ public class SchoolHELPConsole {
             // breadcrumbs
             System.out.println("\n\n~/SchoolHELP Console");
             // using lambda expressions and stream() to get user input
-            Stream.of("\n\n--Welcome to the School Help System--", "What are you logging in as?", "1. Admin",
+            Stream.of("--Welcome to the School Help System--", "What are you logging in as?", "1. Admin",
                     "2. Volunteer", "3. Exit",
                     "Please enter your choice: ")
                     .forEach(System.out::println);

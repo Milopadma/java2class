@@ -4,7 +4,7 @@
 // not included and needed for the assignment 
 // but just makes it easier to run tests on 
 // all the features for the assignment
-// Test Driven Development time???????????????
+// Test Driven Development
 import java.time.LocalDateTime;
 
 public class TestRunner {
@@ -13,14 +13,14 @@ public class TestRunner {
 
     private static LocalDateTime now = LocalDateTime.now();
     // current user admin
-    private static SchoolAdmin currentUserAdmin = new SchoolAdmin(null, null, null, null, 0, 0, null, null);
+    private static SchoolAdmin currentUserAdmin = new SchoolAdmin(null, null, null, null, 0L, 0, null, null);
 
     // TESTCASE1: Register a new School (also includes creating and adding a new
     // SchoolAdmin)
     public static void TESTCASE1() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
-                12345, 123,
+                12345L, 123,
                 "TestPosition", school);
         currentUserAdmin = testSchoolAdmin;
         schoolHELP.addUser(testSchoolAdmin);
@@ -38,7 +38,7 @@ public class TestRunner {
     public static void TESTCASE2() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
-                12345, 123,
+                12345L, 123,
                 "TestPosition", school);
         schoolHELP.addUser(testSchoolAdmin);
         schoolHELP.addSchool(school);
@@ -80,7 +80,7 @@ public class TestRunner {
     public static void TESTCASE4() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
-                12345, 123,
+                12345L, 123,
                 "TestPosition", school);
         schoolHELP.addUser(testSchoolAdmin);
         schoolHELP.addSchool(school);
@@ -114,7 +114,7 @@ public class TestRunner {
     public static void TESTCASE5() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
-                12345, 123,
+                12345L, 123,
                 "TestPosition", school);
         schoolHELP.addUser(testSchoolAdmin);
         schoolHELP.addSchool(school);
@@ -149,7 +149,7 @@ public class TestRunner {
     public static void TESTCASE6() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
-                12345, 123,
+                12345L, 123,
                 "TestPosition", school);
         schoolHELP.addUser(testSchoolAdmin);
         schoolHELP.addSchool(school);

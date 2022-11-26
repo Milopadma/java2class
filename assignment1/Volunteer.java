@@ -10,7 +10,7 @@ public class Volunteer extends User {
     private ArrayList<Offer> offers = new ArrayList<Offer>();
 
     // class constructor
-    public Volunteer(String username, String password, String fullname, String email, int phone, int dateOfBirth,
+    public Volunteer(String username, String password, String fullname, String email, Long phone, int dateOfBirth,
             String occupation) {
         super(username, password, fullname, email, phone);
         this.dateOfBirth = dateOfBirth;
@@ -42,7 +42,7 @@ public class Volunteer extends User {
         this.offers = offers;
     }
 
-    public void addOffer(Offer offer){
+    public void addOffer(Offer offer) {
         offers.add(offer);
     }
 

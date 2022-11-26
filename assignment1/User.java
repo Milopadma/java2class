@@ -3,10 +3,10 @@ public class User {
         private String password;
         private String fullname;
         private String email;
-        private int phone; 
+        private Long phone; 
 
         // User class constructor
-        public User(String username, String password, String fullname, String email, int phone){
+        public User(String username, String password, String fullname, String email, Long phone){
             this.username = username;
             this.password = password;
             this.fullname = fullname;
@@ -47,11 +47,11 @@ public class User {
             this.email = email;
         }
 
-        public int getPhone(){
+        public Long getPhone(){
             return phone;
         }
 
-        public void setPhone(int phone){
+        public void setPhone(Long phone){
             this.phone = phone;
         }
 
