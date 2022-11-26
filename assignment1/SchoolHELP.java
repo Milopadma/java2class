@@ -191,7 +191,7 @@ public class SchoolHELP {
     }
 
     public boolean isValidDate(int requestDate) {
-        // the basic date format is DDMMYY or DDMMYYYY,
+        // the basic date format DDMMYYYY,
         // where DD is the date, MM is the month, and YYYY is the year
         // DD must not be above 31, MM must not be above 12, and YYYY should be fine as
         // first, check if the int its a 8 digit number or not

@@ -87,7 +87,7 @@ public class SchoolHELPConsole {
                 Stream.of("Please enter the school admin email (4/7): ").forEach(System.out::println);
                 String adminEmail = (System.console().readLine());
                 // school admin phone
-                Stream.of("Please enter the school admin phone (e.g 62 8112912, without +) (5/7): ")
+                Stream.of("Please enter the school admin phone (e.g 628112912, without +) (5/7): ")
                         .forEach(System.out::println);
                 Long adminPhone = Long.parseLong(System.console().readLine());
                 // school admin ID
@@ -257,7 +257,7 @@ public class SchoolHELPConsole {
                                     // throw an exception and thats bad :(
                                     try {
                                         // phone change
-                                        Stream.of("Please enter the new phone number (e.g 62 8112912, without +): ")
+                                        Stream.of("Please enter the new phone number (e.g 628112912, without +): ")
                                                 .forEach(System.out::println);
                                         Long newPhoneNumber = Long.parseLong(System.console().readLine());
                                         // set the new phone
@@ -482,26 +482,25 @@ public class SchoolHELPConsole {
                                         "Now viewing the list of requests for school name: ("
                                                 + currentUserAdmin.getSchool().getSchoolName() + ")")
                                         .forEach(System.out::println);
-                                // if there are no requests, this prints out a message to let the user know
-                                if (currentUserAdmin.getSchool().getRequests().isEmpty() == true) {
-                                    // show the requests for that school
-                                    currentUserAdmin.getSchool().getRequests().stream()
-                                            // sorted by status, and date
-                                            .sorted(Comparator.comparing(Request::getRequestStatus)
-                                                    .thenComparing(Request::getRequestDate))
-                                            .forEach(System.out::println);
-
-                                    System.out.print("-------");
-                                } else {
-                                    Stream.of("\nThere are no offers for any requests for this school.")
-                                            .forEach(System.out::println);
+                                // show the list of offers for all the requests of this schoolname
+                                // and sort them by status and date
+                                if (currentUserAdmin.getSchool().getRequests().size() == 0) {
+                                    Stream.of("\nThere are no requests for this school.").forEach(System.out::println);
                                     // press any key to go back to the admin menu
                                     Stream.of("\nPress any key to go back to the admin menu.")
                                             .forEach(System.out::println);
                                     System.console().readLine();
                                     displayAdminMenu();
+                                } else {
+                                    // sort the requests by status and date
+                                    currentUserAdmin.getSchool().getRequests().sort(Comparator
+                                            .comparing(Request::getRequestStatus)
+                                            .thenComparing(Request::getRequestDate));
+                                    // print out the list of requests
+                                    for (Request request : currentUserAdmin.getSchool().getRequests()) {
+                                        System.out.println(request);
+                                    }
                                 }
-
                                 // the user selects one of the shown requests by requestID
                                 Stream.of(
                                         "\nPlease enter the request ID of the request you would like to review (1/5): ")
@@ -694,7 +693,7 @@ public class SchoolHELPConsole {
 
                     // breadcrumbs
                     System.out.println(
-                            "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests > View Request Details");
+                            "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Request Details");
                     // choice to choose to submit offers for the request, or go back to the
                     // previous
                     // menu
@@ -707,7 +706,7 @@ public class SchoolHELPConsole {
                         case 1:
                             // breadcrumbs
                             System.out.println(
-                                    "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests > View Request Details > Submit Offer");
+                                    "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Request Details > Submit Offer");
                             // submit offer for the request
                             Stream.of("\n--Submitting Offer for Request--",
                                     "Please enter some remaks for this offer: ")
@@ -765,18 +764,14 @@ public class SchoolHELPConsole {
                 // View requests that have been submitted, ever.
                 // basically, display all requests that exists in the system
                 // if there are none, show the EMPTY message
-                if (SchoolHELP.getAllRequests().isEmpty() == true) {
+                if (SchoolHELP.getAllRequests().isEmpty()) {
                     Stream.of("There are no requests in the system.", "Press any key to go back.")
                             .forEach(System.out::println);
                     System.console().readLine();
                     displayVolunteerMenu();
                 } else {
                     // if there are requests, display them
-                    SchoolHELP.getSchools().forEach(school -> {
-                        school.getRequests().forEach(request -> {
-                            System.out.println(request);
-                        });
-                    });
+                    SchoolHELP.getAllRequests().forEach(System.out::println);
                 }
                 System.out.println("--------------"); // these are just dividers to make the CLI look better
 
@@ -906,7 +901,11 @@ public class SchoolHELPConsole {
                                     }
                                 } else {
                                     // if city does not exist, display error message
-                                    Stream.of("\nCity does not exist").forEach(System.out::println);
+                                    Stream.of("\nCity does not exist.", "Press any key to go back.")
+                                            .forEach(System.out::println);
+                                    System.console().readLine();
+                                    // go back to ViewRequests() method
+                                    ViewRequests();
                                 }
                             } catch (Exception e) {
 
@@ -970,7 +969,7 @@ public class SchoolHELPConsole {
                                     }
                                 } else {
                                     // if date not valid, display error message
-                                    Stream.of("\nDate not valid. Please use the DD-MM-YYYY format.")
+                                    Stream.of("\nDate not valid. Please use the DDMMYYYY format.")
                                             .forEach(System.out::println);
                                     // go back
                                     Stream.of("\nGoing back to Volunteer Menu...").forEach(System.out::println);
@@ -995,6 +994,9 @@ public class SchoolHELPConsole {
 
             } catch (Exception e) {
                 System.out.println("\nError: " + e.getMessage());
+                System.out.println("\nPress any key to go back.");
+                System.console().readLine();
+                ViewRequests();
                 continue;
             }
         }

@@ -25,6 +25,7 @@ public class TutorialRequest extends Request {
         this.studentLevel = studentLevel;
         this.numStudents = numStudents;
         this.requestStatus = requestStatus;
+        this.school = school;
     }
 
     // class setter and getter methods

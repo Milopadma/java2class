@@ -51,7 +51,7 @@ public class ResourceRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "Resource Request | [Request Status: " + requestStatus + "number of resources required: "
+        return "Resource Request | [Request Status: " + requestStatus + ", number of resources required: "
                 + numRequired + ", resource type: " + resourceType
                 + ", of school: " + school.getSchoolName() + "]";
     }
