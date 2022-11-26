@@ -12,6 +12,9 @@ public class TutorialRequest extends Request {
     // each tutorial request has a 1-1 relationship with a School class
     private School school;
 
+    // to show the request status
+    private String requestStatus;
+
     // class constructor
     public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
             int proposedDate,
@@ -21,6 +24,7 @@ public class TutorialRequest extends Request {
         this.proposedTime = proposedTime;
         this.studentLevel = studentLevel;
         this.numStudents = numStudents;
+        this.requestStatus = requestStatus;
     }
 
     // class setter and getter methods
@@ -59,8 +63,9 @@ public class TutorialRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "Tutorial Request | [Number of Students: " + numStudents + ", proposed date: " + proposedDate
+        return "Tutorial Request | [Request Status: " + requestStatus + ", number of students: " + numStudents
+                + ", proposed date: " + proposedDate
                 + ", proposed time: "
-                + proposedTime + ", student level: " + studentLevel + ", of school: " + school + "]";
+                + proposedTime + ", student level: " + studentLevel + ", of school: " + school.getSchoolName() + "]";
     }
 }

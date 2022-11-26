@@ -64,7 +64,9 @@ public class TestRunner {
 
     // TESTCASE3: Registering as a Volunteer
     public static void TESTCASE3() {
-        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail",
+                (long) 12345123122L,
+                123,
                 "TestPosition");
         schoolHELP.addUser(volunteer);
         // check if the volunteer is added to the user list
@@ -95,7 +97,8 @@ public class TestRunner {
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
 
-        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345123122L,
+                123,
                 "TestPosition");
         schoolHELP.addUser(volunteer);
 
@@ -129,7 +132,8 @@ public class TestRunner {
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
 
-        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 1234123125L,
+                123,
                 "TestPosition");
         schoolHELP.addUser(volunteer);
 
@@ -164,7 +168,8 @@ public class TestRunner {
         currentUserAdmin.getSchool().addRequest(tutorialRequest);
         currentUserAdmin.getSchool().addRequest(resourceRequestTest);
 
-        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12345, 123,
+        Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail", 12342131325L,
+                123,
                 "TestPosition");
         schoolHELP.addUser(volunteer);
 

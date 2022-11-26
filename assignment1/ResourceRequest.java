@@ -10,6 +10,9 @@ public class ResourceRequest extends Request {
     // each tutorial request has a 1-1 relationship with a School class
     private School school;
 
+    // to show the request status
+    private String requestStatus;
+
     // class constructor
     public ResourceRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
             String resourceType, int numRequired, School school) {
@@ -17,6 +20,7 @@ public class ResourceRequest extends Request {
         this.resourceType = resourceType;
         this.numRequired = numRequired;
         this.school = school;
+        this.requestStatus = requestStatus;
     }
 
     // class setter and getter methods
@@ -47,7 +51,8 @@ public class ResourceRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "Resource Request | [Number of resources required: " + numRequired + ", resource type: " + resourceType
-                + ", of school: " + school + "]";
+        return "Resource Request | [Request Status: " + requestStatus + "number of resources required: "
+                + numRequired + ", resource type: " + resourceType
+                + ", of school: " + school.getSchoolName() + "]";
     }
 }

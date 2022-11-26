@@ -26,9 +26,9 @@ public class SchoolHELPConsole {
      * @return School object
      */
     public static School displaySchoolCreationMenu() {
-        School school = new School();
         while (true) {
             try {
+                School newSchool = new School();
                 // school name
                 Stream.of("\n--Registering a new School (1/2)--", "Please enter the school name: ")
                         .forEach(System.out::println);
@@ -36,24 +36,24 @@ public class SchoolHELPConsole {
                 if (SchoolHELP.getSchools().stream().anyMatch(s -> s.getSchoolName().equals(schoolInput))) {
                     Stream.of("\nSchool already exists, skipping to Registering a new SchoolAdmin.")
                             .forEach(System.out::println);
-                    return school;
+                    return newSchool;
                 } else {
-                    school.setSchoolName(schoolInput);
+                    newSchool.setSchoolName(schoolInput);
                 }
                 // school address
                 Stream.of("Please enter the school address: ").forEach(System.out::println);
-                school.setAddress(System.console().readLine());
+                newSchool.setAddress(System.console().readLine());
                 // get school email
                 Stream.of("Please enter the school city: ").forEach(System.out::println);
-                school.setCity(System.console().readLine());
+                newSchool.setCity(System.console().readLine());
 
                 // schoolID is randomly generated, even though this can be done in the class
                 // constructor itself, i prefer to have it here
-                school.setSchoolID((int) (Math.random() * 1000));
+                newSchool.setSchoolID((int) (Math.random() * 1000));
 
                 // giving user feedback that this was successful
                 Stream.of("\nSchool added successfully!").forEach(System.out::println);
-                return school;
+                return newSchool;
 
             } catch (Exception e) {
                 System.out.println("\nError: " + e.getMessage());
@@ -150,9 +150,14 @@ public class SchoolHELPConsole {
                             // wrap this in a try/catch block to catch any exceptions when adding new
                             // SchoolAdmin and School instances
                             try {
-                                // call the method responsible for that wall of text
+                                // call the method responsible for the school creation menu
                                 School school = displaySchoolCreationMenu();
-                                // then, call the method responsible for the other wall of text that takes the
+
+                                // add the school to the school list in the SchoolHELP class,
+                                // since SchoolHELP is the only class that is a static instance
+                                SchoolHELP.addSchool(school);
+
+                                // then, call the method responsible for the school admin creation menu
                                 // school object because its necessary
                                 SchoolAdmin schoolAdmin = displaySchoolAdminCreationMenu(school);
 
@@ -161,12 +166,9 @@ public class SchoolHELPConsole {
                                 // SchoolHELP class
                                 SchoolHELP.addUser(schoolAdmin);
 
-                                // adding the newly created schoolAdmin to this school's instance
+                                // adding the newly created schoolAdmin to this the newly created school
+                                // instance
                                 school.addSchoolAdmin(schoolAdmin);
-
-                                // add the school to the school list in the SchoolHELP class,
-                                // since SchoolHELP is the only class that is a static instance
-                                SchoolHELP.addSchool(school);
 
                             } catch (Exception e) {
                                 System.out.println("\nError: " + e.getMessage());
@@ -286,7 +288,7 @@ public class SchoolHELPConsole {
                                 Stream.of("\n\n~/SchoolHELP Console > Admin Menu > Adding a new Request")
                                         .forEach(System.out::println);
                                 // ask if the user wants to do a Tutorial Request or a Resource Request
-                                Stream.of("\n--Adding a new request--",
+                                Stream.of("--Adding a new request--",
                                         "Is this a tutorial request or a resource request?")
                                         .forEach(System.out::println);
                                 Stream.of("1. Tutorial Request", "2. Resource Request", "3. Back")
@@ -298,27 +300,31 @@ public class SchoolHELPConsole {
                                     switch (requestTypeChoice) {
                                         case 1:
                                             try {
+                                                // breadcrumbs
+                                                Stream.of(
+                                                        "\n\n~/SchoolHELP Console > Admin Menu > Adding a new Request > Tutorial Request")
+                                                        .forEach(System.out::println);
                                                 // description of the tutorial request
                                                 Stream.of(
-                                                        "Please enter the description of the tutorial request (1/5): ")
+                                                        "\nPlease enter the description of the tutorial request (1/5): ")
                                                         .forEach(System.out::println);
                                                 String tutorialDescription = (System.console().readLine());
                                                 // proposed date of the tutorial request
                                                 Stream.of(
-                                                        "Please enter the proposed date of the tutorial request (DDMMYYYY) (2/5): ")
+                                                        "\nPlease enter the proposed date of the tutorial request (DDMMYYYY) (2/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedDate = Integer.parseInt(System.console().readLine());
                                                 // proposed time of the tutorial request
                                                 Stream.of(
-                                                        "Please enter the proposed time of the tutorial request (hhmm) (3/5): ")
+                                                        "\nPlease enter the proposed time of the tutorial request (hhmm) (3/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedTime = Integer.parseInt(System.console().readLine());
                                                 // student level
-                                                Stream.of("Please enter the student level (1-10) (4/5): ")
+                                                Stream.of("\nPlease enter the student level (1-10) (4/5): ")
                                                         .forEach(System.out::println);
                                                 int studentLevel = Integer.parseInt(System.console().readLine());
                                                 // number of students expected
-                                                Stream.of("Please enter the number of students expected (5/5): ")
+                                                Stream.of("\nPlease enter the number of students expected (5/5): ")
                                                         .forEach(System.out::println);
                                                 int numberOfStudents = Integer.parseInt(System.console().readLine());
 
@@ -360,17 +366,22 @@ public class SchoolHELPConsole {
 
                                         case 2:
                                             try {
+                                                // breadcrumbs
+                                                Stream.of(
+                                                        "\n\n~/SchoolHELP Console > Admin Menu > Adding a new Request > Resource Request")
+                                                        .forEach(System.out::println);
                                                 // description of the resource request
-                                                Stream.of("Please enter the description of the resource request: ")
+                                                Stream.of(
+                                                        "\nPlease enter the description of the resource request (1/3): ")
                                                         .forEach(System.out::println);
                                                 String resourceDescription = (System.console().readLine());
                                                 // resource type
                                                 Stream.of(
-                                                        "Please enter the resource type: (mobile device/personal computer/networking equipment)")
+                                                        "\nPlease enter the resource type (mobile device/personal computer/networking equipment) (2/3):")
                                                         .forEach(System.out::println);
                                                 String resourceType = (System.console().readLine());
                                                 // number of resources expected
-                                                Stream.of("Please enter the number of resources expected: ")
+                                                Stream.of("\nPlease enter the number of resources expected (3/3): ")
                                                         .forEach(System.out::println);
                                                 int numberOfResources = Integer.parseInt(System.console().readLine());
 
@@ -462,6 +473,7 @@ public class SchoolHELPConsole {
                                 // if there are no requests, this prints out a message to let the user know
                                 if (currentUserAdmin.getSchool().getRequests() != null) {
 
+                                    // show the requests for that school
                                     currentUserAdmin.getSchool().getRequests().stream()
                                             // sorted by status, and date
                                             .sorted(Comparator.comparing(Request::getRequestStatus)
@@ -498,7 +510,7 @@ public class SchoolHELPConsole {
                                     while (true) {
                                         // print out the request details
                                         Stream.of(
-                                                "\n\n--Request Details of RequestID: " + request.getRequestID() + " --")
+                                                "\n\n--Request Details of RequestID: " + request.getRequestID() + "--")
                                                 .forEach(System.out::println);
                                         System.out.println("'" + request.getRequestDescription() + "''");
 
@@ -774,11 +786,19 @@ public class SchoolHELPConsole {
                                                                 + request.getRequestDescription()
                                                                 + " - " + request.getSchool().getSchoolName() + " - "
                                                                 + request.getSchool().getCity());
+
+                                                // call the method to submit offers
+                                                SubmitOffer();
+                                            } else {
+                                                // if school does not have any requests
+                                                Stream.of("\nError: School does not have any requests.")
+                                                        .forEach(System.out::println);
+                                                // press any key to go back to the previous menu
+                                                Stream.of("Press any key to go back to the previous menu.")
+                                                        .forEach(System.out::println);
+                                                System.console().readLine();
+                                                ViewRequests();
                                             }
-
-                                            // call the method to submit offers
-                                            SubmitOffer();
-
                                         });
                                     } else {
                                         // if school has no requests
@@ -829,11 +849,17 @@ public class SchoolHELPConsole {
                                                                 + request.getRequestDescription()
                                                                 + " - " + request.getSchool().getSchoolName() + " - "
                                                                 + request.getSchool().getCity());
+                                                // call the method to submit offers
+                                                SubmitOffer();
+                                            } else {
+                                                // if there are no requests in the city
+                                                Stream.of("\nThere are no requests for this city.",
+                                                        "Going back to View Requests menu...")
+                                                        .forEach(System.out::println);
+
+                                                // go back to ViewRequests() method
+                                                ViewRequests();
                                             }
-
-                                            // call the method to submit offers
-                                            SubmitOffer();
-
                                         });
                                     } else {
                                         // if there are no requests in the city
@@ -881,10 +907,18 @@ public class SchoolHELPConsole {
                                                                 + request.getRequestDescription()
                                                                 + " - " + request.getSchool().getSchoolName() + " - "
                                                                 + request.getSchool().getCity());
-                                            }
 
-                                            // call the method to submit offers
-                                            SubmitOffer();
+                                                // call the method to submit offers
+                                                SubmitOffer();
+                                            } else {
+                                                // if there are no requests for that date
+                                                Stream.of("\nThere are no requests for this date.",
+                                                        "Going back to View Requests menu...")
+                                                        .forEach(System.out::println);
+
+                                                // go back to ViewRequests() method
+                                                ViewRequests();
+                                            }
 
                                         });
                                     } else {
@@ -1112,7 +1146,7 @@ public class SchoolHELPConsole {
 
                         } else {
                             // if user is not admin, display error message
-                            System.out.println("Invalid username or password");
+                            System.out.println("\nInvalid username or password");
                         }
 
                         break;
