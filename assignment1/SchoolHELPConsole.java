@@ -126,7 +126,7 @@ public class SchoolHELPConsole {
      * SchoolAdmin user type.
      */
     public static void displayAdminMenu() {
-        // this shall be a looop!!!!
+        // this will be a loop that will keep running until the user decides to exit
         while (true) {
             // adding breadcrumbs so the users don't get lost in the menus because i sure
             // did
@@ -1125,7 +1125,7 @@ public class SchoolHELPConsole {
                 System.out.println("----INFO----");
                 System.out.println("Logged in as: " + currentUser.getFullname() + ", position: ("
                         + ((Volunteer) currentUser).getOccupation() + ")");
-                // show the volunteer only menu!!
+                // show the volunteer only menu
                 Stream.of("--VOLUNTEER--", "1. View Requests", "2. Back", "Please enter your choice:")
                         .forEach(System.out::println);
                 int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
