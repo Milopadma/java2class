@@ -132,7 +132,7 @@ public class Offer {
      */
     @Override
     public String toString() {
-        return "Offer | [Offer date submitted: " + offerDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"))
+        return "Offer | [Offer date submitted: " + offerDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
                 + ", offer status: " + offerStatus
                 + ", offer ID: " + offerID
                 + ", submitted by " + isOwnedBy.getFullname()

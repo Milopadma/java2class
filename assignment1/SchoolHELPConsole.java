@@ -157,7 +157,11 @@ public class SchoolHELPConsole {
 
                                 // add the school to the school list in the SchoolHELP class,
                                 // since SchoolHELP is the only class that is a static instance
-                                SchoolHELP.addSchool(school);
+                                try {
+                                    SchoolHELP.addSchool(school);
+                                } catch (Exception e) {
+                                    System.out.println("\nError: " + e.getMessage());
+                                }
 
                                 // then, call the method responsible for the school admin creation menu
                                 // school object because its necessary
@@ -513,9 +517,19 @@ public class SchoolHELPConsole {
                                     currentUserAdmin.getSchool().getRequests().sort(Comparator
                                             .comparing(Request::getRequestStatus)
                                             .thenComparing(Request::getRequestDate));
-                                    // print out the list of requests
+                                    // print out the list of request
+                                    Stream.of(
+                                            "ID     | Status | Request Date | Request Type  | City        | Description ")
+                                            .forEach(System.out::println);
                                     for (Request request : currentUserAdmin.getSchool().getRequests()) {
-                                        System.out.println(request);
+                                        System.out.println(request.getRequestID() + " | "
+                                                + request.getRequestStatus() + "    | "
+                                                + request.getRequestDate()
+                                                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                                                + "   | "
+                                                + request.getRequestType() + "     | "
+                                                + request.getSchool().getCity() + "| "
+                                                + request.getRequestDescription());
                                     }
                                     System.out.println("-------");
                                 }
@@ -576,8 +590,8 @@ public class SchoolHELPConsole {
                                                                     + offer.getOfferStatus() + "    | "
                                                                     + offer.getOfferDate()
                                                                             .format(DateTimeFormatter
-                                                                                    .ofPattern("dd/MM/yyyy"))
-                                                                    + "   | "
+                                                                                    .ofPattern("yyyy/MM/dd"))
+                                                                    + "     | "
                                                                     + offer.getIsOwnedBy().getFullname() + "        | "
                                                                     + offer.getOfferRemarks());
                                                         });
@@ -627,24 +641,29 @@ public class SchoolHELPConsole {
                                                         // of the offer
                                                         // to let them know that the offer has been accepted
                                                         // here ..
+                                                        // update the offer status
+                                                        offer.setOfferStatus(offerStatus);
+                                                        // giving the user feedback that the status was successfully
+                                                        // changed
+                                                        Stream.of("\nStatus successfully changed!\n")
+                                                                .forEach(System.out::println);
                                                         break;
                                                     case 2:
                                                         offerStatus = "REJECTED";
+                                                        // update the offer status
+                                                        offer.setOfferStatus(offerStatus);
+                                                        // giving the user feedback that the status was successfully
+                                                        // changed
+                                                        Stream.of("\nStatus successfully changed!\n")
+                                                                .forEach(System.out::println);
                                                         break;
 
                                                     default:
+                                                        // offer status does not change here in this case
                                                         Stream.of("Request error; Invalid choice")
                                                                 .forEach(System.out::println);
                                                         break;
                                                 }
-
-                                                // update the offer status
-                                                offer.setOfferStatus(offerStatus);
-
-                                                // giving the user feedback that the status was successfully changed
-                                                Stream.of("\nStatus successfully changed!\n")
-                                                        .forEach(System.out::println);
-
                                                 // would you like to review another offer for this Request?
                                                 Stream.of(
                                                         "Would you like to review another offer for this Request? (Y/N) (4/5)")
@@ -837,7 +856,7 @@ public class SchoolHELPConsole {
                 // basically, display all requests that exists in the system
                 // if there are none, show the EMPTY message
                 if (SchoolHELP.getAllRequests().isEmpty()) {
-                    Stream.of("There are no requests in the system.", "Press any key to go back.")
+                    Stream.of("\nThere are no requests in the system.", "Press any key to go back.")
                             .forEach(System.out::println);
                     System.console().readLine();
                     displayVolunteerMenu();
@@ -850,7 +869,7 @@ public class SchoolHELPConsole {
                     SchoolHELP.getAllRequests().forEach(request -> {
                         System.out.println(request.getRequestID() + " | "
                                 + request.getRequestStatus() + "    | "
-                                + request.getRequestDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "   | "
+                                + request.getRequestDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + "   | "
                                 + request.getSchool().getSchoolName() + "        | "
                                 + request.getSchool().getCity() + "| "
                                 + request.getRequestDescription());

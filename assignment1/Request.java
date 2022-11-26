@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Request {
@@ -47,8 +48,6 @@ public class Request {
     }
 
     public void setRequestStatus(String requestStatus) {
-        // !! DEBUG! TODO: REMOVE THIS LATER
-        System.out.println("Request.java: setRequestStatus() called");
         this.requestStatus = requestStatus;
     }
 
@@ -83,8 +82,27 @@ public class Request {
     // toString method
     @Override
     public String toString() {
-        return "Request | [Request description: " + description + ", request date: " + requestDate + ", request ID: "
+        return "Request | [Request description: " + description + ", request date: "
+                + requestDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ", request ID: "
                 + requestID
                 + ", request status:  " + requestStatus + ", of school: " + school + "]";
+    }
+
+    /**
+     * {@summary} Method of Request class, returns either "Resource" or "Tutorial"
+     * request depending on the instance of the class.
+     * 
+     * @return String "Resource" or "Tutorial"
+     */
+    public String getRequestType() {
+
+        if (this instanceof ResourceRequest) {
+            return "Resource";
+        } else if (this instanceof TutorialRequest) {
+            return "Tutorial";
+        } else {
+            return "Unknown";
+        }
+
     }
 }

@@ -91,10 +91,12 @@ public class SchoolHELP {
      * @return ArrayList of type Request
      */
     public ArrayList<Request> getAllRequests() {
+        ArrayList<Request> allRequests = new ArrayList<Request>();
         for (School school : schools) {
-            return school.getRequests();
+            allRequests.addAll(school.getRequests());
         }
-        return null;
+        return allRequests;
+
     }
 
     // functional class methods
