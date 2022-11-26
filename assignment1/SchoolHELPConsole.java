@@ -319,11 +319,25 @@ public class SchoolHELPConsole {
                                                         "\nPlease enter the proposed date of the tutorial request (DDMMYYYY) (2/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedDate = Integer.parseInt(System.console().readLine());
+                                                // validatee the proposed date
+                                                boolean isDateValid = SchoolHELP.isValidDate(proposedDate);
+                                                if (!isDateValid) {
+                                                    Stream.of("\nDate not valid.", "Going back...")
+                                                            .forEach(System.out::println);
+                                                    break;
+                                                }
                                                 // proposed time of the tutorial request
                                                 Stream.of(
                                                         "\nPlease enter the proposed time of the tutorial request (hhmm) (3/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedTime = Integer.parseInt(System.console().readLine());
+                                                // validate the proposed time
+                                                boolean isTimeValid = SchoolHELP.isValidTime(proposedTime);
+                                                if (!isTimeValid) {
+                                                    Stream.of("\nTime not valid.", "Going back...")
+                                                            .forEach(System.out::println);
+                                                    break;
+                                                }
                                                 // student level
                                                 Stream.of("\nPlease enter the student level (1-10) (4/5): ")
                                                         .forEach(System.out::println);
@@ -770,8 +784,16 @@ public class SchoolHELPConsole {
                     System.console().readLine();
                     displayVolunteerMenu();
                 } else {
-                    // if there are requests, display them
-                    SchoolHELP.getAllRequests().forEach(System.out::println);
+                    // if there are requests, displaying only the status, request date, description,
+                    // school name and city.
+                    // the user can select the request by its ID to view MORE details
+                    Stream.of("ID | Status | Request Date | Description | School Name | City")
+                            .forEach(System.out::println);
+                    SchoolHELP.getAllRequests().forEach(request -> {
+                        System.out.println(request.getRequestID() + " | " + request.getRequestStatus() + " | "
+                                + request.getRequestDate() + " | " + request.getRequestDescription() + " | "
+                                + request.getSchool().getSchoolName() + " | " + request.getSchool().getCity());
+                    });
                 }
                 System.out.println("--------------"); // these are just dividers to make the CLI look better
 
@@ -921,7 +943,7 @@ public class SchoolHELPConsole {
                                         "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by Request Date");
                                 // view requests by request date
                                 Stream.of("\n--Viewing Requests by Date--",
-                                        "Please enter the request date (DD-MM-YYYY): ")
+                                        "Please enter the request date (DDMMYYYY): ")
                                         .forEach(System.out::println);
                                 int requestDate = Integer.parseInt(System.console().readLine());
                                 // check if date valid date

@@ -2,7 +2,6 @@
 // I GUSTI BAGUS MILO PADMA WIJAYA //E2000426
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 /**
  * {@summary} This class manages instances of User and School classes, both in
@@ -199,8 +198,8 @@ public class SchoolHELP {
             return false;
         } else {
             // then, break the date into DD, MM
-            int DD = requestDate / 10000;
-            int MM = (requestDate % 10000) / 100;
+            int DD = requestDate / 1000000;
+            int MM = (requestDate % 1000000) / 10000;
 
             // then, check if DD is above 31, MM is above 12, and YY
             if (DD > 31 || MM > 12) {
@@ -269,5 +268,33 @@ public class SchoolHELP {
             }
         }
         return null;
+    }
+
+    /**
+     * {@summary} Method of class SchoolHELP, to validate the time passed in as an
+     * int. Uses HHMM time format.
+     * 
+     * @param proposedTime
+     * @return
+     */
+    public boolean isValidTime(int proposedTime) {
+        // the basic time format HHMM,
+        // where HH is the hour, and MM is the minute
+        // HH must not be above 24, MM must not be above 59
+        // first, check if the int its a 4 digit number or not
+        if (proposedTime < 1000 || proposedTime > 2400) {
+            return false;
+        } else {
+            // then, break the time into HH, MM
+            int HH = proposedTime / 100;
+            int MM = proposedTime % 100;
+
+            // then, check if HH is above 24, MM is above 59
+            if (HH > 24 || MM > 59) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 }

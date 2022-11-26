@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ResourceRequest extends Request {
     // this class manages ResourceRequest data,
@@ -12,6 +13,9 @@ public class ResourceRequest extends Request {
 
     // to show the request status
     private String requestStatus;
+
+    // to show the request date
+    private LocalDateTime requestDate;
 
     // class constructor
     public ResourceRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
@@ -51,8 +55,11 @@ public class ResourceRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "Resource Request | [Request Status: " + requestStatus + ", number of resources required: "
-                + numRequired + ", resource type: " + resourceType
-                + ", of school: " + school.getSchoolName() + "]";
+        return "Resource Request | [Request Status: " + requestStatus
+                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddmmyyyy"))
+                + ", of school: " + school.getSchoolName()
+                + ", number of resources required: " + numRequired
+                + ", resource type: " + resourceType
+                + "]";
     }
 }

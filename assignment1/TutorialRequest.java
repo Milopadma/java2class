@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TutorialRequest extends Request {
     // this class handles all things about the tutorial request and its data
@@ -15,6 +16,9 @@ public class TutorialRequest extends Request {
     // to show the request status
     private String requestStatus;
 
+    // to show the request date
+    private LocalDateTime requestDate;
+
     // class constructor
     public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
             int proposedDate,
@@ -26,6 +30,7 @@ public class TutorialRequest extends Request {
         this.numStudents = numStudents;
         this.requestStatus = requestStatus;
         this.school = school;
+        this.requestDate = requestDate;
     }
 
     // class setter and getter methods
@@ -64,9 +69,13 @@ public class TutorialRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "Tutorial Request | [Request Status: " + requestStatus + ", number of students: " + numStudents
+        return "Tutorial Request | [Request Status: " + requestStatus
+                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddmmyyyy"))
+                + ", of school: " + school.getSchoolName()
+                + ", number of students: " + numStudents
+                + ", student level: " + studentLevel
                 + ", proposed date: " + proposedDate
-                + ", proposed time: "
-                + proposedTime + ", student level: " + studentLevel + ", of school: " + school.getSchoolName() + "]";
+                + ", proposed time: " + proposedTime
+                + "]";
     }
 }
