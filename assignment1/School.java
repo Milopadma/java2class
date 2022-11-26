@@ -82,6 +82,16 @@ public class School {
         this.requests = requests;
     }
 
+    // singular getRequestByID
+    public Request getRequestByID(int requestID) {
+        for (Request request : requests) {
+            if (request.getRequestID() == requestID) {
+                return request;
+            }
+        }
+        return null;
+    }
+
     // class methods
 
     // add a SchoolAdmin to the school (singular)

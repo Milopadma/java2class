@@ -1,10 +1,12 @@
+import java.time.LocalDateTime;
+
 /**
  * Offer class that manages data of Offers, sends for the request class, and is
  * created by the Volunteer class.
  */
 public class Offer {
     // class variables
-    private int offerDate;
+    private LocalDateTime offerDate;
     private String remarks;
     private String offerStatus;
 
@@ -19,12 +21,12 @@ public class Offer {
     /**
      * {@summary} Offer class constructor, takes in all the required fields.
      * 
-     * @param offerDate   int
+     * @param offerDate   LocalDateTime
      * @param remarks     String
      * @param offerStatus String
      * @param isOwnedBy   Volunteer
      */
-    public Offer(int offerDate, String remarks, String offerStatus, Volunteer isOwnedBy) {
+    public Offer(LocalDateTime offerDate, String remarks, String offerStatus, Volunteer isOwnedBy) {
         this.offerDate = offerDate;
         this.remarks = remarks;
         this.offerStatus = offerStatus;
@@ -38,7 +40,7 @@ public class Offer {
      * 
      * @return int
      */
-    public int getOfferDate() {
+    public LocalDateTime getOfferDate() {
         return offerDate;
     }
 
@@ -47,7 +49,7 @@ public class Offer {
      * 
      * @param offerDate
      */
-    public void setOfferDate(int offerDate) {
+    public void setOfferDate(LocalDateTime offerDate) {
         this.offerDate = offerDate;
     }
 
@@ -56,7 +58,7 @@ public class Offer {
      * 
      * @return String
      */
-    public String getRemarks() {
+    public String getOfferRemarks() {
         return remarks;
     }
 
@@ -65,7 +67,7 @@ public class Offer {
      * 
      * @param remarks
      */
-    public void setRemarks(String remarks) {
+    public void setOfferRemarks(String remarks) {
         this.remarks = remarks;
     }
 

@@ -136,8 +136,8 @@ public class TestRunner {
                 123,
                 "TestPosition");
         schoolHELP.addUser(volunteer);
-
-        Offer offer = new Offer(12345, "testRemarks", "testStatus", volunteer);
+        LocalDateTime offerNowTime = LocalDateTime.now();
+        Offer offer = new Offer(offerNowTime, "testRemarks", "testStatus", volunteer);
         volunteer.addOffer(offer);
 
         // check if the offer is added to the volunteer
@@ -173,7 +173,8 @@ public class TestRunner {
                 "TestPosition");
         schoolHELP.addUser(volunteer);
 
-        Offer offer = new Offer(12345, "testRemarks", "testStatus", volunteer);
+        LocalDateTime offerNowTime = LocalDateTime.now();
+        Offer offer = new Offer(offerNowTime, "testRemarks", "testStatus", volunteer);
         // add this offer to the volunteer
         volunteer.addOffer(offer);
 

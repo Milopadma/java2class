@@ -19,6 +19,9 @@ public class TutorialRequest extends Request {
     // to show the request date
     private LocalDateTime requestDate;
 
+    // to show this request ID
+    private int requestID;
+
     // class constructor
     public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
             int proposedDate,
@@ -31,6 +34,7 @@ public class TutorialRequest extends Request {
         this.requestStatus = requestStatus;
         this.school = school;
         this.requestDate = requestDate;
+        this.requestID = requestID;
     }
 
     // class setter and getter methods
@@ -70,8 +74,9 @@ public class TutorialRequest extends Request {
     @Override
     public String toString() {
         return "Tutorial Request | [Request Status: " + requestStatus
-                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddmmyyyy"))
+                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"))
                 + ", of school: " + school.getSchoolName()
+                + ", request ID: " + requestID
                 + ", number of students: " + numStudents
                 + ", student level: " + studentLevel
                 + ", proposed date: " + proposedDate

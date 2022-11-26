@@ -17,6 +17,9 @@ public class ResourceRequest extends Request {
     // to show the request date
     private LocalDateTime requestDate;
 
+    // to show this request ID
+    private int requestID;
+
     // class constructor
     public ResourceRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
             String resourceType, int numRequired, School school) {
@@ -25,6 +28,8 @@ public class ResourceRequest extends Request {
         this.numRequired = numRequired;
         this.school = school;
         this.requestStatus = requestStatus;
+        this.requestDate = requestDate;
+        this.requestID = requestID;
     }
 
     // class setter and getter methods
@@ -56,8 +61,9 @@ public class ResourceRequest extends Request {
     @Override
     public String toString() {
         return "Resource Request | [Request Status: " + requestStatus
-                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddmmyyyy"))
+                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"))
                 + ", of school: " + school.getSchoolName()
+                + ", request ID: " + requestID
                 + ", number of resources required: " + numRequired
                 + ", resource type: " + resourceType
                 + "]";
