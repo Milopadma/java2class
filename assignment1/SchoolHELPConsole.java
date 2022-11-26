@@ -317,7 +317,7 @@ public class SchoolHELPConsole {
                                                 String tutorialDescription = (System.console().readLine());
                                                 // proposed date of the tutorial request
                                                 Stream.of(
-                                                        "\nPlease enter the proposed date of the tutorial request (DDMMYYYY) (2/5): ")
+                                                        "\nPlease enter the proposed date of the tutorial request (YYYYMMDD) (2/5): ")
                                                         .forEach(System.out::println);
                                                 int proposedDate = Integer.parseInt(System.console().readLine());
                                                 // validatee the proposed date
@@ -1004,7 +1004,7 @@ public class SchoolHELPConsole {
                                         "\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests > View Requests by Request Date");
                                 // view requests by request date
                                 Stream.of("\n--Viewing Requests by Date--",
-                                        "Please enter the request date (DDMMYYYY): ")
+                                        "Please enter the request date (YYYYMMDD): ")
                                         .forEach(System.out::println);
                                 int requestDate = Integer.parseInt(System.console().readLine());
                                 // check if date valid date
@@ -1048,7 +1048,7 @@ public class SchoolHELPConsole {
                                     }
                                 } else {
                                     // if date not valid, display error message
-                                    Stream.of("\nDate not valid. Please use the DDMMYYYY format.")
+                                    Stream.of("\nDate not valid. Please use the YYYYMMDD format.")
                                             .forEach(System.out::println);
                                     // go back
                                     Stream.of("\nGoing back to Volunteer Menu...").forEach(System.out::println);
@@ -1186,7 +1186,7 @@ public class SchoolHELPConsole {
                         Long phoneNumber = Long.parseLong(System.console().readLine());
                         Stream.of("Please enter your occupation (6/7): ").forEach(System.out::println);
                         String occupation = System.console().readLine();
-                        Stream.of("Please enter your date of birth (e.g DDMMYYYY) (7/7): ")
+                        Stream.of("Please enter your date of birth (e.g YYYYMMDD) (7/7): ")
                                 .forEach(System.out::println);
                         int dateOfBirth = Integer.parseInt(System.console().readLine());
 

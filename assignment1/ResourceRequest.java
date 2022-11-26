@@ -57,11 +57,37 @@ public class ResourceRequest extends Request {
         this.school = school;
     }
 
+    public void setRequestStatus(String requestStatus) {
+        // !! DEBUG! TODO: REMOVE THIS LATER
+        System.out.println("ResourceRequest.java: setRequestStatus() called");
+        this.requestStatus = requestStatus;
+    }
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public LocalDateTime getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(LocalDateTime requestDate) {
+        this.requestDate = requestDate;
+    }
+
+    public int getRequestID() {
+        return requestID;
+    }
+
+    public void setRequestID(int requestID) {
+        this.requestID = requestID;
+    }
+
     // toString method
     @Override
     public String toString() {
         return "Resource Request | [Request Status: " + requestStatus
-                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"))
+                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
                 + ", of school: " + school.getSchoolName()
                 + ", request ID: " + requestID
                 + ", number of resources required: " + numRequired

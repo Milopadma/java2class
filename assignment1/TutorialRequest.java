@@ -70,11 +70,43 @@ public class TutorialRequest extends Request {
         this.numStudents = numStudents;
     }
 
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public LocalDateTime getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(LocalDateTime requestDate) {
+        this.requestDate = requestDate;
+    }
+
+    public int getRequestID() {
+        return requestID;
+    }
+
+    public void setRequestID(int requestID) {
+        this.requestID = requestID;
+    }
+
     // toString method
     @Override
     public String toString() {
         return "Tutorial Request | [Request Status: " + requestStatus
-                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"))
+                + ", request date: " + requestDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
                 + ", of school: " + school.getSchoolName()
                 + ", request ID: " + requestID
                 + ", number of students: " + numStudents

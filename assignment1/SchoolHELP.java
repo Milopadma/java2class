@@ -1,5 +1,6 @@
 
 // I GUSTI BAGUS MILO PADMA WIJAYA //E2000426
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -190,24 +191,19 @@ public class SchoolHELP {
     }
 
     public boolean isValidDate(int requestDate) {
-        // the basic date format DDMMYYYY,
-        // where DD is the date, MM is the month, and YYYY is the year
-        // DD must not be above 31, MM must not be above 12, and YYYY should be fine as
-        // first, check if the int its a 8 digit number or not
-        if (requestDate < 10000000 || requestDate > 99999999) {
+        // using the convention of YYYYMMDD
+        // to validate whatever is requestDate
+        // if it is a valid date, return true
+        // if it is not a valid date, return false
+        try {
+            LocalDateTime.of(requestDate / 10000, (requestDate % 10000) / 100, requestDate % 100,
+                    0,
+                    0);
+        } catch (DateTimeException e) {
             return false;
-        } else {
-            // then, break the date into DD, MM
-            int DD = requestDate / 1000000;
-            int MM = (requestDate % 1000000) / 10000;
-
-            // then, check if DD is above 31, MM is above 12, and YY
-            if (DD > 31 || MM > 12) {
-                return false;
-            } else {
-                return true;
-            }
         }
+        return true;
+
     }
 
     /**
@@ -215,10 +211,11 @@ public class SchoolHELP {
      * that has the same date
      * 
      * @param requestDate
-     * @return
+     * @return ArrayList
      */
     public ArrayList<Request> getRequestsByDate(int requestDate) {
-        // convert the int to a LocalDateTime format
+        // converting the passed in requestDate to a LocalDateTime format
+        // this is apparently YEAR-MONTH-DAY
         LocalDateTime date = LocalDateTime.of(requestDate / 10000, (requestDate % 10000) / 100, requestDate % 100, 0,
                 0);
         // then, loop through the schools arraylist, and get the requests of each school
