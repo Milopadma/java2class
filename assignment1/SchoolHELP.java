@@ -15,6 +15,11 @@ public class SchoolHELP {
     private static ArrayList<School> schools = new ArrayList<School>();
 
     // class constructor
+    /**
+     * 
+     * SchoolHELP class constructor, does not take in any arguments. Instead just
+     * creates the initial default users and schools.
+     */
     public SchoolHELP() {
         // default ArrayList constructor with a single default school
         schools.add(new School("HELP", 1, "Jalan Damansara", "Kuala Lumpur"));
@@ -25,15 +30,31 @@ public class SchoolHELP {
     }
 
     // class setter and getter methods
+    /**
+     * This method returns the ArrayList of users.
+     * 
+     * @return
+     */
     public ArrayList<User> getUsers() {
         return users;
     }
 
+    /**
+     * This method sets the ArrayList of users.
+     * 
+     * @param users
+     */
     public void setUsers(ArrayList<User> users) {
         SchoolHELP.users = users;
     }
 
     // singular user
+    /**
+     * This method returns a single user from the ArrayList of users.
+     * 
+     * @param index
+     * @return
+     */
     public User getUser(String adminUsername, String adminPassword) {
         for (User user : users) {
             if (user.getUsername().equals(adminUsername)) {
@@ -43,19 +64,39 @@ public class SchoolHELP {
         return null;
     }
 
+    /**
+     * This method returns the ArrayList of schools.
+     * 
+     * @return ArrayList
+     */
     public ArrayList<School> getSchools() {
         return schools;
     }
 
+    /**
+     * This method sets the ArrayList of schools.
+     * 
+     * @param schools
+     */
     public void setSchools(ArrayList<School> schools) {
         SchoolHELP.schools = schools;
     }
 
     // class methods
+    /**
+     * This method adds a user to the ArrayList of users.
+     * 
+     * @param user
+     */
     public void addUser(User user) {
         users.add(user);
     }
 
+    /**
+     * This method adds a school to the ArrayList of schools.
+     * 
+     * @param school
+     */
     public void addSchool(School school) {
         schools.add(school);
     }
@@ -76,10 +117,22 @@ public class SchoolHELP {
         return null;
     }
 
+    /**
+     * 
+     * Removes a singular user from the ArrayList of users.
+     * 
+     * @param user
+     */
     public void removeUser(User user) {
         users.remove(user);
     }
 
+    /**
+     * 
+     * Removes a singular school from the ArrayList of schools.
+     * 
+     * @param school
+     */
     public void removeSchool(School school) {
         schools.remove(school);
     }
@@ -100,9 +153,11 @@ public class SchoolHELP {
     }
 
     // functional class methods
-
     // to check if the user is an admin in the user list array or not
     /**
+     * 
+     * To check if the user is an admin in the user list array or not.
+     * 
      * @param adminUsername
      * @param adminPassword
      * @return boolean
@@ -125,6 +180,9 @@ public class SchoolHELP {
 
     // to check if the user is a volunteer in the user list array or not
     /**
+     * 
+     * To check if the user is a volunteer in the user list array or not.
+     * 
      * @param volunteerUsername
      * @param volunteerPassword
      * @return boolean
@@ -146,6 +204,9 @@ public class SchoolHELP {
 
     // to check if that username exists in the ArrayList already or not
     /**
+     * 
+     * To check if that username exists in the ArrayList already or not.
+     * 
      * @param username
      * @return boolean
      */
@@ -158,6 +219,14 @@ public class SchoolHELP {
         return false;
     }
 
+    /**
+     *
+     * To check if that school name exists in the ArrayList or not.
+     * 
+     * @param string
+     * 
+     * @return boolean
+     */
     public boolean isSchool(String schoolName) {
         for (School school : schools) {
             if (school.getSchoolName().equals(schoolName)) {
@@ -167,6 +236,13 @@ public class SchoolHELP {
         return false;
     }
 
+    /**
+     * 
+     * To check if that city name exists in the ArrayList or not.
+     * 
+     * @param schoolName
+     * @return boolean
+     */
     public boolean isCity(String cityName) {
         for (School school : schools) {
             if (school.getCity().equals(cityName)) {
@@ -192,6 +268,14 @@ public class SchoolHELP {
         return null;
     }
 
+    /**
+     * 
+     * Takes in an int requestDate and checks if it is a valid date or not according
+     * to the YYYYMMDD format. Returns true if it is valid, false if it is not.
+     * 
+     * @param requestDate
+     * @return boolean
+     */
     public boolean isValidDate(int requestDate) {
         // using the convention of YYYYMMDD
         // to validate whatever is requestDate
@@ -210,7 +294,7 @@ public class SchoolHELP {
 
     /**
      * {@summary} to return all the requests in the ArrayList of type Request,
-     * that has the same date
+     * that has the same date.
      * 
      * @param requestDate
      * @return ArrayList
