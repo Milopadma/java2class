@@ -7,6 +7,11 @@
 // Test Driven Development
 import java.time.LocalDateTime;
 
+/**
+ * {@summary} TestRunner class that runs all the tests for the assignment java
+ * files.
+ *
+ */
 public class TestRunner {
     private static SchoolHELP schoolHELP = new SchoolHELP();
     // private static User currentUser = null;
@@ -17,6 +22,10 @@ public class TestRunner {
 
     // TESTCASE1: Register a new School (also includes creating and adding a new
     // SchoolAdmin)
+    /**
+     * {@summary} Test case 1: Register a new School (also includes creating and
+     * adding a new SchoolAdmin)
+     */
     public static void TESTCASE1() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
@@ -35,6 +44,9 @@ public class TestRunner {
     }
 
     // TESTCASE2: Submitting a new Request
+    /**
+     * {@summary} Test case 2: Submitting a new Request
+     */
     public static void TESTCASE2() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
@@ -63,6 +75,9 @@ public class TestRunner {
     }
 
     // TESTCASE3: Registering as a Volunteer
+    /**
+     * {@summary} Test case 3: Registering as a Volunteer
+     */
     public static void TESTCASE3() {
         Volunteer volunteer = new Volunteer("TestVolunteer", "TestPassword", "TestFullName", "TestEmail",
                 (long) 12345123122L,
@@ -79,6 +94,11 @@ public class TestRunner {
 
     // TESTCASE4: Allowing a Volunteer usersession to view requests that have been
     // submitted
+    /**
+     * {@summary} Test case 4: Allowing a Volunteer usersession to view requests
+     * that have been submitted
+     * 
+     */
     public static void TESTCASE4() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
@@ -114,6 +134,9 @@ public class TestRunner {
     }
 
     // TESTCASE5: Submitting an Offer
+    /**
+     * {@summary} Test case 5: Submitting an Offer
+     */
     public static void TESTCASE5() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
@@ -150,6 +173,9 @@ public class TestRunner {
 
     // TESTCASE6: Reviewing Offers, to allow school admins to review offers and
     // change the status of the offer
+    /**
+     * {@summary} Test case 6: Reviewing Offers, to allow school admins to review
+     */
     public static void TESTCASE6() {
         School school = new School("TestSchool", 123, "TestAddress", "TestCity");
         SchoolAdmin testSchoolAdmin = new SchoolAdmin("TestSchoolAdmin", "TestPassword", "TestFullName", "TestEmail",
@@ -194,6 +220,11 @@ public class TestRunner {
 
     }
 
+    /**
+     * {@summary} Main class, to run the test cases.
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         // test for first use case, which is Registering a New School
         TESTCASE1();

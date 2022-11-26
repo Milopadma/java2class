@@ -1,3 +1,4 @@
+// I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 public class SchoolAdmin extends User {
     // this class manages SchoolAdmin data
     // class variables

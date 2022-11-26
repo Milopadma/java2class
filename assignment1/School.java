@@ -1,3 +1,5 @@
+
+// I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 import java.util.ArrayList;
 
 // School class

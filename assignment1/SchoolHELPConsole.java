@@ -1,3 +1,5 @@
+
+// I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -204,7 +206,8 @@ public class SchoolHELPConsole {
                         // switch statement to handle user input
                         switch (detailChangeChoice) {
                             case 1:
-                                // this shall be a loooooop!!
+                                // this will be a loop so it can be repeated if the user wants to change
+                                // multiple things
                                 while (true) {
                                     try {
                                         // username change
@@ -226,10 +229,11 @@ public class SchoolHELPConsole {
                                         }
                                     } catch (Exception e) {
                                         System.out.println("\nError: " + e.getMessage());
-                                        // we shall stay in the loop !!!!!!!!
+                                        // stay in the loop even if there was an error
                                         continue;
                                     }
                                 }
+                                break;
 
                             case 2:
                                 // password change
@@ -237,6 +241,8 @@ public class SchoolHELPConsole {
                                 String newPassword = (System.console().readLine());
                                 // set the new password
                                 currentUserAdmin.setPassword(newPassword);
+                                // give the user feedback that the password was changed
+                                Stream.of("\nPassword successfully changed!").forEach(System.out::println);
                                 break;
 
                             case 3:
@@ -245,6 +251,8 @@ public class SchoolHELPConsole {
                                 String newFullname = (System.console().readLine());
                                 // set the new fullname
                                 currentUserAdmin.setFullname(newFullname);
+                                // give the user feedback that the fullname was changed
+                                Stream.of("\nFullname successfully changed!").forEach(System.out::println);
                                 break;
 
                             case 4:
@@ -253,6 +261,8 @@ public class SchoolHELPConsole {
                                 String newEmail = (System.console().readLine());
                                 // set the new email
                                 currentUserAdmin.setEmail(newEmail);
+                                // give the user feedback that the email was changed
+                                Stream.of("\nEmail successfully changed!").forEach(System.out::println);
                                 break;
 
                             case 5:
@@ -267,7 +277,8 @@ public class SchoolHELPConsole {
                                         Long newPhoneNumber = Long.parseLong(System.console().readLine());
                                         // set the new phone
                                         currentUserAdmin.setPhone(newPhoneNumber);
-                                        Stream.of("Phone number successfully changed!\n").forEach(System.out::println);
+                                        Stream.of("\nPhone number successfully changed!\n")
+                                                .forEach(System.out::println);
                                         break;
 
                                     } catch (Exception e) {
@@ -282,7 +293,7 @@ public class SchoolHELPConsole {
 
                             default:
                                 // if the user enters an invalid choice
-                                Stream.of("Detail change error; Invalid choice").forEach(System.out::println);
+                                Stream.of("\nDetail change error; Invalid choice").forEach(System.out::println);
                                 break;
                         }
                         break;

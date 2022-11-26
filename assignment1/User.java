@@ -1,3 +1,4 @@
+// I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 public class User {
     private String username;
     private String password;
