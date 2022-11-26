@@ -39,6 +39,11 @@ public class Request {
         return requestDate;
     }
 
+    public String getRequestDateAsString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return requestDate.format(formatter);
+    }
+
     public void setRequestDate(LocalDateTime requestDate) {
         this.requestDate = requestDate;
     }

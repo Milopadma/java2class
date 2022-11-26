@@ -967,7 +967,8 @@ public class SchoolHELPConsole {
                                                                    // can
                                                                    // never trust the user
                                     // if city exists, check if there are any requests in the city
-                                    if (!SchoolHELP.getRequestsByCity(cityName).isEmpty()) {
+                                    if (SchoolHELP.getRequestsByCity(cityName).isEmpty()) {
+                                        // then check if there are any requests in the city that are NEW
                                         System.out.println("\n-------");
                                         // printing out only the requests with city of cityName
                                         Stream.of(
@@ -984,14 +985,6 @@ public class SchoolHELPConsole {
                                                         + request.getSchool().getCity() + "| "
                                                         + request.getRequestDescription());
 
-                                            } else {
-                                                // if there are no requests in the city
-                                                Stream.of("\nThere are no requests for this city.",
-                                                        "Going back to View Requests menu...")
-                                                        .forEach(System.out::println);
-
-                                                // go back to ViewRequests() method
-                                                ViewRequests();
                                             }
                                         });
                                         System.out.println("-------");
@@ -1037,7 +1030,7 @@ public class SchoolHELPConsole {
                                                                            // you can
                                                                            // never trust the user
                                     // if date valid, check if there are any requests for that date
-                                    if (!SchoolHELP.getRequestsByDate(requestDate).isEmpty()) {
+                                    if (SchoolHELP.getRequestsByDate(requestDate) != null) {
 
                                         System.out.println("\n-------");
                                         // if there are requests for that date, display only the RequestStatus of NEW,

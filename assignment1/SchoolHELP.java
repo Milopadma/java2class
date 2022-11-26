@@ -216,22 +216,19 @@ public class SchoolHELP {
      * @return ArrayList
      */
     public ArrayList<Request> getRequestsByDate(int requestDate) {
-        // converting the passed in requestDate to a LocalDateTime format
-        // this is apparently YEAR-MONTH-DAY
-        LocalDateTime date = LocalDateTime.of(requestDate / 10000, (requestDate % 10000) / 100, requestDate % 100, 0,
-                0);
+        // parsing the requestDate integer to a string
+        String requestDateString = Integer.toString(requestDate);
         // then, loop through the schools arraylist, and get the requests of each school
         // and loop through the newly created requests arraylist, and check if the date
-        // is the same
-        ArrayList<Request> requests = new ArrayList<Request>();
+        ArrayList<Request> requestsByDate = new ArrayList<Request>();
         for (School school : schools) {
             for (Request request : school.getRequests()) {
-                if (request.getRequestDate().equals(date)) {
-                    requests.add(request);
+                if (request.getRequestDateAsString().equals(requestDateString)) {
+                    requestsByDate.add(request);
                 }
             }
         }
-        return requests;
+        return requestsByDate;
     }
 
     /**

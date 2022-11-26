@@ -21,9 +21,9 @@ public class ResourceRequest extends Request {
     private int requestID;
 
     // class constructor
-    public ResourceRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
+    public ResourceRequest(int requestID, LocalDateTime requestDate, String requestStatus, String description,
             String resourceType, int numRequired, School school) {
-        super(requestID, requestDate, requestStatus, desription, school);
+        super(requestID, requestDate, requestStatus, description, school);
         this.resourceType = resourceType;
         this.numRequired = numRequired;
         this.school = school;
@@ -67,6 +67,11 @@ public class ResourceRequest extends Request {
 
     public LocalDateTime getRequestDate() {
         return requestDate;
+    }
+
+    public String getRequestDateAsString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return requestDate.format(formatter);
     }
 
     public void setRequestDate(LocalDateTime requestDate) {

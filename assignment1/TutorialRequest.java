@@ -23,10 +23,10 @@ public class TutorialRequest extends Request {
     private int requestID;
 
     // class constructor
-    public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
+    public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String description,
             int proposedDate,
             int proposedTime, int studentLevel, int numStudents, School school) {
-        super(requestID, requestDate, requestStatus, desription, school);
+        super(requestID, requestDate, requestStatus, description, school);
         this.proposedDate = proposedDate;
         this.proposedTime = proposedTime;
         this.studentLevel = studentLevel;
@@ -88,6 +88,11 @@ public class TutorialRequest extends Request {
 
     public LocalDateTime getRequestDate() {
         return requestDate;
+    }
+
+    public String getRequestDateAsString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return requestDate.format(formatter);
     }
 
     public void setRequestDate(LocalDateTime requestDate) {
