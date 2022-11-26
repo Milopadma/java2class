@@ -349,14 +349,15 @@ public class SchoolHELPConsole {
                                                 Stream.of(
                                                         "\nPlease enter the proposed time of the tutorial request (hhmm) (3/5): ")
                                                         .forEach(System.out::println);
-                                                int proposedTime = Integer.parseInt(System.console().readLine());
+                                                String proposedTimeString = System.console().readLine();
                                                 // validate the proposed time
-                                                boolean isTimeValid = SchoolHELP.isValidTime(proposedTime);
+                                                boolean isTimeValid = SchoolHELP.isValidTime(proposedTimeString);
                                                 if (!isTimeValid) {
                                                     Stream.of("\nTime not valid.", "Going back...")
                                                             .forEach(System.out::println);
                                                     break;
                                                 }
+                                                int proposedTime = Integer.parseInt(proposedTimeString);
                                                 // student level
                                                 Stream.of("\nPlease enter the student level (1-10) (4/5): ")
                                                         .forEach(System.out::println);

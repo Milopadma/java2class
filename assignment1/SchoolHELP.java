@@ -359,24 +359,23 @@ public class SchoolHELP {
      * @param proposedTime
      * @return
      */
-    public boolean isValidTime(int proposedTime) {
+    public boolean isValidTime(String proposedTime) {
         // the basic time format HHMM,
         // where HH is the hour, and MM is the minute
         // HH must not be above 24, MM must not be above 59
-        // first, check if the int its a 4 digit number or not
-        if (proposedTime < 1000 || proposedTime > 2400) {
-            return false;
-        } else {
-            // then, break the time into HH, MM
-            int HH = proposedTime / 100;
-            int MM = proposedTime % 100;
-
-            // then, check if HH is above 24, MM is above 59
-            if (HH > 24 || MM > 59) {
+        // if it is a valid time, return true
+        // if it is not a valid time, return false
+        try {
+            int hour = Integer.parseInt(proposedTime.substring(0, 2));
+            int minute = Integer.parseInt(proposedTime.substring(2, 4));
+            if (hour > 24 || minute > 59) {
                 return false;
-            } else {
-                return true;
             }
+        } catch (NumberFormatException e) {
+            return false;
+        } catch (DateTimeException e) {
+            return false;
         }
+        return true;
     }
 }
