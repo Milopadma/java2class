@@ -3,6 +3,10 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This class manages the data of tutorialRequest instances. Child of Request
+ * class.
+ */
 public class TutorialRequest extends Request {
     // this class handles all things about the tutorial request and its data
 
@@ -25,6 +29,20 @@ public class TutorialRequest extends Request {
     private int requestID;
 
     // class constructor
+    /**
+     * 
+     * The class contructor for the TutorialRequest class.
+     * 
+     * @param requestID
+     * @param requestDate
+     * @param requestStatus
+     * @param description
+     * @param proposedDate
+     * @param proposedTime
+     * @param studentLevel
+     * @param numStudents
+     * @param school
+     */
     public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String description,
             int proposedDate,
             int proposedTime, int studentLevel, int numStudents, School school) {
@@ -40,76 +58,166 @@ public class TutorialRequest extends Request {
     }
 
     // class setter and getter methods
+    /**
+     * This method returns the proposed date.
+     * 
+     * @return int
+     */
     public int getProposedDate() {
         return proposedDate;
     }
 
+    /**
+     * This method sets the proposed date.
+     * 
+     * @param proposedDate
+     */
     public void setProposedDate(int proposedDate) {
         this.proposedDate = proposedDate;
     }
 
+    /**
+     * This method returns the proposed time.
+     * 
+     * @return int
+     */
     public int getProposedTime() {
         return proposedTime;
     }
 
+    /**
+     * This method sets the proposed time.
+     * 
+     * @param proposedTime
+     */
     public void setProposedTime(int proposedTime) {
         this.proposedTime = proposedTime;
     }
 
+    /**
+     * This method returns the student level.
+     * 
+     * @return int
+     */
     public int getStudentLevel() {
         return studentLevel;
     }
 
+    /**
+     * This method sets the student level.
+     * 
+     * @param studentLevel
+     */
     public void setStudentLevel(int studentLevel) {
         this.studentLevel = studentLevel;
     }
 
+    /**
+     * This method returns the number of students.
+     * 
+     * @return int
+     */
     public int getNumStudents() {
         return numStudents;
     }
 
+    /**
+     * This method sets the number of students.
+     * 
+     * @param numStudents
+     */
     public void setNumStudents(int numStudents) {
         this.numStudents = numStudents;
     }
 
+    /**
+     * This method returns the school.
+     * 
+     * @return School
+     */
     public School getSchool() {
         return school;
     }
 
+    /**
+     * This method sets the school.
+     * 
+     * @param school
+     */
     public void setSchool(School school) {
         this.school = school;
     }
 
+    /**
+     * This method sets the request status.
+     * 
+     * @param String
+     */
     public void setRequestStatus(String requestStatus) {
         this.requestStatus = requestStatus;
     }
 
+    /**
+     * This method returns the request status.
+     * 
+     * @return String
+     */
     public String getRequestStatus() {
         return requestStatus;
     }
 
+    /**
+     * This method returns the request date.
+     * 
+     * @return LocalDateTime
+     */
     public LocalDateTime getRequestDate() {
         return requestDate;
     }
 
+    /**
+     * This method returns the request date as a string.
+     * 
+     * @param String
+     */
     public String getRequestDateAsString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         return requestDate.format(formatter);
     }
 
+    /**
+     * This method sets the request date.
+     * 
+     * @param LocalDateTime
+     */
     public void setRequestDate(LocalDateTime requestDate) {
         this.requestDate = requestDate;
     }
 
+    /**
+     * This method returns the request ID.
+     * 
+     * @return int
+     */
     public int getRequestID() {
         return requestID;
     }
 
+    /**
+     * This method sets the request ID.
+     * 
+     * @param int
+     */
     public void setRequestID(int requestID) {
         this.requestID = requestID;
     }
 
     // toString method
+    /**
+     * This method returns the string representation of the TutorialRequest class.
+     * 
+     * @return String
+     */
     @Override
     public String toString() {
         return "Tutorial Request | [Request Status: " + requestStatus
