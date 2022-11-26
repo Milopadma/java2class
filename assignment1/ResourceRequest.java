@@ -58,8 +58,6 @@ public class ResourceRequest extends Request {
     }
 
     public void setRequestStatus(String requestStatus) {
-        // !! DEBUG! TODO: REMOVE THIS LATER
-        System.out.println("ResourceRequest.java: setRequestStatus() called");
         this.requestStatus = requestStatus;
     }
 

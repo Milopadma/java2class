@@ -139,10 +139,4 @@ public class Offer {
                 + ", remarks: '" + remarks
                 + "']";
     }
-
-    // functional class method
-    // to send an offer to a Request class
-    // public void sendOffer(Request request) {
-    // // this method sends an offer to a Request class
-    // }
 }
