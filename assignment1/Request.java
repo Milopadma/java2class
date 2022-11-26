@@ -47,6 +47,8 @@ public class Request {
     }
 
     public void setRequestStatus(String requestStatus) {
+        // !! DEBUG! TODO: REMOVE THIS LATER
+        System.out.println("Request.java: setRequestStatus() called");
         this.requestStatus = requestStatus;
     }
 

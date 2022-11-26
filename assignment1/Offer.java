@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Offer class that manages data of Offers, sends for the request class, and is
@@ -131,8 +132,12 @@ public class Offer {
      */
     @Override
     public String toString() {
-        return "Offer | [Offer date: " + offerDate + ", offer status: " + offerStatus + ", remarks: " + remarks
-                + ", offer ID: " + offerID + "]";
+        return "Offer | [Offer date submitted: " + offerDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"))
+                + ", offer status: " + offerStatus
+                + ", offer ID: " + offerID
+                + ", submitted by " + isOwnedBy.getFullname()
+                + ", remarks: '" + remarks
+                + "']";
     }
 
     // functional class method

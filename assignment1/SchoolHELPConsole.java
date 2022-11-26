@@ -356,7 +356,7 @@ public class SchoolHELPConsole {
                                                 // current time for the request
                                                 LocalDateTime requestDate = LocalDateTime.now();
 
-                                                // random requestID
+                                                // random requestID 6 digit number
                                                 int requestID = (int) (Math.random() * 1000000);
 
                                                 // request status is set to "NEW"
@@ -414,7 +414,7 @@ public class SchoolHELPConsole {
                                                 // current time for the request
                                                 LocalDateTime requestDateResource = LocalDateTime.now();
 
-                                                // random requestID
+                                                // random requestID 6 digit number using math random
                                                 int requestIDResource = (int) (Math.random() * 1000000);
 
                                                 // request status is set to "NEW"
@@ -566,7 +566,7 @@ public class SchoolHELPConsole {
                                             if (currentUserAdmin.getSchool().getRequestByID(requestID)
                                                     .getOffers() != null) {
                                                 Stream.of(
-                                                        "ID     | Status | Offer Date | Volunteer Name | Remarks ")
+                                                        "ID     | Status      | Offer Date   | Volunteer Name  | Remarks ")
                                                         .forEach(System.out::println);
                                                 currentUserAdmin.getSchool().getRequestByID(requestID).getOffers()
                                                         .stream()
