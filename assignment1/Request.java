@@ -38,11 +38,28 @@ public class Request {
      * @param school
      */
     public Request(int requestID, LocalDateTime requestDate, String requestStatus, String description, School school) {
-        this.requestID = requestID;
+        this.requestID = requestIDvalidator(requestID);
         this.requestDate = requestDate;
         this.requestStatus = requestStatus;
         this.description = description;
         this.school = school;
+    }
+
+    /**
+     * 
+     * Method to validate the request ID.
+     * 
+     * @param requestIDtoValidate
+     * @return int
+     */
+    private int requestIDvalidator(int requestIDtoValidate) {
+        // to make sure that the requestID is a 6 digit number
+        // if the requestID is not a 6 digit number, this will regenerate a new
+        // number
+        if (requestIDtoValidate < 100000 || requestIDtoValidate > 999999) {
+            requestIDtoValidate = (int) (Math.random() * 900000) + 100000;
+        }
+        return requestIDtoValidate;
     }
 
     // class setter and getter methods

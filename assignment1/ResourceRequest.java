@@ -50,7 +50,24 @@ public class ResourceRequest extends Request {
         this.school = school;
         this.requestStatus = requestStatus;
         this.requestDate = requestDate;
-        this.requestID = requestID;
+        this.requestID = requestIDvalidator(requestID);
+    }
+
+    /**
+     * 
+     * Method to validate the request ID.
+     * 
+     * @param requestIDtoValidate
+     * @return int
+     */
+    private int requestIDvalidator(int requestIDtoValidate) {
+        // to make sure that the requestID is a 6 digit number
+        // if the requestID is not a 6 digit number, this will regenerate a new
+        // number
+        if (requestIDtoValidate < 100000 || requestIDtoValidate > 999999) {
+            requestIDtoValidate = (int) (Math.random() * 900000) + 100000;
+        }
+        return requestIDtoValidate;
     }
 
     // class setter and getter methods
