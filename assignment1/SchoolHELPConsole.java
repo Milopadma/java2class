@@ -125,7 +125,8 @@ public class SchoolHELPConsole {
             // adding breadcrumbs so the users don't get lost in the menus because i sure
             // did
             System.out.println("\n\n~/SchoolHELP Console > Admin Menu");
-            System.out.println("--Welcome to the SchoolHELP Admin Menu--");
+            System.out.println("---Welcome to the SchoolHELP Admin Menu--");
+            System.out.println("---INFO---");
 
             // to show the current user's name and position
             System.out.println("Logged in as: " + currentUser.getFullname() + ", position: ("
@@ -134,7 +135,7 @@ public class SchoolHELPConsole {
             System.out.println("School ID: " + ((SchoolAdmin) currentUser).getSchool().getSchoolID() + ", School Name: "
                     + ((SchoolAdmin) currentUser).getSchool().getSchoolName());
 
-            Stream.of("----------", "1. Register a new school", "2. Edit profile",
+            Stream.of("-----------", "1. Register a new school", "2. Edit profile",
                     "3. Submit a request for assistance",
                     "4. Review offers for requests", "5. Back").forEach(System.out::println);
             Stream.of("Please enter your choice: ").forEach(System.out::println);
@@ -182,10 +183,13 @@ public class SchoolHELPConsole {
                         break;
 
                     case 2:
+                        // breadcrumbs
+                        System.out.println("\n\n~/SchoolHELP Console > Admin Menu > Edit Profile");
                         // Editing the profile of the current user admin profile
                         // display their current profile details of the current user in this instance
-                        Stream.of("Current profile details: ").forEach(System.out::println);
+                        Stream.of("--Current profile details-- ").forEach(System.out::println);
                         Stream.of(currentUserAdmin.toString()).forEach(System.out::println);
+                        System.out.println("\n---------------");
                         // asking the user which detail they want to change
                         Stream.of("Which detail would you like to change? ").forEach(System.out::println);
                         Stream.of("1. Username", "2. Password", "3. Fullname", "4. Email", "5. Phone", "6. Cancel")
@@ -306,7 +310,8 @@ public class SchoolHELPConsole {
                                                         .forEach(System.out::println);
                                                 // description of the tutorial request
                                                 Stream.of(
-                                                        "\nPlease enter the description of the tutorial request (1/5): ")
+                                                        "\n--New Tutorial Request--",
+                                                        "Please enter the description of the tutorial request (1/5): ")
                                                         .forEach(System.out::println);
                                                 String tutorialDescription = (System.console().readLine());
                                                 // proposed date of the tutorial request
@@ -323,6 +328,11 @@ public class SchoolHELPConsole {
                                                 Stream.of("\nPlease enter the student level (1-10) (4/5): ")
                                                         .forEach(System.out::println);
                                                 int studentLevel = Integer.parseInt(System.console().readLine());
+                                                if (studentLevel > 10) {
+                                                    throw new Exception("Student level cannot be greater than 10");
+                                                } else if (studentLevel < 1) {
+                                                    throw new Exception("Student level cannot be less than 1");
+                                                }
                                                 // number of students expected
                                                 Stream.of("\nPlease enter the number of students expected (5/5): ")
                                                         .forEach(System.out::println);
@@ -372,7 +382,8 @@ public class SchoolHELPConsole {
                                                         .forEach(System.out::println);
                                                 // description of the resource request
                                                 Stream.of(
-                                                        "\nPlease enter the description of the resource request (1/3): ")
+                                                        "\n--New Resource Request--",
+                                                        "Please enter the description of the resource request (1/3): ")
                                                         .forEach(System.out::println);
                                                 String resourceDescription = (System.console().readLine());
                                                 // resource type
@@ -449,17 +460,18 @@ public class SchoolHELPConsole {
                                 // TEST start //
                                 // adding dummy data into the requests system
                                 // this is for testing purposes only
-                                LocalDateTime NOW = LocalDateTime.now();
-                                // this school
-                                School school = currentUserAdmin.getSchool();
-                                Request request1 = new Request(12, NOW, "NEW", "testdesc", school);
-                                currentUserAdmin.getSchool().addRequest(request1);
+                                // LocalDateTime NOW = LocalDateTime.now();
+                                // // this school
+                                // School school = currentUserAdmin.getSchool();
+                                // Request request1 = new Request(12, NOW, "NEW", "testdesc", school);
+                                // currentUserAdmin.getSchool().addRequest(request1);
 
-                                Volunteer volunteer1 = new Volunteer("guy", "guy", "guy", "guyemail", 123L, 312,
-                                        "null");
-                                Offer offer1 = new Offer(221122, "yes", "PENDING", volunteer1);
-                                // add this offer to the request1
-                                request1.addOffer(offer1);
+                                // Volunteer volunteer1 = new Volunteer("guy", "guy", "guy", "guyemail", 123L,
+                                // 312,
+                                // "null");
+                                // Offer offer1 = new Offer(221122, "yes", "PENDING", volunteer1);
+                                // // add this offer to the request1
+                                // request1.addOffer(offer1);
                                 // TEST end //
 
                                 // this prints out the list of requests for this current user's school
@@ -471,8 +483,7 @@ public class SchoolHELPConsole {
                                                 + currentUserAdmin.getSchool().getSchoolName() + ")")
                                         .forEach(System.out::println);
                                 // if there are no requests, this prints out a message to let the user know
-                                if (currentUserAdmin.getSchool().getRequests() != null) {
-
+                                if (currentUserAdmin.getSchool().getRequests().isEmpty() == true) {
                                     // show the requests for that school
                                     currentUserAdmin.getSchool().getRequests().stream()
                                             // sorted by status, and date
@@ -482,9 +493,10 @@ public class SchoolHELPConsole {
 
                                     System.out.print("-------");
                                 } else {
-                                    Stream.of("There are no requests for this school.").forEach(System.out::println);
+                                    Stream.of("\nThere are no offers for any requests for this school.")
+                                            .forEach(System.out::println);
                                     // press any key to go back to the admin menu
-                                    Stream.of("Press any key to go back to the admin menu.")
+                                    Stream.of("\nPress any key to go back to the admin menu.")
                                             .forEach(System.out::println);
                                     System.console().readLine();
                                     displayAdminMenu();
@@ -640,7 +652,12 @@ public class SchoolHELPConsole {
 
                             } catch (Exception e) {
                                 System.out.println("\nTypeError: " + e.getMessage());
-                                continue;
+                                // press any key to go back to admin menu
+                                Stream.of("Press any key to go back to the admin menu.")
+                                        .forEach(System.out::println);
+                                System.console().readLine();
+                                displayAdminMenu();
+                                break;
                             }
                         }
 
@@ -744,22 +761,30 @@ public class SchoolHELPConsole {
             try {
                 // breadcrumbs
                 System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu > View Requests");
-                System.out.println("-------");
-
+                System.out.println("---REQUESTS---");
                 // View requests that have been submitted, ever.
                 // basically, display all requests that exists in the system
-                SchoolHELP.getSchools().forEach(school -> {
-                    school.getRequests().forEach(request -> {
-                        System.out.println(request);
+                // if there are none, show the EMPTY message
+                if (SchoolHELP.getAllRequests().isEmpty() == true) {
+                    Stream.of("There are no requests in the system.", "Press any key to go back.")
+                            .forEach(System.out::println);
+                    System.console().readLine();
+                    displayVolunteerMenu();
+                } else {
+                    // if there are requests, display them
+                    SchoolHELP.getSchools().forEach(school -> {
+                        school.getRequests().forEach(request -> {
+                            System.out.println(request);
+                        });
                     });
-                });
-
-                System.out.println("-------");
+                }
+                System.out.println("--------------"); // these are just dividers to make the CLI look better
 
                 // choice to choose to view requests by school, by city, or by request date
                 Stream.of(
                         "\n--VOLUNTEER--",
-                        "Please choose an option: \n1. View requests by school \n2. View requests by city \n3. View requests by request date \n4. Back")
+                        "1. View requests by school", "2. View requests by city",
+                        "3. View requests by request date", "4. Back", "Please enter your choice:")
                         .forEach(System.out::println);
                 int choice = Integer.parseInt(System.console().readLine());
                 switch (choice) {
@@ -779,7 +804,7 @@ public class SchoolHELPConsole {
                                                                        // because
                                                                        // you can never trust the user
                                     // if school exists, check if it has any requests
-                                    if (SchoolHELP.getSchool(schoolName).getRequests().size() > 0) {
+                                    if (!SchoolHELP.getSchool(schoolName).getRequests().isEmpty()) {
                                         // if school has requests, display only the RequestStatus of NEW, description,
                                         // school name and city
                                         SchoolHELP.getSchool(schoolName).getRequests().forEach(request -> {
@@ -845,7 +870,7 @@ public class SchoolHELPConsole {
                                                                    // can
                                                                    // never trust the user
                                     // if city exists, check if there are any requests in the city
-                                    if (SchoolHELP.getRequestsByCity(cityName) != null) {
+                                    if (!SchoolHELP.getRequestsByCity(cityName).isEmpty()) {
                                         // if there are requests in the city, display only the RequestStatus of NEW,
                                         // description, school name and city
                                         SchoolHELP.getRequestsByCity(cityName).forEach(request -> {
@@ -874,8 +899,8 @@ public class SchoolHELPConsole {
                                     } else {
                                         // if there are no requests in the city
                                         Stream.of("\nThere are no requests for this city.",
-                                                "Going back to View Requests menu...").forEach(System.out::println);
-
+                                                "Press any key to go back.").forEach(System.out::println);
+                                        System.console().readLine();
                                         // go back to ViewRequests() method
                                         ViewRequests();
                                     }
@@ -907,7 +932,7 @@ public class SchoolHELPConsole {
                                                                            // you can
                                                                            // never trust the user
                                     // if date valid, check if there are any requests for that date
-                                    if (SchoolHELP.getRequestsByDate(requestDate) != null) {
+                                    if (!SchoolHELP.getRequestsByDate(requestDate).isEmpty()) {
                                         // if there are requests for that date, display only the RequestStatus of NEW,
                                         // description, school name and city
                                         SchoolHELP.getRequestsByDate(requestDate).forEach(request -> {
@@ -986,11 +1011,12 @@ public class SchoolHELPConsole {
                 // breadcrumbs
                 System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Volunteer Menu");
                 // to show the current user's name and occupation
-                System.out.println("-------");
+                System.out.println("----INFO----");
                 System.out.println("Logged in as: " + currentUser.getFullname() + ", position: ("
                         + ((Volunteer) currentUser).getOccupation() + ")");
                 // show the volunteer only menu!!
-                Stream.of("--VOLUNTEER--", "1. View Requests", "2. Back").forEach(System.out::println);
+                Stream.of("--VOLUNTEER--", "1. View Requests", "2. Back", "Please enter your choice:")
+                        .forEach(System.out::println);
                 int volunteerMenuChoice = Integer.parseInt(System.console().readLine());
                 switch (volunteerMenuChoice) {
                     case 1:
@@ -1022,9 +1048,9 @@ public class SchoolHELPConsole {
         while (true) {
             try {
                 // volunteer login
-                Stream.of("\n--VOLUNTEER--", "Enter your username: ").forEach(System.out::println);
+                Stream.of("\n--VOLUNTEER LOGIN (1/2)--", "Enter your username: ").forEach(System.out::println);
                 String username = System.console().readLine();
-                Stream.of("\n--VOLUNTEER--", "Enter your password: ").forEach(System.out::println);
+                Stream.of("\n--VOLUNTEER LOGIN (2/2)--", "Enter your password: ").forEach(System.out::println);
                 String password = System.console().readLine();
                 // check if user is volunteer
                 if (SchoolHELP.isUserVolunteer(username, password)) {
@@ -1065,7 +1091,7 @@ public class SchoolHELPConsole {
                         // breadcrumbs
                         System.out.println("\n\n~/SchoolHELP Console > Volunteer Login > Register As Volunteer");
                         // Register As Volunteer
-                        Stream.of("\n--Volunteer Account Creation--", "Please enter your username (1/7): ")
+                        Stream.of("--Volunteer Account Creation--", "Please enter your username (1/7): ")
                                 .forEach(System.out::println);
                         String username = System.console().readLine();
                         Stream.of("Please enter your password (2/7): ").forEach(System.out::println);

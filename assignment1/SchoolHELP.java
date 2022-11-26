@@ -179,12 +179,12 @@ public class SchoolHELP {
      * param, then returns the schools in that city, if they exist.
      * 
      * @param cityName
-     * @return
+     * @return ArrayList of type School
      */
-    public Stream<Request> getRequestsByCity(String cityName) {
+    public ArrayList<Request> getRequestsByCity(String cityName) {
         for (School school : schools) {
             if (school.getCity().equals(cityName)) {
-                return school.getRequests().stream();
+                return school.getRequests();
             }
         }
         return null;
@@ -218,12 +218,22 @@ public class SchoolHELP {
      * @param requestDate
      * @return
      */
-    public Stream<Request> getRequestsByDate(int requestDate) {
+    public ArrayList<Request> getRequestsByDate(int requestDate) {
         // convert the int to a LocalDateTime format
         LocalDateTime date = LocalDateTime.of(requestDate / 10000, (requestDate % 10000) / 100, requestDate % 100, 0,
                 0);
-        return getAllRequests().stream().filter(r -> r.getRequestDate() == date);
-
+        // then, loop through the schools arraylist, and get the requests of each school
+        // and loop through the newly created requests arraylist, and check if the date
+        // is the same
+        ArrayList<Request> requests = new ArrayList<Request>();
+        for (School school : schools) {
+            for (Request request : school.getRequests()) {
+                if (request.getRequestDate().equals(date)) {
+                    requests.add(request);
+                }
+            }
+        }
+        return requests;
     }
 
     /**
