@@ -129,8 +129,8 @@ public class Offer {
      */
     @Override
     public String toString() {
-        return "Offer [offerDate: " + offerDate + ", offerStatus: " + offerStatus + ", remarks: " + remarks
-                + ", offerID: " + offerID + "]";
+        return "Offer | [Offer date: " + offerDate + ", offer status: " + offerStatus + ", remarks: " + remarks
+                + ", offer ID: " + offerID + "]";
     }
 
     // functional class method

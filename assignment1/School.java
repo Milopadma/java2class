@@ -97,7 +97,8 @@ public class School {
     // toString method
     @Override
     public String toString() {
-        return "School [address: " + address + ", city: " + city + ", schoolID: " + schoolID + ", schoolName: "
+        return "School | [School address: " + address + ", city: " + city + ", school ID: " + schoolID
+                + ", school name: "
                 + schoolName + "]";
     }
 }

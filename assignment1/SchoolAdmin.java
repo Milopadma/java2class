@@ -45,6 +45,6 @@ public class SchoolAdmin extends User {
     // toString method
     @Override
     public String toString() {
-        return "SchoolAdmin [staffID: " + staffID + ", position: " + position + "], " + super.toString();
+        return "School Admin | [Staff ID: " + staffID + ", position: " + position + "], " + super.toString();
     }
 }

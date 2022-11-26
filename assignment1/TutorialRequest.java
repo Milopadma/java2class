@@ -9,6 +9,9 @@ public class TutorialRequest extends Request {
     private int studentLevel;
     private int numStudents;
 
+    // each tutorial request has a 1-1 relationship with a School class
+    private School school;
+
     // class constructor
     public TutorialRequest(int requestID, LocalDateTime requestDate, String requestStatus, String desription,
             int proposedDate,
@@ -56,8 +59,8 @@ public class TutorialRequest extends Request {
     // toString method
     @Override
     public String toString() {
-        return "Tutorial Request [Number of Students: " + numStudents + ", proposed date: " + proposedDate
+        return "Tutorial Request | [Number of Students: " + numStudents + ", proposed date: " + proposedDate
                 + ", proposed time: "
-                + proposedTime + ", student level: " + studentLevel + "]";
+                + proposedTime + ", student level: " + studentLevel + ", of school: " + school + "]";
     }
 }

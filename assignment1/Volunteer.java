@@ -49,7 +49,6 @@ public class Volunteer extends User {
     // toString method
     @Override
     public String toString() {
-        return "Volunteer [dateOfBirth=" + dateOfBirth + ", occupation=" + occupation + "]";
-
+        return "Volunteer | [Date of birth: " + dateOfBirth + ", occupation: " + occupation + "]";
     }
 }

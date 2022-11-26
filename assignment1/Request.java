@@ -81,7 +81,8 @@ public class Request {
     // toString method
     @Override
     public String toString() {
-        return "Request [description=" + description + ", requestDate=" + requestDate + ", requestID=" + requestID
-                + ", requestStatus=" + requestStatus + "]";
+        return "Request | [Request description: " + description + ", request date: " + requestDate + ", request ID: "
+                + requestID
+                + ", request status:  " + requestStatus + ", of school: " + school + "]";
     }
 }
