@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 /**
  * This class manages the data of resourceRequest instances. Child of Request
  * class.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class ResourceRequest extends Request {
     // this class manages ResourceRequest data,

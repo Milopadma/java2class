@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
  * {@summary} TestRunner class that runs all the tests for the assignment java
  * files.
  *
+ * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class TestRunner {
     private static SchoolHELP schoolHELP = new SchoolHELP();

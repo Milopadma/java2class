@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * of offers that this Volunteer instance has made.
  * 
  * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class Volunteer extends User {
     // this class manages Volunteer data

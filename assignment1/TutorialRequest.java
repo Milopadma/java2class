@@ -6,6 +6,10 @@ import java.time.format.DateTimeFormatter;
 /**
  * This class manages the data of tutorialRequest instances. Child of Request
  * class.
+ * 
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class TutorialRequest extends Request {
     // this class handles all things about the tutorial request and its data

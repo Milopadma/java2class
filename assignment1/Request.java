@@ -4,8 +4,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-/*
- * This class manages the data of request instances, and its children classes. Contains an array list of offers as it has a 1-many relationship with the Offer class.
+/**
+ * This class manages the data of request instances, and its children classes.
+ * Contains an array list of offers as it has a 1-many relationship with the
+ * Offer class.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class Request {
     // this class receives from the Offer class and each School class has multiple

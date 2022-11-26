@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 /**
  * Offer class that manages data of Offers, sends for the request class, and is
  * created by the Volunteer class.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class Offer {
     // class variables

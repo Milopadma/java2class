@@ -8,6 +8,8 @@ import java.util.ArrayList;
  * {@summary} This class manages instances of User and School classes, both in
  * ArrayLists.
  *
+ * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class SchoolHELP {
     // class variables

@@ -10,6 +10,9 @@ import java.util.stream.Stream;
  * {@summary} This class is the top level main class of the
  * SchoolHELPConsole.java file. This is what should be run first as it contains
  * the main method.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class SchoolHELPConsole {
     // init a single instance of the SchoolHELP class

@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * schoolAdmins instances and requests instances.
  * 
  * @author I Gusti Bagus Milo Padma Wijaya
+ * 
  */
 public class School {
     // this class manages School data and also SchoolAdmin classes
