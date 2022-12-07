@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch apicalls",
+      "request": "launch",
+      "mainClass": "gui_fun.apicalls",
+      "projectName": "java2class_7a327dc0"
+    },
+    {
+      "type": "java",
+      "name": "Launch apicalls",
+      "request": "launch",
+      "mainClass": "apicalls",
+      "projectName": "java2class_7a327dc0"
+    },
+    {
+      "type": "java",
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "Main",
