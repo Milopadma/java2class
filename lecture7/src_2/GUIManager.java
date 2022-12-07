@@ -18,6 +18,7 @@ public class GUIManager {
     public static ButtonGroup gender_select_group = new ButtonGroup();
     public static JRadioButton gender_male_radio = new JRadioButton("Male"); // readable radio button
     public static JRadioButton gender_female_radio = new JRadioButton("Female"); // readable radio button
+    public static String this_gender = "";
 
     public static JPanel text_area_panel = new JPanel();
     public static JTextArea text_area_text = new JTextArea(10, 20); // readable text area
@@ -26,6 +27,19 @@ public class GUIManager {
     public static JButton submit_button = new JButton("Submit"); // action button
     public static JButton clear_button = new JButton("Clear"); // action button
     public static JButton cancel_button = new JButton("Cancel"); // action button
+
+    public static JFrame output_frame = new JFrame("Output");
+    public static JTextArea output_text = new JTextArea(10, 20); // readable text area
+    public static PopupFactory output_popup = new PopupFactory();
+
+    // class methods
+    public static void setGender(String gender) {
+        this_gender = gender;
+    }
+
+    public static String getGender() {
+        return this_gender;
+    }
 
     public static void main(String[] args) {
         // init all the things
@@ -75,6 +89,18 @@ public class GUIManager {
         // adding the radio buttons to the buttongroup
         gender_select_group.add(gender_male_radio);
         gender_select_group.add(gender_female_radio);
+        gender_male_radio.setActionCommand("male");
+        gender_female_radio.setActionCommand("female");
+
+        // adding event listeners to the radio buttons
+        gender_male_radio.addActionListener(e -> {
+            setGender("male");
+        });
+
+        gender_female_radio.addActionListener(e -> {
+            setGender("female");
+        });
+
         // adding the gender group to the panel
         gender_select_panel.add(gender_male_radio);
         gender_select_panel.add(gender_female_radio);
@@ -106,6 +132,17 @@ public class GUIManager {
                 8, // horizontal gap
                 8 // vertical gap
         ));
+        // adding event listeners to the buttons
+        submit_button.addActionListener(e -> {
+            submit_button_functionality();
+        });
+        clear_button.addActionListener(e -> {
+            clear_button_functionality();
+        });
+        cancel_button.addActionListener(e -> {
+            cancel_button_functionality();
+        });
+
         // adding the components to the buttons_panel
         buttons_panel.add(submit_button);
         buttons_panel.add(clear_button);
@@ -121,8 +158,37 @@ public class GUIManager {
         main_frame.setVisible(true);
     }
 
+    /*
+     * pop up window
+     */
+
     // button functionalities
     public static void submit_button_functionality() {
         // getting the text from the text fields
+        String name = name_text_field.getText();
+        String age = age_text_field.getText();
+
+        // getting the selected radio button
+        String selected_gender = getGender();
+
+        // show a pop up dialog box
+        JOptionPane.showMessageDialog(
+                main_frame,
+                "Name: " + name + "\n" +
+                        "Age: " + age + "\n" +
+                        "Gender: " + selected_gender);
     }
+
+    public static void clear_button_functionality() {
+        // clearing the text fields
+        name_text_field.setText("");
+        age_text_field.setText("");
+        text_area_text.setText("");
+    }
+
+    public static void cancel_button_functionality() {
+        // closing the program
+        System.exit(0);
+    }
+
 }
