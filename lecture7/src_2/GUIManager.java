@@ -184,6 +184,10 @@ public class GUIManager {
         name_text_field.setText("");
         age_text_field.setText("");
         text_area_text.setText("");
+
+        // also forcefully deselect the radio button groups
+        gender_select_group.clearSelection();
+
     }
 
     public static void cancel_button_functionality() {
