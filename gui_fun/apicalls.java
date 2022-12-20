@@ -1,3 +1,5 @@
+package gui_fun;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -54,7 +56,7 @@ public class apicalls {
                 // set the label text to the response
                 try {
                     BufferedImage img = ImageIO.read(imageurl);
-                    labelImage.setIcon(new ImageIcon(img));
+                    labelImage.setIcon(new ImageIcon(img)); // this is responsible for updating the image 
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -89,7 +91,6 @@ public class apicalls {
         // add the panel to the frame
         frame.add(panel);
         frame.add(panelImage);
-
     }
 
     // this method calls the api
