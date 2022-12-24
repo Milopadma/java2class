@@ -4,18 +4,18 @@
 import javax.swing.*;
 import java.awt.*;
 
-// this class  handles the admin login screen GUI, and it also handles the AdminLogin functionalities
+// this class handles the admin login screen GUI, and it also handles the AdminLogin functionalities,
+// takes and processes data from and for the SchoolAdmin class
 public class AdminLogin extends LoginScreen {
     // class fields
-    private String adminUsername;
-    private String adminPassword;
+    private SchoolAdmin schoolAdmin;
 
     // class GUI elements
-    JButton loginButton = new JButton("Login");
+    static JButton loginButton = new JButton("Login");
 
     // constructor
-    public AdminLogin(String username, String password) {
-        super(username, password, "Admin Login", "Username", "Password", loginButton);
+    public AdminLogin() {
+        super("Admin Login", "Username", "Password", loginButton);
 
         // add an event listener to the login button
         // when the login button is clicked, the login() method is called

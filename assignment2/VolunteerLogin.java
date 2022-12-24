@@ -6,14 +6,21 @@ import java.awt.*;
 
 // this class  handles the volunteer login screen GUI, and it also handles the VolunteerLogin functionalities
 public class VolunteerLogin extends LoginScreen {
-    // constructor
-    public VolunteerLogin(String username, String password) {
-        super(username, password, "Volunteer Login", "Username", "Password", "Login");
-    }
-
     // class fields
     private String volunteerUsername;
     private String volunteerPassword;
+
+    // class GUI elements
+    static JButton loginButton = new JButton("Login");
+
+    // constructor
+    public VolunteerLogin(String username, String password) {
+        super(username, password, "Volunteer Login", "Username", "Password", loginButton);
+
+        // add an event listener to the login button
+        // when the login button is clicked, the login() method is called
+        loginButton.addActionListener(e -> login());
+    }
 
     // getters and setters
     public String getVolunteerUsername() {
@@ -37,10 +44,17 @@ public class VolunteerLogin extends LoginScreen {
     public void login() {
         // this method is called wwhen the login button is clicked
         // it checks if the username and password are correct
-        if (getUsername().equals(getVolunteerUsername()) && getPassword().equals(getVolunteerPassword())) {
-            // call the VolunteerScreen class
-        } else {
-            // display an error message
+        try {
+            if (getUsername().equals(getVolunteerUsername()) && getPassword().equals(getVolunteerPassword())) {
+                // call the VolunteerScreen class
+            } else {
+                // show an error message
+                JOptionPane.showMessageDialog(null, "Username or password is incorrect", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Username or password is incorrect", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

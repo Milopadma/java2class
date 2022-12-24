@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
-// this whole class' purpose is to be a user interface
+// this whole class' purpose is to be a sort of container and flow manager for all the other classes.
 /**
  * {@summary} This class is the top level main class of the
  * SchoolHELPConsole.java file. This is what should be run first as it contains

@@ -4,20 +4,14 @@
 import java.awt.*;
 import javax.swing.*;
 
-// this class handles everything related to the login screen, the first class to be called when the program is run
+// this class handles everything related to the login screen, takes data from the User class
 // and it also handles both AdminLogin and VolunteerLogin classes
 public abstract class LoginScreen {
-    // class fields
-    private String username;
-    private String password;
-
     // constructor
-    public LoginScreen(String username, String password, String title, String usernameLabel, String passwordLabel,
+    public LoginScreen(String title, String usernameLabel, String passwordLabel,
             JButton loginButton) {
-        this.username = username;
-        this.password = password;
 
-        // have the login screen GUI here as all Login GUIs are the same structure, just
+        // have the login screen GUI here as all login GUIs are the same structure, just
         // different labels and button functionalities
 
         // initialize the frame and GUI elements
@@ -32,23 +26,6 @@ public abstract class LoginScreen {
         frame.add(new JLabel(passwordLabel));
         frame.add(new JPasswordField());
         frame.add(new JButton("Login"));
-    }
-
-    // getters and setters
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     // abstract methods
