@@ -6,34 +6,21 @@ import java.awt.*;
 
 // this class  handles the admin login screen GUI, and it also handles the AdminLogin functionalities
 public class AdminLogin extends LoginScreen {
-    // constructor
-    public AdminLogin(String username, String password) {
-        super(username, password);
-
-        // initialize the frame and GUI elements
-        JFrame frame = new JFrame("Admin Login");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setLayout(new GridLayout(3, 1));
-
-        // create the GUI elements
-        JLabel usernameLabel = new JLabel("Username");
-        JTextField usernameField = new JTextField();
-        JLabel passwordLabel = new JLabel("Password");
-        JPasswordField passwordField = new JPasswordField();
-        JButton loginButton = new JButton("Login");
-
-        // add the GUI elements to the frame
-        frame.add(usernameLabel);
-        frame.add(usernameField);
-        frame.add(passwordLabel);
-        frame.add(passwordField);
-        frame.add(loginButton);
-    }
-
     // class fields
     private String adminUsername;
     private String adminPassword;
+
+    // class GUI elements
+    JButton loginButton = new JButton("Login");
+
+    // constructor
+    public AdminLogin(String username, String password) {
+        super(username, password, "Admin Login", "Username", "Password", loginButton);
+
+        // add an event listener to the login button
+        // when the login button is clicked, the login() method is called
+        loginButton.addActionListener(e -> login());
+    }
 
     // getters and setters
     public String getAdminUsername() {

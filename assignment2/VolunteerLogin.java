@@ -8,27 +8,7 @@ import java.awt.*;
 public class VolunteerLogin extends LoginScreen {
     // constructor
     public VolunteerLogin(String username, String password) {
-        super(username, password);
-
-        // initialize the frame and GUI elements
-        JFrame frame = new JFrame("Volunteer Login");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setLayout(new GridLayout(3, 1));
-
-        // create the GUI elements
-        JLabel usernameLabel = new JLabel("Username");
-        JTextField usernameField = new JTextField();
-        JLabel passwordLabel = new JLabel("Password");
-        JPasswordField passwordField = new JPasswordField();
-        JButton loginButton = new JButton("Login");
-
-        // add the GUI elements to the frame
-        frame.add(usernameLabel);
-        frame.add(usernameField);
-        frame.add(passwordLabel);
-        frame.add(passwordField);
-        frame.add(loginButton);
+        super(username, password, "Volunteer Login", "Username", "Password", "Login");
     }
 
     // class fields
