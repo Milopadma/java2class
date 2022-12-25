@@ -6,16 +6,14 @@ import javax.swing.*;
 
 // this class handles everything related to the login screen, takes data from the User class
 // and it also handles both AdminLogin and VolunteerLogin classes
-public abstract class LoginScreen {
+public class LoginView extends Component {
     // constructor
-    public LoginScreen(String title, String usernameLabel, String passwordLabel,
-            JButton loginButton) {
+    public LoginView(JFrame frame, String title, String usernameLabel, String passwordLabel) {
 
         // have the login screen GUI here as all login GUIs are the same structure, just
         // different labels and button functionalities
 
         // initialize the frame and GUI elements
-        JFrame frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
         frame.setLayout(new GridLayout(3, 1));
@@ -28,16 +26,14 @@ public abstract class LoginScreen {
         frame.add(new JButton("Login"));
     }
 
-    // abstract methods
-    public abstract void login();
+    public static String getUsername() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-    public abstract void logout();
+    public static String getPassword() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-    public abstract void register();
-
-    public abstract void forgotPassword();
-
-    public abstract void changePassword();
-
-    public abstract void changeUsername();
 }
