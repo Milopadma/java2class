@@ -7,6 +7,7 @@ import javax.swing.*;
 public class MainView {
     // class GUI elements
     static JFrame frame = new JFrame();
+
     public static JButton loginButton = new JButton("Login");
 
     // constructor
@@ -19,8 +20,7 @@ public class MainView {
     // class methods
     // show LoginView
     public static void showLoginView() {
-        LoginView loginView = new LoginView(frame, "Login", "Username", "Password");
-        // somehow "paste" the loginView to the current frame
+        LoginView loginView = new LoginView(frame, loginButton, "Login", "Username", "Password");
         frame.add(loginView);
         frame.setVisible(true);
     }

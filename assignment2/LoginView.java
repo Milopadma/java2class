@@ -8,7 +8,7 @@ import javax.swing.*;
 // and it also handles both AdminLogin and VolunteerLogin classes
 public class LoginView extends Component {
     // constructor
-    public LoginView(JFrame frame, String title, String usernameLabel, String passwordLabel) {
+    public LoginView(JFrame frame, JButton loginButton, String title, String usernameLabel, String passwordLabel) {
 
         // have the login screen GUI here as all login GUIs are the same structure, just
         // different labels and button functionalities
@@ -23,7 +23,7 @@ public class LoginView extends Component {
         frame.add(new JTextField());
         frame.add(new JLabel(passwordLabel));
         frame.add(new JPasswordField());
-        frame.add(new JButton("Login"));
+        frame.add(loginButton);
     }
 
     public static String getUsername() {
