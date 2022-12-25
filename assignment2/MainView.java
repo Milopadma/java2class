@@ -5,13 +5,14 @@ import java.awt.*;
 import javax.swing.*;
 
 public class MainView {
-    // class GUI elements, this is gonna get messy
+    // class GUI elements
+    // this is gonna get messy
     static JFrame frame = new JFrame();
 
     // for the loginView
     static JButton AdminButton = new JButton();
     static JButton VolunteerButton = new JButton();
-    static LoginView loginView;
+    static LoginViewPanel loginViewPanel;
 
     // constructor
     public MainView() {
@@ -23,12 +24,17 @@ public class MainView {
     // class methods
     // show LoginView
     public static void showLoginView() {
-        loginView = new LoginView(frame, AdminButton, VolunteerButton, "SchoolHELP Menu");
-        frame.add(loginView);
+        // clear the frame before adding new elements
+        frame.getContentPane().removeAll();
+        loginViewPanel = new LoginViewPanel(AdminButton, VolunteerButton, "SchoolHELP Menu");
+        frame.add(loginViewPanel);
         frame.setVisible(true);
     }
 
-	public static void showAdminLoginView() {
-	}
+    public static void showAdminLoginView() {
+    }
+
+    public static void showVolunteerLoginView() {
+    }
 
 }

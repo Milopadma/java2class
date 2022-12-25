@@ -19,7 +19,7 @@ public class SchoolHELPGUI {
         });
         MainView.VolunteerButton.addActionListener(e -> {
             System.out.println("Volunteer button clicked");
-            MainView.showAdminLoginView();
+            MainView.showVolunteerLoginView();
         });
     }
 }
