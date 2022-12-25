@@ -6,36 +6,27 @@ import javax.swing.*;
 
 public class LoginViewPanel extends JPanel {
     // a generic 2 choice button for the initial login screen
-    private JPanel thisPanel = new JPanel();
-
     // class fields
     private JButton ExitButton = new JButton("Exit");
 
     // constructor
     public LoginViewPanel(JButton AdminButton, JButton VolunteerButton, String title) {
         // different labels and button functionalities
-        JLabel titleLabel = new JLabel(title);
+        JLabel title_label = new JLabel(title);
         AdminButton.setText("Admin");
         VolunteerButton.setText("Volunteer");
 
-        // set the layout of the panel
-        thisPanel.setLayout(new BorderLayout());
+        JPanel thisPanel = new JPanel();
+        thisPanel.setLayout(new BoxLayout(thisPanel, BoxLayout.Y_AXIS));
+        thisPanel.add(title_label);
+        thisPanel.add(AdminButton);
+        thisPanel.add(VolunteerButton);
+        thisPanel.add(ExitButton);
 
-        // new thisPanel for the centered elements
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        centerPanel.add(titleLabel);
-        centerPanel.add(AdminButton);
-        centerPanel.add(VolunteerButton);
-
-        // add the centered elements to the thisPanel
-        thisPanel.add(centerPanel, BorderLayout.CENTER);
-        thisPanel.add(ExitButton, BorderLayout.SOUTH);
+        // add the thisPanel to the main panel
+        add(thisPanel);
 
         // event handlers
         ExitButton.addActionListener(e -> System.exit(0));
-
-        // add the thisPanel to the frame
-        add(thisPanel, BorderLayout.CENTER);
     }
 }

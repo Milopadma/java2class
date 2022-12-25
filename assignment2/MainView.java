@@ -3,33 +3,36 @@
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class MainView {
     // class GUI elements
     // this is gonna get messy
-    static JFrame frame = new JFrame();
+    static JFrame main_frame = new JFrame();
 
     // for the loginView
-    static JButton AdminButton = new JButton();
-    static JButton VolunteerButton = new JButton();
-    static LoginViewPanel loginViewPanel;
+    JButton AdminButton = new JButton();
+    JButton VolunteerButton = new JButton();
+    LoginViewPanel login_view_panel;
 
     // constructor
     public MainView() {
         // initialize the frame and GUI elements
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
+        main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main_frame.setSize(800, 600);
+        main_frame.setLocationRelativeTo(null);
+        main_frame.setResizable(true);
+        main_frame.setTitle("SchoolHELP");
+        main_frame.setLayout(new BorderLayout());
     }
 
     // class methods
     // show LoginView
-    public static void showLoginView() {
+    public void showLoginView() {
         // clear the frame before adding new elements
-        frame.getContentPane().removeAll();
-        loginViewPanel = new LoginViewPanel(AdminButton, VolunteerButton, "SchoolHELP Menu");
-        frame.add(loginViewPanel);
-        frame.setVisible(true);
+        main_frame.getContentPane().removeAll();
+        login_view_panel = new LoginViewPanel(AdminButton, VolunteerButton, "SchoolHELP Menu");
+        main_frame.add(login_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
     }
 
     public static void showAdminLoginView() {
