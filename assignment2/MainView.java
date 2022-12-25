@@ -11,6 +11,7 @@ public class MainView {
     // for the loginView
     static JButton AdminButton = new JButton();
     static JButton VolunteerButton = new JButton();
+    static LoginView loginView;
 
     // constructor
     public MainView() {
@@ -22,9 +23,12 @@ public class MainView {
     // class methods
     // show LoginView
     public static void showLoginView() {
-        LoginView loginView = new LoginView(frame, AdminButton, VolunteerButton, "Choose");
+        loginView = new LoginView(frame, AdminButton, VolunteerButton, "SchoolHELP Menu");
         frame.add(loginView);
         frame.setVisible(true);
     }
+
+	public static void showAdminLoginView() {
+	}
 
 }

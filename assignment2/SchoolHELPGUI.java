@@ -13,7 +13,13 @@ public class SchoolHELPGUI {
         MainView.showLoginView();
         // send an event listener to the login button
         // when the login button is clicked, the login() method is called
-        MainView.AdminButton.addActionListener(e -> System.out.println("Admin button clicked"));
-        MainView.VolunteerButton.addActionListener(e -> System.out.println("Vol button clicked"));
+        MainView.AdminButton.addActionListener(e -> {
+            System.out.println("Admin button clicked");
+            MainView.showAdminLoginView();
+        });
+        MainView.VolunteerButton.addActionListener(e -> {
+            System.out.println("Volunteer button clicked");
+            MainView.showAdminLoginView();
+        });
     }
 }

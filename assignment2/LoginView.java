@@ -7,6 +7,9 @@ import javax.swing.*;
 public class LoginView extends Component {
     // a generic 2 choice button for the initial login screen
 
+    // class fields
+    private JButton ExitButton = new JButton("Exit");
+
     // constructor
     public LoginView(JFrame frame, JButton AdminButton, JButton VolunteerButton, String title) {
         // different labels and button functionalities
@@ -20,9 +23,13 @@ public class LoginView extends Component {
         frame.setLayout(new GridLayout(3, 1));
 
         // add the GUI elements to the frame
+        frame.add(titleLabel);
         frame.add(AdminButton);
         frame.add(VolunteerButton);
-        frame.add(titleLabel);
+        frame.add(ExitButton);
+
+        // event handlers
+        ExitButton.addActionListener(e -> System.exit(0));
 
     }
 }
