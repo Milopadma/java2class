@@ -5,10 +5,12 @@ import java.awt.*;
 import javax.swing.*;
 
 public class MainView {
-    // class GUI elements
+    // class GUI elements, this is gonna get messy
     static JFrame frame = new JFrame();
 
-    public static JButton loginButton = new JButton("Login");
+    // for the loginView
+    static JButton AdminButton = new JButton();
+    static JButton VolunteerButton = new JButton();
 
     // constructor
     public MainView() {
@@ -20,7 +22,7 @@ public class MainView {
     // class methods
     // show LoginView
     public static void showLoginView() {
-        LoginView loginView = new LoginView(frame, loginButton, "Login", "Username", "Password");
+        LoginView loginView = new LoginView(frame, AdminButton, VolunteerButton, "Choose");
         frame.add(loginView);
         frame.setVisible(true);
     }
