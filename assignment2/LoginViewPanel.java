@@ -19,11 +19,11 @@ public class LoginViewPanel extends JPanel {
         VolunteerButton.setText("Volunteer");
 
         // set the layout of the panel
-        setLayout(new BorderLayout());
+        thisPanel.setLayout(new BorderLayout());
 
         // new thisPanel for the centered elements
         JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BorderLayout(3, 1));
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.add(titleLabel);
         centerPanel.add(AdminButton);
         centerPanel.add(VolunteerButton);

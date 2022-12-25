@@ -3,6 +3,7 @@
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class MainView {
     // class GUI elements
