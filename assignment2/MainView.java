@@ -1,4 +1,8 @@
-// this class is responsible for the main view of the application GUI, all GUI-related classes are based on this class
+// this class is responsible for the main view of the application GUI, 
+// all GUI-related classes are either based on this class, or called from this class
+// GUI related class elements are allowed to call SchoolHELPGUI methods to pass data
+// to the data classes
+
 // GUI elements import
 
 import java.awt.*;
@@ -22,6 +26,8 @@ public class MainView {
         main_frame.setResizable(true);
         main_frame.setTitle("SchoolHELP");
         main_frame.setLayout(new BorderLayout());
+        // TODO: add icon, fade animations, splashscreen
+
         // show the login view
         showLoginView();
     }
@@ -51,3 +57,15 @@ public class MainView {
     }
 
 }
+
+// !notes
+// all exceptions handled by their own component classes
+// all GUI elements are initialized in the constructor
+// all GUI elements are added to the frame in the show methods
+// all GUI elements are removed from the frame in the show methods
+// all GUI elements must only transfer data to SchoolHELPGUI and not direct to
+// the data classes
+// all GUI elements must only transfer data from SchoolHELPGUI and not direct
+// from the data classes (by method calls)
+// all inputs are validated by the GUI elements that asked for it
+// all inputs are wrapped in a try-catch block to handle exceptions

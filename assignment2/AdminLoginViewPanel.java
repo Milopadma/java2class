@@ -3,6 +3,7 @@
 // class imports
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 // this class handles the admin login screen GUI, and it also handles the AdminLogin functionalities,
 // takes and processes data from and for the SchoolAdmin class
@@ -55,13 +56,18 @@ public class AdminLoginViewPanel extends JPanel {
         String username = usernamefield.getText();
         String password = new String(passwordfield.getPassword());
 
-        // check if the username and password are correct
-        if (SchoolHELPGUI.checkLogin(username, password)) {
-            // if the login is successful, show the admin menu
-            MainView.showAdminMenuView();
-        } else {
-            // if the login is unsuccessful, show an error message
-            JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            // check if the username and password are correct
+            if (SchoolHELPGUI.checkLogin(username, password)) {
+                // if the login is successful, show the admin menu
+                MainView.showAdminMenuView();
+            } else {
+                // if the login is unsuccessful, show an error message
+                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
         }
     }
 }

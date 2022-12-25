@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -38,32 +40,19 @@ public class SchoolHELPGUI {
 
     // this method is called when the login button is clicked
     public static boolean checkLogin(String username, String password) {
-        // it checks if the username and password are correct
-        try {
-            if (SchoolHELP.isUserAdmin(username, password)) {
+        if (SchoolHELP.isUserAdmin(username, password)) {
 
-                // call the AdminScreen class
-                // AdminScreen admin_screen = new AdminScreen();
-                // set the current user to the admin
-                currentUser = SchoolHELP.getUser(username, password);
-                // set the current user to the admin
-                // currentUserAdmin = SchoolHELP.getAdmin();
-                // set the first time login to false
-                isFirstTimeLogin = false;
-                // return true
-                return true;
-            } else {
-                // show an error message
-                JOptionPane.showMessageDialog(null, "Username or password is incorrect", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                // return false
-                return false;
-            }
-        } catch (
-
-        Exception e) {
-            JOptionPane.showMessageDialog(null, "Username or password is incorrect", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            // call the AdminScreen class
+            // AdminScreen admin_screen = new AdminScreen();
+            // set the current user to the admin
+            currentUser = SchoolHELP.getUser(username, password);
+            // set the current user to the admin
+            // currentUserAdmin = SchoolHELP.getAdmin();
+            // set the first time login to false
+            isFirstTimeLogin = false;
+            // return true
+            return true;
+        } else {
             // return false
             return false;
         }
