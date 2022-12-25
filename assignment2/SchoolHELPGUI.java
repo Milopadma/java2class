@@ -1,3 +1,6 @@
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+
 // I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 // this class controls the data flow, and controls the communications between the GUI classes and the data classes
 public class SchoolHELPGUI {
@@ -10,22 +13,84 @@ public class SchoolHELPGUI {
     private static boolean isFirstTimeLogin = true;
 
     public static void main(String[] args) {
-        MainView main_view = new MainView();
-        main_view.showLoginView();
-        // send an event listener to the login button
-        // when the login button is clicked, the login() method is called
-        main_view.login_view_panel.AdminButton.addActionListener(e -> {
-            System.out.println("Admin button clicked");
-            MainView.showAdminLoginView();
-        });
-        // main_view.VolunteerButton.addActionListener(e -> {
-        // System.out.println("Volunteer button clicked");
-        // MainView.showVolunteerLoginView();
-        // });
+        // init the main view
+        try {
+            MainView main_view = new MainView();
+            // send an event listener to the login button
+            // when the login button is clicked, the login() method is called
+            // main_view.login_view_panel.AdminButton.addActionListener(event -> {
+            // System.out.println("Admin button clicked");
+            // MainView.showAdminLoginView();
+            // });
+            // main_view.VolunteerButton.addActionListener(e -> {
+            // System.out.println("Volunteer button clicked");
+            // MainView.showVolunteerLoginView();
+            // });
+            // main_view.admin_login_view_panel.UsernameTextField.addActionListener(e -> {
+            // System.out.println("Username text field clicked");
+            // MainView.showAdminLoginView();
+            // });
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
 
-        // main_view.admin_login_view_panel.UsernameTextField.addActionListener(e -> {
-        // System.out.println("Username text field clicked");
-        // MainView.showAdminLoginView();
-        // });
+    }
+
+    // this method is called when the login button is clicked
+    public static boolean checkLogin(String username, String password) {
+        // it checks if the username and password are correct
+        try {
+            if (SchoolHELP.isUserAdmin(username, password)) {
+
+                // call the AdminScreen class
+                // AdminScreen admin_screen = new AdminScreen();
+                // set the current user to the admin
+                currentUser = SchoolHELP.getUser(username, password);
+                // set the current user to the admin
+                // currentUserAdmin = SchoolHELP.getAdmin();
+                // set the first time login to false
+                isFirstTimeLogin = false;
+                // return true
+                return true;
+            } else {
+                // show an error message
+                JOptionPane.showMessageDialog(null, "Username or password is incorrect", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                // return false
+                return false;
+            }
+        } catch (
+
+        Exception e) {
+            JOptionPane.showMessageDialog(null, "Username or password is incorrect", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            // return false
+            return false;
+        }
+    }
+
+    // getters and setters
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        SchoolHELPGUI.currentUser = currentUser;
+    }
+
+    // public static SchoolAdmin getCurrentUserAdmin() {
+    // return currentUserAdmin;
+    // }
+
+    // public static void setCurrentUserAdmin(SchoolAdmin currentUserAdmin) {
+    // SchoolHELPGUI.currentUserAdmin = currentUserAdmin;
+    // }
+
+    public static boolean isFirstTimeLogin() {
+        return isFirstTimeLogin;
+    }
+
+    public static void setFirstTimeLogin(boolean isFirstTimeLogin) {
+        SchoolHELPGUI.isFirstTimeLogin = isFirstTimeLogin;
     }
 }

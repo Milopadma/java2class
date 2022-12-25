@@ -49,6 +49,15 @@ public class LoginViewPanel extends JPanel {
 
         // event handlers
         ExitButton.addActionListener(e -> System.exit(0));
+        AdminButton.addActionListener(e -> {
+            // propagate data to SchoolHELPGUI class to let them decide what to do
+            MainView.showAdminLoginView();
+        });
+
+        VolunteerButton.addActionListener(e -> {
+            // propagate data to SchoolHELPGUI class to let them decide what to do
+            MainView.showVolunteerLoginView();
+        });
     }
 }
 

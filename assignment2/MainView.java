@@ -10,8 +10,8 @@ public class MainView {
     static JFrame main_frame = new JFrame();
 
     // for the loginView
-    LoginViewPanel login_view_panel;
-    AdminLoginViewPanel admin_login_view_panel;
+    static LoginViewPanel login_view_panel;
+    static AdminLoginViewPanel admin_login_view_panel;
 
     // constructor
     public MainView() {
@@ -22,11 +22,13 @@ public class MainView {
         main_frame.setResizable(true);
         main_frame.setTitle("SchoolHELP");
         main_frame.setLayout(new BorderLayout());
+        // show the login view
+        showLoginView();
     }
 
     // class methods
     // show LoginView
-    public void showLoginView() {
+    public static void showLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
         login_view_panel = new LoginViewPanel();
@@ -37,12 +39,15 @@ public class MainView {
     public static void showAdminLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        // admin_login_view_panel = new AdminLoginViewPanel();
-        // main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
-        // main_frame.setVisible(true);
+        admin_login_view_panel = new AdminLoginViewPanel();
+        main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
     }
 
     public static void showVolunteerLoginView() {
+    }
+
+    public static void showAdminMenuView() {
     }
 
 }
