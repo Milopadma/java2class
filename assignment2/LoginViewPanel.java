@@ -7,28 +7,43 @@ import javax.swing.*;
 public class LoginViewPanel extends JPanel {
     // a generic 2 choice button for the initial login screen
     // class fields
+    public JButton AdminButton = new JButton();
+    public JButton VolunteerButton = new JButton();
     private JButton ExitButton = new JButton("Exit");
 
     // constructor
-    public LoginViewPanel(JButton AdminButton, JButton VolunteerButton, String title) {
-        JLabel title_label = new JLabel(title);
+    public LoginViewPanel() {
+        JLabel title_label = new JLabel("<html><h1>" + "SchoolHELP Menu" + "</h1></html>");
 
-        AdminButton.setText("Admin");
-        VolunteerButton.setText("Volunteer");
+        AdminButton.setText("Admin Login");
+        VolunteerButton.setText("Volunteer Login");
 
+        // init the center panel
         JPanel center_panel = new JPanel();
+
         // center panel layout, items are stacked vertically
         center_panel.setLayout(new BoxLayout(center_panel, BoxLayout.Y_AXIS));
         center_panel.add(title_label);
-        center_panel.add(AdminButton);
-        center_panel.add(VolunteerButton);
-        center_panel.add(ExitButton);
+
+        // init the panel for the buttons
+        JPanel button_panel = new JPanel();
+
+        // button panel layout, items are stacked vertically with same width using
+        // GridLayout
+        button_panel.setLayout(new GridLayout(0, 1, 0, 10));
+        button_panel.add(AdminButton);
+        button_panel.add(VolunteerButton);
+        button_panel.add(ExitButton);
+
+        // to add the button panel to the center panel
+        center_panel.add(button_panel);
 
         // parent panel layout, items are stacked horizontally
         setLayout(new BoxLayout(this, 2));
 
         // to center the center panel
         setLayout(new GridBagLayout());
+
         // to add the center panel to the parent panel
         add(center_panel, new GridBagConstraints());
 

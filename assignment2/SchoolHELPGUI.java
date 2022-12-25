@@ -14,13 +14,18 @@ public class SchoolHELPGUI {
         main_view.showLoginView();
         // send an event listener to the login button
         // when the login button is clicked, the login() method is called
-        main_view.AdminButton.addActionListener(e -> {
+        main_view.login_view_panel.AdminButton.addActionListener(e -> {
             System.out.println("Admin button clicked");
             MainView.showAdminLoginView();
         });
-        main_view.VolunteerButton.addActionListener(e -> {
-            System.out.println("Volunteer button clicked");
-            MainView.showVolunteerLoginView();
-        });
+        // main_view.VolunteerButton.addActionListener(e -> {
+        // System.out.println("Volunteer button clicked");
+        // MainView.showVolunteerLoginView();
+        // });
+
+        // main_view.admin_login_view_panel.UsernameTextField.addActionListener(e -> {
+        // System.out.println("Username text field clicked");
+        // MainView.showAdminLoginView();
+        // });
     }
 }

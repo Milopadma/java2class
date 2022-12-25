@@ -10,9 +10,8 @@ public class MainView {
     static JFrame main_frame = new JFrame();
 
     // for the loginView
-    JButton AdminButton = new JButton();
-    JButton VolunteerButton = new JButton();
     LoginViewPanel login_view_panel;
+    AdminLoginViewPanel admin_login_view_panel;
 
     // constructor
     public MainView() {
@@ -30,12 +29,17 @@ public class MainView {
     public void showLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        login_view_panel = new LoginViewPanel(AdminButton, VolunteerButton, "SchoolHELP Menu");
+        login_view_panel = new LoginViewPanel();
         main_frame.add(login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
     public static void showAdminLoginView() {
+        // clear the frame before adding new elements
+        main_frame.getContentPane().removeAll();
+        // admin_login_view_panel = new AdminLoginViewPanel();
+        // main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
+        // main_frame.setVisible(true);
     }
 
     public static void showVolunteerLoginView() {
