@@ -85,6 +85,8 @@ public class MainView {
     }
 
     // * */ ADMIN USER FUNCTIONALITY STAGE
+    // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE ADMIN USER */
+    // * DIRECTLY CORRELATES WITH THE DECLARED PUBLIC STATIC FIELDS OF THIS CLASS */
     // show AdminMenuView (admin menu with dashboard)
     public static void showAdminMenuView() {
         // clear the frame before adding new elements
@@ -106,6 +108,7 @@ public class MainView {
 
     public static void showAdminRegisterSchoolView() {
         // todo
+        System.out.println("showAdminRegisterSchoolView() called");
     }
 
     public static void showAdminRegisterSchoolAdminView() {
