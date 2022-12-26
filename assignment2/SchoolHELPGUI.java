@@ -38,6 +38,24 @@ public class SchoolHELPGUI {
 
     }
 
+    // this method handles the login process for admin user
+    public static void adminLogin(String username, char[] password) {
+        String password_stringified = new String(password);
+        try {
+            // check if the username and password are correct
+            if (SchoolHELPGUI.checkLogin(username, password_stringified)) {
+                // if the login is successful, show the admin menu
+                MainView.showAdminMenuView();
+            } else {
+                // if the login is unsuccessful, show an error message
+                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
     // this method is called when the login button is clicked
     public static boolean checkLogin(String username, String password) {
         if (SchoolHELP.isUserAdmin(username, password)) {
@@ -46,8 +64,6 @@ public class SchoolHELPGUI {
             // AdminScreen admin_screen = new AdminScreen();
             // set the current user to the admin
             currentUser = SchoolHELP.getUser(username, password);
-            // set the current user to the admin
-            // currentUserAdmin = SchoolHELP.getAdmin();
             // set the first time login to false
             isFirstTimeLogin = false;
             // return true

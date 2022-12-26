@@ -4,19 +4,19 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class LoginViewPanel extends JPanel {
+public class UserChoiceViewPanel extends JPanel {
     // a generic 2 choice button for the initial login screen
     // class fields
-    public JButton AdminButton = new JButton();
-    public JButton VolunteerButton = new JButton();
+    public JButton AdminChoiceButton = new JButton();
+    public JButton VolunteerChoiceButton = new JButton();
     private JButton ExitButton = new JButton("Exit");
 
     // constructor
-    public LoginViewPanel() {
+    public UserChoiceViewPanel() {
         JLabel title_label = new JLabel("<html><h1>" + "SchoolHELP Menu" + "</h1></html>");
 
-        AdminButton.setText("Admin Login");
-        VolunteerButton.setText("Volunteer Login");
+        AdminChoiceButton.setText("Admin Login");
+        VolunteerChoiceButton.setText("Volunteer Login");
 
         // init the center panel
         JPanel center_panel = new JPanel();
@@ -31,8 +31,8 @@ public class LoginViewPanel extends JPanel {
         // button panel layout, items are stacked vertically with same width using
         // GridLayout
         button_panel.setLayout(new GridLayout(0, 1, 0, 10));
-        button_panel.add(AdminButton);
-        button_panel.add(VolunteerButton);
+        button_panel.add(AdminChoiceButton);
+        button_panel.add(VolunteerChoiceButton);
         button_panel.add(ExitButton);
 
         // to add the button panel to the center panel
@@ -44,18 +44,17 @@ public class LoginViewPanel extends JPanel {
         // to center the center panel
         setLayout(new GridBagLayout());
 
-
         // to add the center panel to the parent panel
         add(center_panel, new GridBagConstraints());
 
         // event handlers
         ExitButton.addActionListener(e -> System.exit(0));
-        AdminButton.addActionListener(e -> {
+        AdminChoiceButton.addActionListener(e -> {
             // propagate data to SchoolHELPGUI class to let them decide what to do
             MainView.showAdminLoginView();
         });
 
-        VolunteerButton.addActionListener(e -> {
+        VolunteerChoiceButton.addActionListener(e -> {
             // propagate data to SchoolHELPGUI class to let them decide what to do
             MainView.showVolunteerLoginView();
         });

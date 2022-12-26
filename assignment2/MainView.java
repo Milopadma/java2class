@@ -6,21 +6,40 @@
 // GUI elements import
 
 import java.awt.*;
+import java.beans.EventHandler;
+
 import javax.swing.*;
+import javax.swing.event.EventListenerList;
 
 public class MainView {
     // class GUI elements
     // this is gonna get messy
     static JFrame main_frame = new JFrame();
 
-    // for the loginView
-    // TODO might as well just combine these views to one and separate the
-    // TODO controllers since theres only 2 different main views (login and
-    // TODO dashboard)
-    static LoginViewPanel login_view_panel;
-    static AdminLoginViewPanel admin_login_view_panel;
+    // save the previous panel to be able to go back to it using the Back button
+    static JPanel current_previous_panel;
 
-    static DashboardView dashboard_view;
+    // GUI component views
+    static UserChoiceViewPanel user_choice_view_panel;
+    static LoginPanel admin_login_view_panel;
+    static LoginPanel volunteer_login_view_panel;
+
+    // the generic back button for all views
+    static JButton back_button = new JButton("Back");
+
+    // all admin-related view panels
+    static MultibuttonInputPanel admin_schools_view_panel;
+    static MultifieldInputPanel admin_register_school_view_panel;
+    static MultifieldInputPanel admin_register_school_view_panel_2;
+    static StandardDialogPanel admin_register_school_view_panel_3;
+    static ThreestepTimelinePanel admin_timeline_view_panel;
+
+    // all volunteer-related view panels
+    // todo
+
+    // the sidemenu views
+    static SidemenuView admin_sidemenu_view_panel;
+    static SidemenuView volunteer_sidemenu_view_panel;
 
     // constructor
     public MainView() {
@@ -40,12 +59,13 @@ public class MainView {
     // class methods, every GUI class actions will eventually call one of these
     // public methods to keep the application flow
 
+    // * */ USER SELECT AND LOGIN STAGE
     // show LoginView (pick and choose User type)
     public static void showLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        login_view_panel = new LoginViewPanel();
-        main_frame.add(login_view_panel, BorderLayout.CENTER);
+        user_choice_view_panel = new UserChoiceViewPanel();
+        main_frame.add(user_choice_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -53,22 +73,50 @@ public class MainView {
     public static void showAdminLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        admin_login_view_panel = new AdminLoginViewPanel(SchoolHELPGUI.isFirstTimeLogin());
+        admin_login_view_panel = new LoginPanel(SchoolHELPGUI.isFirstTimeLogin(), SchoolHELPGUI.getCurrentUser());
         main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
     // show VolunteerLoginView (enter username and password for volunteers)
     public static void showVolunteerLoginView() {
+        // clear the frame before adding new elements
+        main_frame.getContentPane().removeAll();
+        volunteer_login_view_panel = new LoginPanel(SchoolHELPGUI.isFirstTimeLogin(), SchoolHELPGUI.getCurrentUser());
+        main_frame.add(volunteer_login_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
     }
 
+    // * */ ADMIN USER FUNCTIONALITY STAGE
     // show AdminMenuView (admin menu with dashboard)
     public static void showAdminMenuView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        admin_menu_view_panel = new AdminMenuViewPanel();
-        main_frame.add(admin_menu_view_panel, BorderLayout.CENTER);
+        admin_sidemenu_view_panel = new SidemenuView(SchoolHELPGUI.getCurrentUser());
+        // the buttons and their event handlers
+        String button_labels[] = { "Register a new School", "Register a new School Admin", "View all Schools" };
+        // an array of functions to be called when the buttons are clicked
+        Runnable button_functions[] = { MainView::showAdminRegisterSchoolView,
+                MainView::showAdminRegisterSchoolAdminView,
+                MainView::showAdminSchoolsView };
+
+        admin_schools_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
+
+        main_frame.add(admin_sidemenu_view_panel, BorderLayout.WEST);
+        main_frame.add(admin_schools_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
+    };
+
+    public static void showAdminRegisterSchoolView() {
+        // todo
+    }
+
+    public static void showAdminRegisterSchoolAdminView() {
+        // todo
+    }
+
+    public static void showAdminSchoolsView() {
+        // todo
     }
 
 }
@@ -76,8 +124,8 @@ public class MainView {
 // !notes
 // all exceptions handled by their own component classes
 // all GUI elements are initialized in the constructor
-// all GUI elements are added to the frame in the show methods
-// all GUI elements are removed from the frame in the show methods
+// all GUI elements are added to the main_frame in the show methods
+// all GUI elements are removed from the main_frame in the show methods
 // all GUI elements must only transfer data to SchoolHELPGUI and not direct to
 // the data classes
 // all GUI elements must only transfer data from SchoolHELPGUI and not direct
