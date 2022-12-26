@@ -44,6 +44,7 @@ public class LoginViewPanel extends JPanel {
         // to center the center panel
         setLayout(new GridBagLayout());
 
+
         // to add the center panel to the parent panel
         add(center_panel, new GridBagConstraints());
 

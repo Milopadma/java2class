@@ -14,8 +14,13 @@ public class MainView {
     static JFrame main_frame = new JFrame();
 
     // for the loginView
+    // TODO might as well just combine these views to one and separate the
+    // TODO controllers since theres only 2 different main views (login and
+    // TODO dashboard)
     static LoginViewPanel login_view_panel;
     static AdminLoginViewPanel admin_login_view_panel;
+
+    static DashboardView dashboard_view;
 
     // constructor
     public MainView() {
@@ -32,8 +37,10 @@ public class MainView {
         showLoginView();
     }
 
-    // class methods
-    // show LoginView
+    // class methods, every GUI class actions will eventually call one of these
+    // public methods to keep the application flow
+
+    // show LoginView (pick and choose User type)
     public static void showLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
@@ -42,18 +49,26 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    // show AdminLoginView (enter username and password for school admins)
     public static void showAdminLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        admin_login_view_panel = new AdminLoginViewPanel();
+        admin_login_view_panel = new AdminLoginViewPanel(SchoolHELPGUI.isFirstTimeLogin());
         main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
+    // show VolunteerLoginView (enter username and password for volunteers)
     public static void showVolunteerLoginView() {
     }
 
+    // show AdminMenuView (admin menu with dashboard)
     public static void showAdminMenuView() {
+        // clear the frame before adding new elements
+        main_frame.getContentPane().removeAll();
+        admin_menu_view_panel = new AdminMenuViewPanel();
+        main_frame.add(admin_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
     }
 
 }
