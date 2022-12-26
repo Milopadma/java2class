@@ -33,15 +33,29 @@ public class AdminLoginViewPanel extends JPanel {
         // init the container panel for both fields and the corresponding title
         JPanel fields_container_panel = new JPanel();
 
+        // username label and field will be stacked on top of each other, but left
+        // aligned
+        username_panel.setLayout(new BoxLayout(username_panel, BoxLayout.Y_AXIS));
         // each input field will be left aligned (username)
-        username_panel.setLayout(new BorderLayout());
-        username_panel.add(usernameLabel, );
+        username_panel.add(usernameLabel);
         username_panel.add(usernameField);
+        usernameField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        usernameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        // password label and field will be stacked on top of each other, but left
+        // aligned
+        password_panel.setLayout(new BoxLayout(password_panel, BoxLayout.Y_AXIS));
         // each input field will be left aligned (password)
-        password_panel.setLayout(new BorderLayout());
         password_panel.add(passwordLabel);
         password_panel.add(passwordField);
+        passwordField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        passwordLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // add both the username and password panels to the fields container panel,
+        // vertically aligned using BorderLayout
+        fields_container_panel.setLayout(new BorderLayout());
+        fields_container_panel.add(username_panel, BorderLayout.NORTH);
+        fields_container_panel.add(password_panel, BorderLayout.SOUTH);
 
         // button panel layout, items are stacked horizontally using FlowLayouut
         button_panel.setLayout(new FlowLayout(1, 10, 1));
@@ -69,8 +83,8 @@ public class AdminLoginViewPanel extends JPanel {
     // this method handles the login process
     public static void login() {
         // get the username and password from the text fields
-        String username = usernamefield.getText();
-        String password = new String(passwordfield.getPassword());
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
 
         try {
             // check if the username and password are correct
