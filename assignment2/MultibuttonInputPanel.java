@@ -1,7 +1,4 @@
-import java.beans.EventHandler;
-
 import javax.swing.*;
-import javax.swing.event.EventListenerList;
 
 // this class represents the generic panel with multiple buttons in it
 public class MultibuttonInputPanel extends JPanel {

@@ -6,10 +6,7 @@
 // GUI elements import
 
 import java.awt.*;
-import java.beans.EventHandler;
-
 import javax.swing.*;
-import javax.swing.event.EventListenerList;
 
 public class MainView {
     // class GUI elements

@@ -1,7 +1,4 @@
-import java.io.IOException;
-
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 // I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 // this class controls the data flow, and controls the communications between the GUI classes and the data classes
