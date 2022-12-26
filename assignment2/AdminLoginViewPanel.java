@@ -3,16 +3,17 @@
 // class imports
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 // this class handles the admin login screen GUI, and it also handles the AdminLogin functionalities,
 // takes and processes data from and for the SchoolAdmin class
 public class AdminLoginViewPanel extends JPanel {
     // class fields
-    public static JTextField usernamefield = new JTextField(10);
-    public static JPasswordField passwordfield = new JPasswordField(10);
+    public static JTextField usernameField = new JTextField(10);
+    public static JPasswordField passwordField = new JPasswordField(10);
     public static JButton loginButton = new JButton("Login");
     public static JButton backButton = new JButton("Back");
+    public static JLabel usernameLabel = new JLabel("Username");
+    public static JLabel passwordLabel = new JLabel("Password");
 
     // constructor
     public AdminLoginViewPanel() {
@@ -25,15 +26,30 @@ public class AdminLoginViewPanel extends JPanel {
         // init the panel for the buttons
         JPanel button_panel = new JPanel();
 
-        // button panel layout, items are stacked vertically with same width using
-        // GridLayout
-        button_panel.setLayout(new GridLayout(0, 1, 0, 10));
-        button_panel.add(usernamefield);
-        button_panel.add(passwordfield);
+        // init the panel for the username and password holding panels
+        JPanel username_panel = new JPanel();
+        JPanel password_panel = new JPanel();
+
+        // init the container panel for both fields and the corresponding title
+        JPanel fields_container_panel = new JPanel();
+
+        // each input field will be left aligned (username)
+        username_panel.setLayout(new BorderLayout());
+        username_panel.add(usernameLabel, );
+        username_panel.add(usernameField);
+
+        // each input field will be left aligned (password)
+        password_panel.setLayout(new BorderLayout());
+        password_panel.add(passwordLabel);
+        password_panel.add(passwordField);
+
+        // button panel layout, items are stacked horizontally using FlowLayouut
+        button_panel.setLayout(new FlowLayout(1, 10, 1));
         button_panel.add(loginButton);
         button_panel.add(backButton);
 
-        // to add the button panel to the center panel
+        // to add the panels to the center panel
+        center_panel.add(fields_container_panel);
         center_panel.add(button_panel);
 
         // parent panel layout, items are stacked horizontally
