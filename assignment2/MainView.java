@@ -46,15 +46,31 @@ public class MainView {
         main_frame.setLocationRelativeTo(null);
         main_frame.setResizable(true);
         main_frame.setTitle("SchoolHELP");
+        // back button functionality
+        back_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            main_frame.getContentPane().removeAll();
+            main_frame.add(current_previous_panel, BorderLayout.CENTER);
+            main_frame.setVisible(true);
+        });
         main_frame.setLayout(new BorderLayout());
         // TODO: add icon, fade animations, splashscreen
 
         // show the login view
         showLoginView();
+
     }
 
     // class methods, every GUI class actions will eventually call one of these
     // public methods to keep the application flow
+
+    // * HELPER CLASS METHODS */
+    // to save the current panel to be able to go back to it using the Back button
+    public static void saveCurrentPanel(JPanel panel) {
+        current_previous_panel = panel;
+        //! this throws an exception
+        System.out.println("Saved panel: " + current_previous_panel);
+    }
 
     // * */ USER SELECT AND LOGIN STAGE
     // show LoginView (pick and choose User type)
@@ -91,6 +107,12 @@ public class MainView {
     public static void showAdminMenuView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        // setting the JLabel to make a new line after the word "Admin" so that "Menu"
+        // is on a new line
+        title_label.setVerticalAlignment(JLabel.TOP);
+
         admin_sidemenu_view_panel = new SidemenuView(SchoolHELPGUI.getCurrentUser());
         // the buttons and their event handlers
         String button_labels[] = { "Register a new School", "Register a new School Admin", "View all Schools" };
@@ -101,8 +123,11 @@ public class MainView {
 
         admin_schools_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
 
+        // add the elements to the frame
+        main_frame.add(title_label, BorderLayout.NORTH);
         main_frame.add(admin_sidemenu_view_panel, BorderLayout.WEST);
         main_frame.add(admin_schools_view_panel, BorderLayout.CENTER);
+        main_frame.add(back_button, BorderLayout.SOUTH);
         main_frame.setVisible(true);
     };
 
