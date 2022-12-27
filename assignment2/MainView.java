@@ -115,8 +115,8 @@ public class MainView {
         main_frame.add(admin_sidemenu_view_panel, BorderLayout.WEST);
     }
 
-    // show AdminMenuView (admin menu with dashboard)
-    public static void showAdminMenuView() {
+    // show AdminSchoolsMenuView (school admin menu with sidemenu dashboard)
+    public static void showAdminSchoolsMenuView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
 
@@ -144,14 +144,20 @@ public class MainView {
         // add the elements to their respective panels
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_schools_view_panel, BorderLayout.CENTER);
+
+        // for the back button to go back to the admin login view
+        back_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAdminLoginView();
+        });
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
-        // TODO back button doesnt work
 
+        // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
-
         main_frame.setVisible(true);
     };
 
+    // to show the view for registering a new school, step 1
     public static void showAdminRegisterSchoolView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -162,7 +168,7 @@ public class MainView {
 
         String input_labels[] = { "School Name", "School Address", "School Phone Number", "School Email" };
         String input_field_values[] = { "", "", "", "" };
-        Runnable button_functions = MainView::showAdminRegisterSchoolView2;
+        Runnable button_functions[] = { MainView::showAdminRegisterSchoolView2, MainView::showAdminSchoolsMenuView };
         admin_register_school_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
                 button_functions);
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);

@@ -42,7 +42,7 @@ public class SchoolHELPGUI {
             // check if the username and password are correct
             if (SchoolHELPGUI.checkLogin(username, password_stringified)) {
                 // if the login is successful, show the admin menu
-                MainView.showAdminMenuView();
+                MainView.showAdminSchoolsMenuView();
             } else {
                 // if the login is unsuccessful, show an error message
                 JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error",

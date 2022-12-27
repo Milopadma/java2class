@@ -12,7 +12,7 @@ public class MultifieldInputPanel extends JPanel {
     JPanel field_panel = new JPanel();
 
     // class constructor
-    MultifieldInputPanel(String[] fieldNames, String[] fieldValues, Runnable button_function) {
+    MultifieldInputPanel(String[] fieldNames, String[] fieldValues, Runnable[] button_functions) {
         // field layout are vertically stacked with same width using BoxLayout
         field_panel.setLayout(new BoxLayout(field_panel, BoxLayout.Y_AXIS));
 
@@ -28,10 +28,15 @@ public class MultifieldInputPanel extends JPanel {
             field_panel.add(text_field);
         });
 
-        // for the button
-        JButton button = new JButton("Done");
-        button.addActionListener(e -> MainView.saveCurrentPanel(this));
-        button.addActionListener(e -> button_function.run());
+        // for the Done button
+        JButton done_button = new JButton("Done");
+        done_button.addActionListener(e -> button_functions[0].run());
+        field_panel.add(done_button);
+
+        // for the Back button
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> button_functions[1].run());
+        field_panel.add(back_button);
 
         // parent panel layout, items are stacked horizontally
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

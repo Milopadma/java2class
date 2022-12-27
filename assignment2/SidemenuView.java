@@ -47,7 +47,7 @@ public class SidemenuView extends JPanel {
             // adding the event handlers for the buttons
             schools_button.addActionListener(e -> {
                 // call the MainView method to show the School admin menu view
-                MainView.showAdminMenuView();
+                MainView.showAdminSchoolsMenuView();
             });
 
             requests_button.addActionListener(e -> {
