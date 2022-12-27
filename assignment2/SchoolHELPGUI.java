@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -48,6 +49,10 @@ public class SchoolHELPGUI {
 
     public static void setFirstTimeLogin(boolean isFirstTimeLogin) {
         SchoolHELPGUI.isFirstTimeLogin = isFirstTimeLogin;
+    }
+
+    public static ArrayList<School> getAllSchools() {
+        return SchoolHELP.getSchools();
     }
 
     // * CLASS HELPER METHODS */

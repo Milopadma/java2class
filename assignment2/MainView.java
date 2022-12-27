@@ -6,6 +6,7 @@
 // GUI elements import
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -163,7 +164,7 @@ public class MainView {
         // an array of functions to be called when the buttons are clicked
         Runnable button_functions[] = { MainView::showAdminRegisterSchoolView,
                 MainView::showAdminRegisterSchoolAdminView,
-                MainView::showAdminSchoolsView };
+                MainView::showAllSchoolsView };
 
         // create the panel with the buttons
         admin_schools_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
@@ -188,6 +189,54 @@ public class MainView {
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     };
+
+    // provide a JList of all the schools in the database
+    public static void showAllSchoolsView() {
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Viewing all Schools</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // get data from SchoolHELPGUI class
+        ArrayList<School> schools = SchoolHELPGUI.getAllSchools();
+
+        // create a new JList with the data
+        JList<School> school_list = new JList<School>(schools.toArray(new School[schools.size()]));
+        school_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        school_list.setLayoutOrientation(JList.VERTICAL);
+        school_list.setVisibleRowCount(-1);
+
+        // create a scroll pane for the list
+        JScrollPane school_list_scroll_pane = new JScrollPane(school_list);
+
+        // add the elements to their respective panels
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(school_list_scroll_pane, BorderLayout.CENTER);
+
+        // for the back button to go back to the admin login view
+        back_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAdminSchoolsMenuView();
+        });
+
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
+    }
+
+    public static void showAdminRequestsView() {
+    }
+
+    public static void showAdminOffersView() {
+    }
 
     // to show the view for registering a new school, step 1
     public static void showAdminRegisterSchoolView() {
@@ -244,15 +293,6 @@ public class MainView {
 
         main_frame.setVisible(true);
 
-    }
-
-    public static void showAdminSchoolsView() {
-    }
-
-    public static void showAdminRequestsView() {
-    }
-
-    public static void showAdminOffersView() {
     }
 
     // this is shown when both a school and school admin is registered
