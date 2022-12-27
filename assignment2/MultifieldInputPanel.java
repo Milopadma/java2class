@@ -35,9 +35,9 @@ public class MultifieldInputPanel extends JPanel {
 
         // also save the text_field values to the MainView class' schoolRegistration
         // string array
-        System.out.println("fieldNames: " + fieldNames[0]);
-        next_button.addActionListener(e -> MainView.saveMultifieldTextFields(fieldNames, getSavedfieldValues()));
-        // ! this doesnt save
+        next_button
+                .addActionListener(e -> MainView.saveMultifieldTextFields(getSavedfieldNames(), getSavedfieldValues()));
+        // ! this throws a null exception
 
         next_button.addActionListener(e -> button_functions[0].run());
         field_panel.add(next_button);
@@ -57,6 +57,19 @@ public class MultifieldInputPanel extends JPanel {
         add(field_panel, new GridBagConstraints());
     }
 
+    private String[] getSavedfieldNames() {
+        // iterate overe the text_field panel and get the text from each label
+        // and save it to the string array
+        String[] savedfieldNames = new String[text_field.getComponentCount()];
+        Stream.iterate(0, i -> i + 1).limit(text_field.getComponentCount()).forEach(i -> {
+            // if its a JLabel, get the text from it and save it to the string array
+            if (text_field.getComponent(i) instanceof JLabel) {
+                savedfieldNames[i] = ((JLabel) text_field.getComponent(i)).getText();
+            }
+        });
+        return savedfieldNames;
+    }
+
     private String[] getSavedfieldValues() {
         // iterate over the text_field panel and get the text from each text field
         // and save it to the string array
@@ -65,7 +78,6 @@ public class MultifieldInputPanel extends JPanel {
             // if its a JTextField, get the text from it and save it to the string array
             if (text_field.getComponent(i) instanceof JTextField) {
                 savedfieldValues[i] = ((JTextField) text_field.getComponent(i)).getText();
-                System.out.println(savedfieldValues[i]);
             }
         });
         return savedfieldValues;

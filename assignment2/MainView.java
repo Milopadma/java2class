@@ -88,9 +88,12 @@ public class MainView {
     public static void saveMultifieldTextFields(String[] fieldNames, String[] fieldValues) {
         // save fieldNames and fieldValues as a connected hashmap using Stream()
         // and Collectors
+        System.out.println("Saving multifield text fields: " + fieldNames[0] + " " + fieldValues[0]);
+        // ! BUG fieldValues[0] is null
         Map<String, String> fieldMap = IntStream.range(0, fieldNames.length)
                 .boxed()
                 .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
+        // ! this throws a null exception
         multifield_input_panel_values = fieldMap;
     }
 
