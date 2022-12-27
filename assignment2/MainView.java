@@ -91,7 +91,6 @@ public class MainView {
         Map<String, String> fieldMap = IntStream.range(0, fieldNames.length)
                 .boxed()
                 .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
-        System.out.println(fieldMap);
         multifield_input_panel_values = fieldMap;
     }
 
@@ -179,6 +178,7 @@ public class MainView {
             // clear the frame before adding new elements
             showAdminLoginView();
         });
+
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
@@ -208,7 +208,7 @@ public class MainView {
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_register_school_view_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        // right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         main_frame.setVisible(true);
     }
@@ -230,13 +230,14 @@ public class MainView {
         String input_labels[] = { "Admin Name", "Admin Email", "Admin Password", "Admin Fullname", "Admin Phone",
                 "Admin StaffID", "Admin Position" };
         String input_field_values[] = { "", "", "", "", "", "", "" };
-        Runnable button_functions[] = { MainView::showSchoolCompletionView, MainView::showAdminSchoolsMenuView };
+        Runnable button_functions[] = { MainView::showSchoolAdminAndSchoolCompletionView,
+                MainView::showAdminSchoolsMenuView };
         admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
                 button_functions);
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        // right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         main_frame.setVisible(true);
 

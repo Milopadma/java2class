@@ -10,6 +10,7 @@ public class MultifieldInputPanel extends JPanel {
 
     // GUI element initializations
     JPanel field_panel = new JPanel();
+    JPanel text_field = new JPanel();
 
     // class constructor
     MultifieldInputPanel(String[] fieldNames, String[] fieldValues, Runnable[] button_functions) {
@@ -21,18 +22,23 @@ public class MultifieldInputPanel extends JPanel {
         // and attach the functions, since using a traditional for (i) loop doesnt work
         // here
         Stream.iterate(0, i -> i + 1).limit(fieldNames.length).forEach(i -> {
-            JPanel text_field = new JPanel();
             text_field.setLayout(new BoxLayout(text_field, BoxLayout.Y_AXIS));
             text_field.add(new JLabel(fieldNames[i]));
-            text_field.add(new JTextField(fieldValues[i], 10));
+            JTextField newTextField = new JTextField(fieldValues[i], 10);
+            newTextField.addActionListener(e -> fieldValues[i] = newTextField.getText());
+            text_field.add(newTextField);
             field_panel.add(text_field);
         });
 
         // for the Next button
         JButton next_button = new JButton("Next");
+
         // also save the text_field values to the MainView class' schoolRegistration
         // string array
-        next_button.addActionListener(e -> MainView.saveMultifieldTextFields(fieldNames, fieldValues));
+        System.out.println("fieldNames: " + fieldNames[0]);
+        next_button.addActionListener(e -> MainView.saveMultifieldTextFields(fieldNames, getSavedfieldValues()));
+        // ! this doesnt save
+
         next_button.addActionListener(e -> button_functions[0].run());
         field_panel.add(next_button);
 
@@ -49,6 +55,20 @@ public class MultifieldInputPanel extends JPanel {
 
         // to add the field panel to the parent panel
         add(field_panel, new GridBagConstraints());
+    }
+
+    private String[] getSavedfieldValues() {
+        // iterate over the text_field panel and get the text from each text field
+        // and save it to the string array
+        String[] savedfieldValues = new String[text_field.getComponentCount()];
+        Stream.iterate(0, i -> i + 1).limit(text_field.getComponentCount()).forEach(i -> {
+            // if its a JTextField, get the text from it and save it to the string array
+            if (text_field.getComponent(i) instanceof JTextField) {
+                savedfieldValues[i] = ((JTextField) text_field.getComponent(i)).getText();
+                System.out.println(savedfieldValues[i]);
+            }
+        });
+        return savedfieldValues;
     }
 
 }
