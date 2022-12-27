@@ -38,6 +38,9 @@ public class MainView {
     static SidemenuView admin_sidemenu_view_panel;
     static SidemenuView volunteer_sidemenu_view_panel;
 
+    // the right menu panel
+    static JPanel right_menu_view_panel = new JPanel();
+
     // constructor
     public MainView() {
         // initialize the frame and GUI elements
@@ -46,6 +49,8 @@ public class MainView {
         main_frame.setLocationRelativeTo(null);
         main_frame.setResizable(true);
         main_frame.setTitle("SchoolHELP");
+        main_frame.setLayout(new BorderLayout());
+
         // back button functionality
         back_button.addActionListener(e -> {
             // clear the frame before adding new elements
@@ -53,11 +58,11 @@ public class MainView {
             main_frame.add(current_previous_panel, BorderLayout.CENTER);
             main_frame.setVisible(true);
         });
-        main_frame.setLayout(new BorderLayout());
+
         // TODO: add icon, fade animations, splashscreen
 
         // show the login view
-        showLoginView();
+        showUserChoiceView();
 
     }
 
@@ -67,14 +72,14 @@ public class MainView {
     // * HELPER CLASS METHODS */
     // to save the current panel to be able to go back to it using the Back button
     public static void saveCurrentPanel(JPanel panel) {
+        // this method is only called on a button press
         current_previous_panel = panel;
-        //! this throws an exception
         System.out.println("Saved panel: " + current_previous_panel);
     }
 
     // * */ USER SELECT AND LOGIN STAGE
     // show LoginView (pick and choose User type)
-    public static void showLoginView() {
+    public static void showUserChoiceView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
         user_choice_view_panel = new UserChoiceViewPanel();
@@ -103,37 +108,58 @@ public class MainView {
     // * */ ADMIN USER FUNCTIONALITY STAGE
     // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE ADMIN USER */
     // * DIRECTLY CORRELATES WITH THE DECLARED PUBLIC STATIC FIELDS OF THIS CLASS */
+    // initialize the side menu view
+    public static void showSideMenuView() {
+        admin_sidemenu_view_panel = new SidemenuView(SchoolHELPGUI.getCurrentUser());
+        main_frame.add(admin_sidemenu_view_panel, BorderLayout.WEST);
+    }
+
     // show AdminMenuView (admin menu with dashboard)
     public static void showAdminMenuView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
+
+        // init sidemenuview
+        // showSideMenuView();
+
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
-        // setting the JLabel to make a new line after the word "Admin" so that "Menu"
-        // is on a new line
         title_label.setVerticalAlignment(JLabel.TOP);
 
-        admin_sidemenu_view_panel = new SidemenuView(SchoolHELPGUI.getCurrentUser());
         // the buttons and their event handlers
         String button_labels[] = { "Register a new School", "Register a new School Admin", "View all Schools" };
+
         // an array of functions to be called when the buttons are clicked
         Runnable button_functions[] = { MainView::showAdminRegisterSchoolView,
                 MainView::showAdminRegisterSchoolAdminView,
                 MainView::showAdminSchoolsView };
 
+        // create the panel with the buttons
         admin_schools_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
 
-        // add the elements to the frame
-        main_frame.add(title_label, BorderLayout.NORTH);
-        main_frame.add(admin_sidemenu_view_panel, BorderLayout.WEST);
-        main_frame.add(admin_schools_view_panel, BorderLayout.CENTER);
-        main_frame.add(back_button, BorderLayout.SOUTH);
+        // set the layout of the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+
+        // add the elements to their respective panels
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_schools_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        
         main_frame.setVisible(true);
     };
 
     public static void showAdminRegisterSchoolView() {
-        // todo
-        System.out.println("showAdminRegisterSchoolView() called");
+        // clear the frame
+        main_frame.getContentPane().removeAll();
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>Registering a new School</h1></html>");
+        // setting the JLabel to make a new line after the word "Admin" so that "Menu"
+        // is on a new line
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // the buttons and their event handlers
     }
 
     public static void showAdminRegisterSchoolAdminView() {
@@ -142,6 +168,12 @@ public class MainView {
 
     public static void showAdminSchoolsView() {
         // todo
+    }
+
+    public static void showAdminRequestsView() {
+    }
+
+    public static void showAdminOffersView() {
     }
 
 }

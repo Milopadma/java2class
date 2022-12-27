@@ -94,7 +94,7 @@ public class LoginPanel extends JPanel {
         add(center_panel, new GridBagConstraints());
 
         // event handlers
-        backButton.addActionListener(e -> MainView.showLoginView());
+        backButton.addActionListener(e -> MainView.showUserChoiceView());
         loginButton
                 .addActionListener(e -> SchoolHELPGUI.adminLogin(usernameField.getText(), passwordField.getPassword()));
         // save this panel to the mainview current previous panel
