@@ -32,13 +32,10 @@ public class MultifieldInputPanel extends JPanel {
 
         // for the Next button
         JButton next_button = new JButton("Next");
-
-        // also save the text_field values to the MainView class' schoolRegistration
-        // string array
+        // also saves the text_field values to the MainView class'
         next_button
                 .addActionListener(e -> MainView.saveMultifieldTextFields(getSavedfieldNames(), getSavedfieldValues()));
         // ! this throws a null exception
-
         next_button.addActionListener(e -> button_functions[0].run());
         field_panel.add(next_button);
 
