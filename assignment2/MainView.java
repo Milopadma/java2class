@@ -215,7 +215,7 @@ public class MainView {
         String button_labels[] = { "View all Requests for this school", "View every Request from all Schools" };
 
         // an array of functions to be called when the buttons are clicked
-        Runnable button_functions[] = { MainView::showAllRequestsForSchoolView, MainView::showAllRequestsView };
+        Runnable button_functions[] = { MainView::showRequestSubmissionForSchoolView, MainView::showAllRequestsView };
 
         // create the panel with the buttons
         admin_requests_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
@@ -413,7 +413,7 @@ public class MainView {
             JButton view_full_info_button = new JButton("View Full Info");
             view_full_info_button.addActionListener(e -> {
                 // show the school info view
-                showSchoolInfoView(newSchool);
+                showSchoolInfoView(newSchool, true);
             });
 
             JButton back_button = new JButton("Back");
@@ -485,6 +485,137 @@ public class MainView {
         right_menu_view_panel.add(admin_school_info_view_panel, BorderLayout.CENTER);
 
     }
+
+    // * */ show METHODS FOR ADMIN REQUESTS MENU]
+    // all the show methods that relates to the requests menu in the admin menu goes
+    // here
+    // this method is to submit a request for the school that the school admin is in
+    // (local)
+    public static void showRequestSubmissionForSchoolView() {
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Request Submissions</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // the buttons and their event handlers
+        String button_labels[] = { "Submit a Request" };
+
+        // an array of functions to be called when the buttons are clicked
+        Runnable button_functions[] = { MainView::showRequestSubmissionChoiceView };
+
+        // the panel view
+        MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(button_labels,
+                button_functions);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
+
+        // for the back button
+        Runnable back_button_function = MainView::showAdminRequestsMenuView;
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> back_button_function.run());
+
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
+
+    }
+
+    // this method is to show the request submission view
+    public static void showRequestSubmissionChoiceView() {
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Request Submission</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // the buttons and their event handlers
+        String button_labels[] = { "Tutorial Request", "Resource Request" };
+
+        // an array of functions to be called when the buttons are clicked
+        Runnable button_functions[] = { MainView::showTutorialRequestSubmissionView,
+                MainView::showResourceRequestSubmissionView };
+
+        // the panel view
+        MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(button_labels,
+                button_functions);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
+
+        // for the back button
+        Runnable back_button_function = MainView::showAdminRequestsMenuView;
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> back_button_function.run());
+
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
+
+    }
+
+    // this method is to show the tutorial request submission view
+    public static void showTutorialRequestSubmissionView() {
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Tutorial Request Submission</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // the buttons and their event handlers
+        String input_labels[] = { "Tutorial Description", "Proposed Date",
+                "Proposed Time", "Student Level", "Student Amount" };
+        
+        RequestSubmissionViewPanel tutorial_request_submission_view_panel = new RequestSubmissionViewPanel(
+                input_labels);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(tutorial_request_submission_view_panel, BorderLayout.CENTER);
+
+        // for the back button
+        Runnable back_button_function = MainView::showRequestSubmissionChoiceView;
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> back_button_function.run());
+
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
+
+    }
+
+    // this method is to show the resource request submission view
+    
 }
 
 // !notes

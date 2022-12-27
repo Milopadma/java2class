@@ -13,7 +13,7 @@ public class MultifieldInputPanel extends JPanel {
     JPanel text_field = new JPanel();
 
     // class constructor
-    MultifieldInputPanel(String[] fieldNames, String[] fieldValues, Runnable[] button_functions) {
+    MultifieldInputPanel(String[] fieldNames, Runnable[] button_functions) {
         // field layout are vertically stacked with same width using BoxLayout
         field_panel.setLayout(new BoxLayout(field_panel, BoxLayout.Y_AXIS));
 
@@ -24,8 +24,8 @@ public class MultifieldInputPanel extends JPanel {
         Stream.iterate(0, i -> i + 1).limit(fieldNames.length).forEach(i -> {
             text_field.setLayout(new BoxLayout(text_field, BoxLayout.Y_AXIS));
             text_field.add(new JLabel(fieldNames[i]));
-            JTextField newTextField = new JTextField(fieldValues[i], 10);
-            newTextField.addActionListener(e -> fieldValues[i] = newTextField.getText());
+            JTextField newTextField = new JTextField(10);
+            newTextField.addActionListener(e -> newTextField.getText());
             text_field.add(newTextField);
             field_panel.add(text_field);
         });
