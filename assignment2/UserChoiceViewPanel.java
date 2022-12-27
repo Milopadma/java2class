@@ -50,13 +50,17 @@ public class UserChoiceViewPanel extends JPanel {
         // event handlers
         ExitButton.addActionListener(e -> System.exit(0));
         AdminChoiceButton.addActionListener(e -> {
-            // propagate data to SchoolHELPGUI class to let them decide what to do
+            // call mainview's method to show the admin login view
             MainView.showAdminLoginView();
+            // and also save the current panel to the previous panel field
+            MainView.saveCurrentPanel(this);
         });
 
         VolunteerChoiceButton.addActionListener(e -> {
-            // propagate data to SchoolHELPGUI class to let them decide what to do
+            // call mainview's method to show the volunteer login view
             MainView.showVolunteerLoginView();
+            // and also save the current panel to the previous panel field
+            MainView.saveCurrentPanel(this);
         });
     }
 }

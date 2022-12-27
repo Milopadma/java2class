@@ -97,6 +97,8 @@ public class LoginPanel extends JPanel {
         backButton.addActionListener(e -> MainView.showLoginView());
         loginButton
                 .addActionListener(e -> SchoolHELPGUI.adminLogin(usernameField.getText(), passwordField.getPassword()));
+        // save this panel to the mainview current previous panel
+        loginButton.addActionListener(e -> MainView.saveCurrentPanel(this));
     }
 
 }
