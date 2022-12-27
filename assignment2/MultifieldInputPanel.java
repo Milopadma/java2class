@@ -28,10 +28,13 @@ public class MultifieldInputPanel extends JPanel {
             field_panel.add(text_field);
         });
 
-        // for the Done button
-        JButton done_button = new JButton("Done");
-        done_button.addActionListener(e -> button_functions[0].run());
-        field_panel.add(done_button);
+        // for the Next button
+        JButton next_button = new JButton("Next");
+        // also save the text_field values to the MainView class' schoolRegistration
+        // string array
+        next_button.addActionListener(e -> MainView.saveMultifieldTextFields(fieldNames, fieldValues));
+        next_button.addActionListener(e -> button_functions[0].run());
+        field_panel.add(next_button);
 
         // for the Back button
         JButton back_button = new JButton("Back");

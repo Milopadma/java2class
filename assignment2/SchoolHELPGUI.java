@@ -1,3 +1,5 @@
+import java.util.Map;
+
 import javax.swing.JOptionPane;
 
 // I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
@@ -35,6 +37,20 @@ public class SchoolHELPGUI {
 
     }
 
+    // * getters and setters
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        SchoolHELPGUI.currentUser = currentUser;
+    }
+
+    public static void setFirstTimeLogin(boolean isFirstTimeLogin) {
+        SchoolHELPGUI.isFirstTimeLogin = isFirstTimeLogin;
+    }
+
+    // * CLASS HELPER METHODS */
     // this method handles the login process for admin user
     public static void adminLogin(String username, char[] password) {
         String password_stringified = new String(password);
@@ -71,28 +87,26 @@ public class SchoolHELPGUI {
         }
     }
 
-    // getters and setters
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    public static void setCurrentUser(User currentUser) {
-        SchoolHELPGUI.currentUser = currentUser;
-    }
-
-    // public static SchoolAdmin getCurrentUserAdmin() {
-    // return currentUserAdmin;
-    // }
-
-    // public static void setCurrentUserAdmin(SchoolAdmin currentUserAdmin) {
-    // SchoolHELPGUI.currentUserAdmin = currentUserAdmin;
-    // }
-
     public static boolean isFirstTimeLogin() {
         return isFirstTimeLogin;
     }
 
-    public static void setFirstTimeLogin(boolean isFirstTimeLogin) {
-        SchoolHELPGUI.isFirstTimeLogin = isFirstTimeLogin;
+    // method that takes the fieldmap from the admin screen and creates a new school
+    // based on its values
+    public static School createNewSchool(Map<String, String> fieldMap) {
+        // get the values from the fieldmap
+        String schoolName = (String) fieldMap.get("School Name");
+        int schoolID = ((int) (Math.random() * 1000));
+        String schoolAddress = (String) fieldMap.get("School Address");
+        String schoolCity = (String) fieldMap.get("School City");
+
+        // create a new school object
+        School newSchool = new School(schoolName, schoolID, schoolAddress, schoolCity);
+
+        // add the new school to the school list
+        SchoolHELP.addSchool(newSchool);
+
+        // return the new school
+        return newSchool;
     }
 }

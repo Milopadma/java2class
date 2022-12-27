@@ -6,6 +6,10 @@
 // GUI elements import
 
 import java.awt.*;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import javax.swing.*;
 
 public class MainView {
@@ -27,8 +31,8 @@ public class MainView {
     // all admin-related view panels
     static MultibuttonInputPanel admin_schools_view_panel;
     static MultifieldInputPanel admin_register_school_view_panel;
-    static MultifieldInputPanel admin_register_school_view_panel_2;
-    static StandardDialogPanel admin_register_school_view_panel_3;
+    static MultifieldInputPanel admin_register_school_admin_view_panel;
+    static StandardInfoPanel admin_school_registration_complete_view_panel;
     static ThreestepTimelinePanel admin_timeline_view_panel;
 
     // all volunteer-related view panels
@@ -40,6 +44,9 @@ public class MainView {
 
     // the right menu panel
     static JPanel right_menu_view_panel = new JPanel();
+
+    // to save the values of the MultifieldInputPanel
+    static Map<String, String> multifield_input_panel_values;
 
     // constructor
     public MainView() {
@@ -76,6 +83,23 @@ public class MainView {
         // this method is only called on a button press
         current_previous_panel = panel;
         System.out.println("Saved panel: " + current_previous_panel);
+    }
+
+    public static void saveMultifieldTextFields(String[] fieldNames, String[] fieldValues) {
+        // save fieldNames and fieldValues as a connected hashmap using Stream()
+        // and Collectors
+        Map<String, String> fieldMap = IntStream.range(0, fieldNames.length)
+                .boxed()
+                .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
+        System.out.println(fieldMap);
+        multifield_input_panel_values = fieldMap;
+    }
+
+    // this helper class method calls into the SchoolHELPGUI class to create a new
+    // school by passing in the saved multitextfields of adminschoolregistration
+    public static void createNewSchool(Map<String, String> fieldMap) {
+        // call the SchoolHELPGUI method to create a new school
+        SchoolHELPGUI.createNewSchool(fieldMap);
     }
 
     // * */ USER SELECT AND LOGIN STAGE
@@ -127,6 +151,10 @@ public class MainView {
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
 
+        // new subtitle label
+        JLabel subtitle_label = new JLabel("<html><h3>Choose an option below</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
         // the buttons and their event handlers
         String button_labels[] = { "Register a new School", "Register a new School Admin", "View all Schools" };
 
@@ -143,6 +171,7 @@ public class MainView {
 
         // add the elements to their respective panels
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_schools_view_panel, BorderLayout.CENTER);
 
         // for the back button to go back to the admin login view
@@ -163,37 +192,151 @@ public class MainView {
         right_menu_view_panel.removeAll();
 
         // new label as title using html h1
-        JLabel title_label = new JLabel("<html><h1>Registering a new School</h1></html>");
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Registering a new School</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
 
-        String input_labels[] = { "School Name", "School Address", "School Phone Number", "School Email" };
+        // panel view content
+        String input_labels[] = { "School Name", "School Address", "School City" };
         String input_field_values[] = { "", "", "", "" };
-        Runnable button_functions[] = { MainView::showAdminRegisterSchoolView2, MainView::showAdminSchoolsMenuView };
+        Runnable button_functions[] = { MainView::showAdminRegisterSchoolAdminView,
+                MainView::showAdminSchoolsMenuView };
         admin_register_school_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
                 button_functions);
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_register_school_view_panel, BorderLayout.CENTER);
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         main_frame.setVisible(true);
     }
 
-    public static void showAdminRegisterSchoolView2() {
-        // todo
-    }
-
+    // to show the school admin registration panel view
     public static void showAdminRegisterSchoolAdminView() {
-        // todo
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Registering a new School Admin</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        String input_labels[] = { "Admin Name", "Admin Email", "Admin Password", "Admin Fullname", "Admin Phone",
+                "Admin StaffID", "Admin Position" };
+        String input_field_values[] = { "", "", "", "", "", "", "" };
+        Runnable button_functions[] = { MainView::showSchoolCompletionView, MainView::showAdminSchoolsMenuView };
+        admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
+                button_functions);
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        main_frame.setVisible(true);
+
     }
 
     public static void showAdminSchoolsView() {
-        // todo
     }
 
     public static void showAdminRequestsView() {
     }
 
     public static void showAdminOffersView() {
+    }
+
+    // this is shown when both a school and school admin is registered
+    public static void showSchoolAdminAndSchoolCompletionView() {
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // create the new school using the saved input fields in this class
+        try {
+            School newSchool = SchoolHELPGUI.createNewSchool(multifield_input_panel_values);
+
+            // button functions
+            Runnable button_functions[] = { MainView::showAdminSchoolsMenuView };
+
+            // panel view content
+            admin_school_registration_complete_view_panel = new StandardInfoPanel(
+                    "School and SchoolAdmin registration complete!",
+                    "You can now login to the SchoolHELP app with the SchoolAdmin credentials you just registered.",
+                    button_functions, newSchool);
+
+            JButton view_full_info_button = new JButton("View Full Info");
+            view_full_info_button.addActionListener(e -> {
+                // show the school info view
+                showSchoolInfoView(newSchool);
+            });
+
+            JButton back_button = new JButton("Back");
+            back_button.addActionListener(e -> {
+                // show the school info view
+                showAdminRegisterSchoolAdminView();
+            });
+
+            right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+            right_menu_view_panel.add(admin_school_registration_complete_view_panel, BorderLayout.CENTER);
+            right_menu_view_panel.add(view_full_info_button, BorderLayout.SOUTH);
+            right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // this is shown when the schoolinfo is requested
+    public static void showSchoolInfoView(School newSchool) {
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>School Info</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        String input_labels[] = { "School Name", "School Address", "School City", "School Admin Name",
+                "School Admin Email", "School Admin Password", "School Admin Fullname", "School Admin Phone",
+                "School Admin StaffID", "School Admin Position" };
+        String input_field_values[] = { newSchool.getSchoolName(), newSchool.getAddress(), newSchool.getCity(),
+                // to view the info of the newly created school admin for this school
+                newSchool.getSchoolAdmins().get(0).getUsername(), newSchool.getSchoolAdmins().get(0).getPassword(),
+                newSchool.getSchoolAdmins().get(0).getFullname(),
+                Long.toString(newSchool.getSchoolAdmins().get(0).getPhone()),
+                Integer.toString(newSchool.getSchoolAdmins().get(0).getStaffID()),
+                newSchool.getSchoolAdmins().get(0).getPosition() };
+
+        Runnable button_function = MainView::showAdminSchoolsMenuView;
+        InfoListViewPanel admin_school_info_view_panel = new InfoListViewPanel(input_labels, input_field_values,
+                button_function);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_school_info_view_panel, BorderLayout.CENTER);
+
+    }
+
+    // this is shown when a school is registered
+    public static void showSchoolCompletionView() {
+    }
+
+    // this is shown when a school admin is registered
+    public static void showSchoolAdminCompletionView() {
     }
 
 }
