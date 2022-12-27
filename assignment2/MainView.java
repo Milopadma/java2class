@@ -51,13 +51,14 @@ public class MainView {
         main_frame.setTitle("SchoolHELP");
         main_frame.setLayout(new BorderLayout());
 
-        // back button functionality
-        back_button.addActionListener(e -> {
-            // clear the frame before adding new elements
-            main_frame.getContentPane().removeAll();
-            main_frame.add(current_previous_panel, BorderLayout.CENTER);
-            main_frame.setVisible(true);
-        });
+        // !Deprecated
+        // // back button functionality
+        // back_button.addActionListener(e -> {
+        // // clear the frame before adding new elements
+        // main_frame.getContentPane().removeAll();
+        // main_frame.add(current_previous_panel, BorderLayout.CENTER);
+        // main_frame.setVisible(true);
+        // });
 
         // TODO: add icon, fade animations, splashscreen
 
@@ -161,14 +162,18 @@ public class MainView {
 
         String input_labels[] = { "School Name", "School Address", "School Phone Number", "School Email" };
         String input_field_values[] = { "", "", "", "" };
-        Runnable button_function = MainView::showAdminRegisterSchoolView;
+        Runnable button_functions = MainView::showAdminRegisterSchoolView2;
         admin_register_school_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
-                button_function);
+                button_functions);
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_register_school_view_panel, BorderLayout.CENTER);
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         main_frame.setVisible(true);
+    }
+
+    public static void showAdminRegisterSchoolView2() {
+        // todo
     }
 
     public static void showAdminRegisterSchoolAdminView() {

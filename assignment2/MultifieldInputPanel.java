@@ -21,11 +21,11 @@ public class MultifieldInputPanel extends JPanel {
         // and attach the functions, since using a traditional for (i) loop doesnt work
         // here
         Stream.iterate(0, i -> i + 1).limit(fieldNames.length).forEach(i -> {
-            JPanel field = new JPanel();
-            field.setLayout(new BoxLayout(field, BoxLayout.X_AXIS));
-            field.add(new JLabel(fieldNames[i]));
-            field.add(new JLabel(fieldValues[i]));
-            field_panel.add(field);
+            JPanel text_field = new JPanel();
+            text_field.setLayout(new BoxLayout(text_field, BoxLayout.Y_AXIS));
+            text_field.add(new JLabel(fieldNames[i]));
+            text_field.add(new JTextField(fieldValues[i], 10));
+            field_panel.add(text_field);
         });
 
         // for the button
