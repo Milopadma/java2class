@@ -25,8 +25,8 @@ public class MultibuttonInputPanel extends JPanel {
             JButton button = new JButton(buttonNames[i]);
 
             // and save this panel to the MainView class' currentPanel field
-            button.addActionListener(e -> button_functions[i].run());
             button.addActionListener(e -> MainView.saveCurrentPanel(this));
+            button.addActionListener(e -> button_functions[i].run());
 
             button_panel.add(button);
         });

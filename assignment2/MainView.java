@@ -120,7 +120,7 @@ public class MainView {
         main_frame.getContentPane().removeAll();
 
         // init sidemenuview
-        // showSideMenuView();
+        showSideMenuView();
 
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
@@ -144,22 +144,31 @@ public class MainView {
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_schools_view_panel, BorderLayout.CENTER);
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        // TODO back button doesnt work
 
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
-        
+
         main_frame.setVisible(true);
     };
 
     public static void showAdminRegisterSchoolView() {
-        // clear the frame
-        main_frame.getContentPane().removeAll();
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>Registering a new School</h1></html>");
-        // setting the JLabel to make a new line after the word "Admin" so that "Menu"
-        // is on a new line
         title_label.setVerticalAlignment(JLabel.TOP);
 
-        // the buttons and their event handlers
+        String input_labels[] = { "School Name", "School Address", "School Phone Number", "School Email" };
+        String input_field_values[] = { "", "", "", "" };
+        Runnable button_function = MainView::showAdminRegisterSchoolView;
+        admin_register_school_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
+                button_function);
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_register_school_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+
+        main_frame.setVisible(true);
     }
 
     public static void showAdminRegisterSchoolAdminView() {
