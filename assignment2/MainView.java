@@ -592,9 +592,11 @@ public class MainView {
         // the buttons and their event handlers
         String input_labels[] = { "Tutorial Description", "Proposed Date",
                 "Proposed Time", "Student Level", "Student Amount" };
-        
+
+        Runnable button_functions[] = { MainView::showAdminRequestsMenuView, MainView::showRequestSubmissionChoiceView;  };
+
         RequestSubmissionViewPanel tutorial_request_submission_view_panel = new RequestSubmissionViewPanel(
-                input_labels);
+                input_labels, button_functions);
 
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
@@ -615,7 +617,7 @@ public class MainView {
     }
 
     // this method is to show the resource request submission view
-    
+
 }
 
 // !notes
