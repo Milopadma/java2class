@@ -52,12 +52,12 @@ public class SidemenuView extends JPanel {
 
             requests_button.addActionListener(e -> {
                 // call the MainView method to show the Requests admin menu view
-                MainView.showAdminRequestsView();
+                MainView.showAdminRequestsMenuView();
             });
 
             offers_button.addActionListener(e -> {
                 // call the MainView method to show the Offers admin menu view
-                MainView.showAdminOffersView();
+                MainView.showAdminOffersMenuView();
             });
 
             // now add all these elements to the parent panel
