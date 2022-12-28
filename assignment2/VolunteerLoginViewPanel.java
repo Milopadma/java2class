@@ -2,7 +2,6 @@
 // I GUSTI BAGUS MILO PADMA WIJAYA //e2000426
 // class imports
 import javax.swing.*;
-import java.awt.*;
 
 public class VolunteerLoginViewPanel extends LoginPanel {
     // constructor
@@ -18,7 +17,8 @@ public class VolunteerLoginViewPanel extends LoginPanel {
         // event handlers
         backButton.addActionListener(e -> MainView.showUserChoiceView());
         loginButton
-                .addActionListener(e -> SchoolHELPGUI.volunteerLogin(usernameField.getText(), passwordField.getPassword()));
+                .addActionListener(
+                        e -> SchoolHELPGUI.volunteerLogin(usernameField.getText(), passwordField.getPassword()));
     }
 
 }

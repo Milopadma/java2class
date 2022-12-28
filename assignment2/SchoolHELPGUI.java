@@ -74,6 +74,23 @@ public class SchoolHELPGUI {
         }
     }
 
+    public static void volunteerLogin(String username, char[] password) {
+        String password_stringified = new String(password);
+        try {
+            // check if the username and password are correct
+            if (SchoolHELPGUI.checkLogin(username, password_stringified)) {
+                // if the login is successful, show the admin menu
+                MainView.showVolunteerMenuView();
+            } else {
+                // if the login is unsuccessful, show an error message
+                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+
     // this method is called when the login button is clicked
     public static boolean checkLogin(String username, String password) {
         if (SchoolHELP.isUserAdmin(username, password)) {
