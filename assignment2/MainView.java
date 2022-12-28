@@ -517,10 +517,11 @@ public class MainView {
 
         // panel view content
         // the buttons and their event handlers
-        String button_labels[] = { "Submit a Request" };
+        String button_labels[] = { "Submit a Request", "Back" };
 
         // an array of functions to be called when the buttons are clicked
-        Runnable button_functions[] = { MainView::showRequestSubmissionChoiceView };
+        Runnable button_functions[] = { MainView::showRequestSubmissionChoiceView,
+                MainView::showAdminRequestsMenuView };
 
         // the panel view
         MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(button_labels,
@@ -531,12 +532,11 @@ public class MainView {
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
 
-        // for the back button
-        Runnable back_button_function = MainView::showAdminRequestsMenuView;
-        JButton back_button = new JButton("Back");
-        back_button.addActionListener(e -> back_button_function.run());
-
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        // // for the back button
+        // Runnable back_button_function = MainView::showAdminRequestsMenuView;
+        // JButton back_button = new JButton("Back");
+        // back_button.addActionListener(e -> back_button_function.run());
+        // right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
@@ -559,11 +559,11 @@ public class MainView {
 
         // panel view content
         // the buttons and their event handlers
-        String button_labels[] = { "Tutorial Request", "Resource Request" };
+        String button_labels[] = { "Tutorial Request", "Resource Request", "Back" };
 
         // an array of functions to be called when the buttons are clicked
         Runnable button_functions[] = { MainView::showTutorialRequestSubmissionView,
-                MainView::showResourceRequestSubmissionView };
+                MainView::showResourceRequestSubmissionView, MainView::showAdminRequestsMenuView };
 
         // the panel view
         MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(button_labels,
@@ -574,12 +574,11 @@ public class MainView {
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
 
-        // for the back button
-        Runnable back_button_function = MainView::showAdminRequestsMenuView;
-        JButton back_button = new JButton("Back");
-        back_button.addActionListener(e -> back_button_function.run());
-
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        // // for the back button
+        // Runnable back_button_function = MainView::showAdminRequestsMenuView;
+        // JButton back_button = new JButton("Back");
+        // back_button.addActionListener(e -> back_button_function.run());
+        // right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
@@ -605,8 +604,9 @@ public class MainView {
         String input_labels[] = { "Tutorial Description", "Proposed Date",
                 "Proposed Time", "Student Level", "Student Amount" };
 
-        //two buttons, "Done" and "Back"
-        Runnable button_functions[] = { MainView::showAdminRequestsMenuView, MainView::showRequestSubmissionChoiceView;  };
+        // two buttons, "Done" and "Back"
+        Runnable button_functions[] = { MainView::showAdminRequestsMenuView,
+                MainView::showRequestSubmissionChoiceView };
 
         // create the panel view object
         RequestSubmissionViewPanel tutorial_request_submission_view_panel = new RequestSubmissionViewPanel(
@@ -663,8 +663,41 @@ public class MainView {
     // of Reviewing Offers and Accepting/Rejecting Offers for Requests of that
     // school
     public static void showReviewsForOffersView() {
-        // this is going to use the JTable view class
-        // todo, use new JTable view class
+        // using TableModelViewPanel class to display the table, from the Requests data
+        // of this school
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Review Offers</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // the buttons and their event handlers
+        String button_labels[] = { "Back" };
+        Runnable button_functions[] = { MainView::showAdminOffersMenuView };
+
+        // get the current user's school's available requests for offers
+        String thisSchoolRequestsForOffers[][] = new String[0][];
+        
+
+        // create the panel view object
+        TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(
+                thisSchoolRequestsForOffers, button_labels, button_functions);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
     }
 }
 
