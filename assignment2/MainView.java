@@ -337,9 +337,9 @@ public class MainView {
             // get the saved fields and saved to Hashmap
             HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
             // create a new school object by calling from SchoolHELPGUI
-            SchoolHELPGUI.createSchool(saved_fields);
+            School newSchool = SchoolHELPGUI.createSchool(saved_fields);
             // then invoke the showAdminRegisterSchoolAdminView method
-            showAdminRegisterSchoolAdminView();
+            showAdminRegisterSchoolAdminView(newSchool);
         });
 
         // set the layout of the right menu panel
@@ -357,7 +357,7 @@ public class MainView {
 
     // to show the school admin registration panel view
     // method 2/2 of the school side menu for admin
-    public static void showAdminRegisterSchoolAdminView() {
+    public static void showAdminRegisterSchoolAdminView(School newSchool) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -393,7 +393,7 @@ public class MainView {
             SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
 
             // show the next panel
-            showSchoolAdminAndSchoolCompletionView();
+            showSchoolAdminAndSchoolCompletionView(newSchool);
         });
         back_button.addActionListener(e -> {
             // show the previous panel
@@ -410,7 +410,7 @@ public class MainView {
     }
 
     // this is shown when both a school and school admin is registered
-    public static void showSchoolAdminAndSchoolCompletionView() {
+    public static void showSchoolAdminAndSchoolCompletionView(School newSchool) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -418,37 +418,37 @@ public class MainView {
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
 
-            // panel view content
-            // need to create buttons here so that they can be passed into the
-            // standardinfopanel object, and since Runnable[] does not support adding params
-            JButton view_full_info_button = new JButton("View Full Info");
-            view_full_info_button.addActionListener(e -> {
-                // show the school info view
-                showSchoolInfoView(newSchool, true);
-            });
+        // panel view content
+        // need to create buttons here so that they can be passed into the
+        // standardinfopanel object, and since Runnable[] does not support adding params
+        JButton view_full_info_button = new JButton("View Full Info");
+        view_full_info_button.addActionListener(e -> {
+            // show the school info view
+            showSchoolInfoView(newSchool, true);
+        });
 
-            JButton back_button = new JButton("Back");
-            back_button.addActionListener(e -> {
-                // show the school info view
-                showAdminRegisterSchoolAdminView();
-            });
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> {
+            // go back to the admin schools menu view
+            showAdminSchoolsMenuView();
+        });
 
-            // to be able to pass in the view_full_info_button and back_button to the
-            // standardinfopanel
-            JButton[] buttons = { view_full_info_button, back_button };
+        // to be able to pass in the view_full_info_button and back_button to the
+        // standardinfopanel
+        JButton[] buttons = { view_full_info_button, back_button };
 
-            // create the standardinfopanel
-            admin_school_registration_complete_view_panel = new StandardInfoPanel(
-                    "School and SchoolAdmin registration complete!",
-                    "You can now login to the SchoolHELP app with the SchoolAdmin credentials you just registered.",
-                    buttons);
+        // create the standardinfopanel
+        admin_school_registration_complete_view_panel = new StandardInfoPanel(
+                "School and SchoolAdmin registration complete!",
+                "You can now login to the SchoolHELP app with the SchoolAdmin credentials you just registered.",
+                buttons);
 
-            // set the layout of the right menu panel
-            right_menu_view_panel.setLayout(new BorderLayout());
+        // set the layout of the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
 
-            // add the elements to the right menu panel
-            right_menu_view_panel.add(title_label, BorderLayout.NORTH);
-            right_menu_view_panel.add(admin_school_registration_complete_view_panel, BorderLayout.CENTER);
+        // add the elements to the right menu panel
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_school_registration_complete_view_panel, BorderLayout.CENTER);
     }
 
     // this is shown when the schoolinfo is requested
@@ -523,27 +523,20 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        // the buttons and their event handlers
-        String button_labels[] = { "Submit a Request", "Back" };
-
-        // an array of functions to be called when the buttons are clicked
-        Runnable button_functions[] = { MainView::showRequestSubmissionChoiceView,
-                MainView::showAdminRequestsMenuView };
+        // buttons for this panel
+        JButton submit_request_button = new JButton("Submit a Request");
+        submit_request_button.addActionListener(e -> showRequestSubmissionChoiceView());
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> showAdminRequestsMenuView());
+        JButton buttons[] = { submit_request_button, back_button };
 
         // the panel view
-        MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(button_labels,
-                button_functions);
+        MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(buttons);
 
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
-
-        // // for the back button
-        // Runnable back_button_function = MainView::showAdminRequestsMenuView;
-        // JButton back_button = new JButton("Back");
-        // back_button.addActionListener(e -> back_button_function.run());
-        // right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
@@ -566,26 +559,22 @@ public class MainView {
 
         // panel view content
         // the buttons and their event handlers
-        String button_labels[] = { "Tutorial Request", "Resource Request", "Back" };
-
-        // an array of functions to be called when the buttons are clicked
-        Runnable button_functions[] = { MainView::showTutorialRequestSubmissionView,
-                MainView::showResourceRequestSubmissionView, MainView::showAdminRequestsMenuView };
+        // String button_labels[] = { "Tutorial Request", "Resource Request", "Back" };
+        JButton tutorial_request_button = new JButton("Tutorial Request");
+        tutorial_request_button.addActionListener(e -> showTutorialRequestSubmissionView());
+        JButton resource_request_button = new JButton("Resource Request");
+        resource_request_button.addActionListener(e -> showResourceRequestSubmissionView());
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> showRequestSubmissionForSchoolView());
+        JButton buttons[] = { tutorial_request_button, resource_request_button, back_button };
 
         // the panel view
-        MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(button_labels,
-                button_functions);
+        MultibuttonInputPanel admin_request_submission_view_panel = new MultibuttonInputPanel(buttons);
 
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
-
-        // // for the back button
-        // Runnable back_button_function = MainView::showAdminRequestsMenuView;
-        // JButton back_button = new JButton("Back");
-        // back_button.addActionListener(e -> back_button_function.run());
-        // right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
@@ -607,22 +596,40 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        // the buttons and their event handlers
-        String input_labels[] = { "Tutorial Description", "Proposed Date",
-                "Proposed Time", "Student Level", "Student Amount" };
-
-        // two buttons, "Done" and "Back"
-        Runnable button_functions[] = { MainView::showAdminRequestsMenuView,
-                MainView::showRequestSubmissionChoiceView };
+        // labels for the input JTextFields
+        String input_labels[] = { "Tutorial Description", "Proposed Date", "Proposed Time", "Student Level",
+                "Student Amount" };
 
         // create the panel view object
-        RequestSubmissionViewPanel tutorial_request_submission_view_panel = new RequestSubmissionViewPanel(
-                input_labels, button_functions);
+        MultifieldInputPanel tutorial_request_submission_view_panel = new MultifieldInputPanel(input_labels);
+
+        // buttons for this panel
+        JButton done_button = new JButton("Done");
+        // done button saves the fields
+        done_button.addActionListener(e -> {
+            try {
+                // get the input fields
+                HashMap<String, String> saved_fields = tutorial_request_submission_view_panel.getSavedFields();
+                SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
+                School thisSchool = current_user.getSchool();
+                // call the method to save the request
+                SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            // show the admin requests menu view
+            showAdminRequestsMenuView();
+        });
+
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> showRequestSubmissionChoiceView());
 
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(tutorial_request_submission_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(done_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
@@ -1130,6 +1137,7 @@ public class MainView {
         list.add(text_area, BorderLayout.CENTER);
 
         // add the buttons to the panel
+        // ! this loop is unnecessary
         for (JButton button : buttons) {
             list.add(button, BorderLayout.SOUTH);
         }
