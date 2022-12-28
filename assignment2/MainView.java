@@ -662,8 +662,9 @@ public class MainView {
     // methods below are concerned about the Admin Offers Menu, from the use cases
     // of Reviewing Offers and Accepting/Rejecting Offers for Requests of that
     // school
-    public static void showReviewsForOffersView(){
+    public static void showReviewsForOffersView() {
         // this is going to use the JTable view class
+        // todo, use new JTable view class
     }
 }
 
