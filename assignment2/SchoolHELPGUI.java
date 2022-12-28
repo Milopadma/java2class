@@ -186,18 +186,21 @@ public class SchoolHELPGUI {
         SchoolHELP.addUser(newAdmin);
     }
 
-    public static void createNewRequest(HashMap<String, String> saved_fields) {
+    public static void createNewRequest(HashMap<String, String> saved_fields, School school) {
         // this method takes in a Hashmap of the fields from the volunteer registration
         // screen and creates a new volunteer user based on them
 
         // get the values from the fieldmap
-        String requestName = (String) saved_fields.get("Request Name");
-        String requestDescription = (String) saved_fields.get("Request Description");
-        String requestCategory = (String) saved_fields.get("Request Category");
+        int requestID = ((int) (Math.random() * 1000));
+        LocalDateTime requestDate = LocalDateTime.now();
         String requestStatus = "PENDING";
-        String requestSchool = (String) saved_fields.get("Request School");
+        String requestDescription = (String) saved_fields.get("Request Description");
 
         // create a new request object
-        Request newRequest = new Request(request
-	}
+        Request newRequest = new Request(requestID, requestDate, requestStatus, requestDescription, school);
+
+        // add the new request to the request list
+        SchoolHELP.getSchool(school.getSchoolName()).addRequest(newRequest);
+
+    }
 }
