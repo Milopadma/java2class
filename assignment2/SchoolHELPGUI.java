@@ -138,7 +138,7 @@ public class SchoolHELPGUI {
         Volunteer currentUser = (Volunteer) getCurrentUser();
 
         LocalDateTime offerDate = LocalDateTime.now();
-        
+
         // create a new offer object
         Offer newOffer = new Offer(offerDate, remarks, "PENDING", currentUser);
 
@@ -146,7 +146,7 @@ public class SchoolHELPGUI {
         selected_request.addOffer(newOffer);
     }
 
-    public static void createNewVolunteerUser(HashMap<String, String> saved_fields) {
+    public static Volunteer createNewVolunteerUser(HashMap<String, String> saved_fields) {
         // this method takes in a Hashmap of the fields from the volunteer registration
         // screen and creates a new volunteer user based on them
 
@@ -164,6 +164,9 @@ public class SchoolHELPGUI {
 
         // add the new volunteer to the volunteer list
         SchoolHELP.addUser(newVolunteer);
+
+        // return the new volunteer
+        return newVolunteer;
     }
 
     public static void createNewAdminUser(HashMap<String, String> saved_fields, School school) {

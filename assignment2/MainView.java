@@ -88,18 +88,20 @@ public class MainView {
         System.out.println("Saved panel: " + current_previous_panel);
     }
 
-    public static void saveMultifieldTextFields(String[] fieldNames, String[] fieldValues) {
-        // save fieldNames and fieldValues as a connected hashmap using Stream()
-        // and Collectors
-        System.out.println("Saving multifield text fields: " + fieldNames[0] + " " + fieldValues[0]);
-        // ! BUG fieldValues[0] is null
-        Map<String, String> fieldMap = IntStream.range(0, fieldNames.length)
-                .boxed()
-                .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
-        // ! this throws a null exception
-        // ? is method this even used?
-        multifield_input_panel_values = fieldMap;
-    }
+    // public static void saveMultifieldTextFields(String[] fieldNames, String[]
+    // fieldValues) {
+    // // save fieldNames and fieldValues as a connected hashmap using Stream()
+    // // and Collectors
+    // System.out.println("Saving multifield text fields: " + fieldNames[0] + " " +
+    // fieldValues[0]);
+    // // ! BUG fieldValues[0] is null
+    // Map<String, String> fieldMap = IntStream.range(0, fieldNames.length)
+    // .boxed()
+    // .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
+    // // ! this throws a null exception
+    // // ? is method this even used?
+    // multifield_input_panel_values = fieldMap;
+    // }
 
     // * */ USER SELECT AND LOGIN STAGE
     // show LoginView (pick and choose User type)
@@ -178,7 +180,7 @@ public class MainView {
         JButton buttons[] = { register_button, register_admin_button, back_button };
 
         // create the panel with the buttons
-        admin_schools_view_panel = new MultibuttonInputPanel(buttons);
+        MultibuttonInputPanel admin_schools_view_panel = new MultibuttonInputPanel(buttons);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -330,6 +332,8 @@ public class MainView {
         next_button.addActionListener(e -> {
             // get the saved fields and saved to Hashmap
             HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
+            // call the createSchool method of the SchoolHELPGUI class
+            SchoolHELPGUI.createSchool(saved_fields);
             // then invoke the showAdminRegisterSchoolAdminView method
             showAdminRegisterSchoolAdminView();
         });
@@ -978,7 +982,7 @@ public class MainView {
         JButton login_button = new JButton("Login");
         login_button.addActionListener(e -> {
             // go to the login view
-            showLoginView();
+            showVolunteerLoginView();
         });
 
         // panel view content
@@ -1178,25 +1182,18 @@ public class MainView {
             showVolunteerMenuView();
         });
 
-        // add the buttons to the JButton array
-        JButton buttons[] = { submit_button, back_button };
-
         // create the panel view object
         JPanel list = new JPanel();
         list.setLayout(new BorderLayout());
         list.add(text_area, BorderLayout.CENTER);
-
-        // add the buttons to the panel
-        // ! this loop is unnecessary
-        for (JButton button : buttons) {
-            list.add(button, BorderLayout.SOUTH);
-        }
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(list, BorderLayout.CENTER);
+        right_menu_view_panel.add(submit_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
