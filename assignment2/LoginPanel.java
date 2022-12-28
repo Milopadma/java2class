@@ -8,7 +8,6 @@ import java.awt.*;
 // takes and processes data from and for the SchoolAdmin class
 public abstract class LoginPanel extends JPanel {
     // class fields
-    public static JLabel titleLabel = new JLabel("<html><h1>SchoolHELP Admin</h1><h1> Login</h1></html>");
     public static JTextField usernameField = new JTextField(10);
     public static JPasswordField passwordField = new JPasswordField(10);
     public static JButton loginButton = new JButton("Login");
@@ -16,10 +15,16 @@ public abstract class LoginPanel extends JPanel {
     public static JLabel usernameLabel = new JLabel("Username");
     public static JLabel passwordLabel = new JLabel("Password");
 
+    // making these public so the child classes can access them
+    // init the center panel
+    public static JPanel center_panel = new JPanel();
+    // init the panel for the buttons
+    public static JPanel button_panel = new JPanel();
+
     // constructor
-    public LoginPanel(Boolean isFirstTimeLogin) {
-        // init the center panel
-        JPanel center_panel = new JPanel();
+    public LoginPanel(String titleString) {
+        // title label with string
+        JLabel titleLabel = new JLabel(titleString);
 
         // init the title panel to contain the title label
         // set the title panel layout to BorderLayout to left align
@@ -29,9 +34,6 @@ public abstract class LoginPanel extends JPanel {
 
         // center panel layout, items are stacked vertically
         center_panel.setLayout(new BoxLayout(center_panel, BoxLayout.Y_AXIS));
-
-        // init the panel for the buttons
-        JPanel button_panel = new JPanel();
 
         // init the panel for the username and password holding panels
         JPanel username_panel = new JPanel();
@@ -49,7 +51,7 @@ public abstract class LoginPanel extends JPanel {
         usernameField.setAlignmentX(Component.LEFT_ALIGNMENT);
         usernameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // password label and field will be stacked on top of each other, but left
+        // password label and field will be stacked on top of each other, bt left
         // aligned
         password_panel.setLayout(new BoxLayout(password_panel, BoxLayout.Y_AXIS));
         // each input field will be left aligned (password)
@@ -75,15 +77,6 @@ public abstract class LoginPanel extends JPanel {
         center_panel.add(fields_container_panel);
         center_panel.add(button_panel);
 
-        if (isFirstTimeLogin) {
-            // using html to make the label multiline
-            final String string_label = "First Time Login detected, default username and password is (admin, admin)";
-            JLabel label = new JLabel("<html><p style=\"width: 200px;\">" + string_label + "</p></html>");
-            // add the label to the center panel
-            center_panel.add(label);
-
-        }
-
         // parent panel layout, items are stacked horizontally
         setLayout(new BoxLayout(this, 2));
 
@@ -92,13 +85,5 @@ public abstract class LoginPanel extends JPanel {
 
         // to add the center panel to the parent panel, vertical alignment
         add(center_panel, new GridBagConstraints());
-
-        // event handlers
-        backButton.addActionListener(e -> MainView.showUserChoiceView());
-        // save this panel to the mainview current previous panel // !deprecated
-        // loginButton.addActionListener(e -> MainView.saveCurrentPanel(this));
-        loginButton
-                .addActionListener(e -> SchoolHELPGUI.adminLogin(usernameField.getText(), passwordField.getPassword()));
     }
-
 }
