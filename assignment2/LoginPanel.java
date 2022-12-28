@@ -6,7 +6,7 @@ import java.awt.*;
 
 // this class handles the user login screen GUI, and it also handles the AdminLogin functionalities,
 // takes and processes data from and for the SchoolAdmin class
-public class LoginPanel extends JPanel {
+public abstract class LoginPanel extends JPanel {
     // class fields
     public static JLabel titleLabel = new JLabel("<html><h1>SchoolHELP Admin</h1><h1> Login</h1></html>");
     public static JTextField usernameField = new JTextField(10);
@@ -17,7 +17,7 @@ public class LoginPanel extends JPanel {
     public static JLabel passwordLabel = new JLabel("Password");
 
     // constructor
-    public LoginPanel(Boolean isFirstTimeLogin, User user) {
+    public LoginPanel(Boolean isFirstTimeLogin) {
         // init the center panel
         JPanel center_panel = new JPanel();
 
@@ -95,8 +95,8 @@ public class LoginPanel extends JPanel {
 
         // event handlers
         backButton.addActionListener(e -> MainView.showUserChoiceView());
-        // save this panel to the mainview current previous panel
-        loginButton.addActionListener(e -> MainView.saveCurrentPanel(this));
+        // save this panel to the mainview current previous panel // !deprecated
+        // loginButton.addActionListener(e -> MainView.saveCurrentPanel(this));
         loginButton
                 .addActionListener(e -> SchoolHELPGUI.adminLogin(usernameField.getText(), passwordField.getPassword()));
     }

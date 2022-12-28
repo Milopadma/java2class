@@ -120,4 +120,15 @@ public class SchoolHELPGUI {
         // SchoolHELP class
         return SchoolHELP.getRequest(value.getRequestID()).getOffers();
     }
+
+    public static void rejectOffer(Offer selected_offer) {
+        // ßet the status of the offer to rejected
+        selected_offer.setOfferStatus("REJECTED");
+
+    }
+
+    public static void acceptOffer(Offer selected_offer) {
+        // set the status of the offer to accepted
+        selected_offer.setOfferStatus("ACCEPTED");
+    }
 }

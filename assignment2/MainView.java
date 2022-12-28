@@ -120,7 +120,7 @@ public class MainView {
     public static void showAdminLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        admin_login_view_panel = new LoginPanel(SchoolHELPGUI.isFirstTimeLogin(), SchoolHELPGUI.getCurrentUser());
+        admin_login_view_panel = new AdminLoginViewPanel(SchoolHELPGUI.isFirstTimeLogin());
         main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
@@ -129,7 +129,7 @@ public class MainView {
     public static void showVolunteerLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        volunteer_login_view_panel = new LoginPanel(SchoolHELPGUI.isFirstTimeLogin(), SchoolHELPGUI.getCurrentUser());
+        volunteer_login_view_panel = new VolunteerLoginViewPanel();
         main_frame.add(volunteer_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
@@ -881,14 +881,14 @@ public class MainView {
         // iteration
         String offer_details[] = selected_offer.toString().split(" ");
 
-        // create the panel view object using JList
-        StandardListViewPanel list = new StandardListViewPanel(offer_details);
+        // create the panel view object
+        StandardListViewPanel list = new StandardListViewPanel(offer_details, buttons);
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(listScroller, BorderLayout.CENTER);
+        right_menu_view_panel.add(list, BorderLayout.CENTER);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
