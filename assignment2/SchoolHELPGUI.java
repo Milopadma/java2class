@@ -114,4 +114,10 @@ public class SchoolHELPGUI {
         // return the new school
         return newSchool;
     }
+
+    public static ArrayList<Offer> getOffersOfRequest(Request value) {
+        // get the offers of the request by calling the appropriate method in the
+        // SchoolHELP class
+        return SchoolHELP.getRequest(value.getRequestID()).getOffers();
+    }
 }

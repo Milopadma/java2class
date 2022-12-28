@@ -662,6 +662,9 @@ public class MainView {
     // methods below are concerned about the Admin Offers Menu, from the use cases
     // of Reviewing Offers and Accepting/Rejecting Offers for Requests of that
     // school
+    /**
+     * Only for Admin offers Menu
+     */
     public static void showReviewsForOffersView() {
         // using TableModelViewPanel class to display the table, from the Requests data
         // of this school
@@ -678,16 +681,38 @@ public class MainView {
 
         // panel view content
         // the buttons and their event handlers
-        String button_labels[] = { "Back" };
-        Runnable button_functions[] = { MainView::showAdminOffersMenuView };
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> MainView.showAdminOffersMenuView());
+
+        // add the buttons to the JButton array
+        JButton buttons[] = { back_button };
 
         // get the current user's school's available requests for offers
-        String thisSchoolRequestsForOffers[][] = new String[0][];
-        
+        ArrayList<Request> thisSchoolRequestsForOffers = new ArrayList<Request>();
+
+        // get the current user
+        User currentUser = SchoolHELPGUI.getCurrentUser();
+
+        try {
+            if (((SchoolAdmin) currentUser).getSchool().getRequests().size() == 0)
+            // if there are no requests for offers
+            {
+                // display a message
+                JOptionPane.showMessageDialog(null, "There are no requests for offers for your school.");
+            } else {
+                // get the requests for offers
+                thisSchoolRequestsForOffers = ((SchoolAdmin) currentUser).getSchool().getRequests();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // create the column names
+        String column_names[] = { "ID", "Status", "Request Date", "Request Type", "City", "Description" };
 
         // create the panel view object
         TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(
-                thisSchoolRequestsForOffers, button_labels, button_functions);
+                column_names, thisSchoolRequestsForOffers, buttons);
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -699,6 +724,110 @@ public class MainView {
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
         main_frame.setVisible(true);
     }
+
+    // this method is to show the offers of a request, when its clicked in a table
+    // cell
+    public static void showOffersOfRequest(Request request) {
+        // ask SchoolHELPGUI to search for the request and return the offers of that
+        // request object
+        if (SchoolHELPGUI.getOffersOfRequest(request) != null) {
+            // if there are offers for that request, do this method
+            // using TableModelViewPanel class to display the table, from the Requests data
+            // of this school
+            // clear the right menu panel
+            right_menu_view_panel.removeAll();
+
+            // new label as title using html h1
+            JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+            title_label.setVerticalAlignment(JLabel.TOP);
+
+            // new label as title using html h1
+            JLabel subtitle_label = new JLabel("<html><h3>Offers of Request</h3></html>");
+            subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+            // panel view content
+            // the buttons and their event handlers
+            JButton back_button = new JButton("Back");
+            back_button.addActionListener(e -> MainView.showAdminOffersMenuView());
+
+            // add the buttons to the JButton array
+            JButton buttons[] = { back_button };
+
+            // get the current user's school's available requests for offers
+            ArrayList<Offer> thisRequestOffers = new ArrayList<Offer>();
+
+            // get the current user
+            User currentUser = SchoolHELPGUI.getCurrentUser();
+
+            try {
+                if (((SchoolAdmin) currentUser).getSchool().getRequests().size() == 0)
+                // if there are no requests for offers
+                {
+                    // display a message
+                    JOptionPane.showMessageDialog(null, "There are no requests for offers for your school.");
+                } else {
+                    // get the requests for offers
+                    thisRequestOffers = SchoolHELPGUI.getOffersOfRequest(value);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // create the column names
+            String column_names[] = { "ID", "Status", "Offer Date", "Volunteer Name", "Remarks" };
+
+            // create the panel view object
+            TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(
+                    column_names, thisRequestOffers, buttons);
+
+            // add these elements to the right menu panel
+            right_menu_view_panel.setLayout(new BorderLayout());
+            right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+            right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+            right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
+
+            // then add the right menu panel to the main frame
+            main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        } else {
+            // show an info view panel that there are no offers for this Request
+            // clear the right menu panel
+            right_menu_view_panel.removeAll();
+
+            // new label as title using html h1
+            JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+            title_label.setVerticalAlignment(JLabel.TOP);
+
+            // new label as title using html h1
+            JLabel subtitle_label = new JLabel("<html><h3>Offers of Request ID: </h3></html>" + request.getRequestID());
+            subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+            // panel view content
+            // the buttons and their event handlers
+            JButton back_button = new JButton("Back");
+            back_button.addActionListener(e -> MainView.showAdminOffersMenuView());
+
+            // add the buttons to the JButton array
+            JButton buttons[] = { back_button };
+
+            // create the panel view object
+            StandardInfoPanel info_view_panel = new StandardInfoPanel("There are no offers", "for this request.",
+                    buttons);
+
+            // add these elements to the right menu panel
+            right_menu_view_panel.setLayout(new BorderLayout());
+            right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+            right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+            right_menu_view_panel.add(info_view_panel, BorderLayout.CENTER);
+
+            // then add the right menu panel to the main frame
+            main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+            main_frame.setVisible(true);
+        }
+
+    }
+
+    // if there are no offers for that request, do this method
+
 }
 
 // !notes

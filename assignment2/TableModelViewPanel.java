@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 // this class represents the table model view panel, 
 // creates an object that takes in an arraylist of data and displays 
@@ -16,12 +17,28 @@ public class TableModelViewPanel extends JPanel {
     JPanel table_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
-    public TableModelViewPanel(String[] columnNames, String[][] data, JButton[] buttons) {
+    public TableModelViewPanel(String[] columnNames, ArrayList data, JButton[] buttons) {
         // table layout are vertically stacked with same width using BoxLayout
         table_panel.setLayout(new BoxLayout(table_panel, BoxLayout.Y_AXIS));
 
         // create the table model and add the data to it
-        tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new DefaultTableModel(columnNames, 0);
+        for (Object row : data) {
+            tableModel.addRow((Object[]) row);
+        }
+
+        // add a click listener to the table
+        tableModel.addTableModelListener(e -> {
+            // get the row and column of the cell that was clicked
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+
+            // get the value of the cell that was clicked
+            Object value = tableModel.getValueAt(row, column);
+
+            // pass the value to the MainView class to show the offers of that request
+            MainView.showOffersOfRequest((Request) value);
+        });
 
         // create the table and add the table model to it
         JTable table = new JTable(tableModel);
