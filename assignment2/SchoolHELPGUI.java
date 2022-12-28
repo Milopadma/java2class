@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -144,4 +145,59 @@ public class SchoolHELPGUI {
         // add the new offer to the request
         selected_request.addOffer(newOffer);
     }
+
+    public static void createNewVolunteerUser(HashMap<String, String> saved_fields) {
+        // this method takes in a Hashmap of the fields from the volunteer registration
+        // screen and creates a new volunteer user based on them
+
+        // get the values from the fieldmap
+        String username = (String) saved_fields.get("Username");
+        String password = (String) saved_fields.get("Password");
+        String fullname = (String) saved_fields.get("Fullname");
+        String email = (String) saved_fields.get("Email");
+        Long phone = Long.parseLong((String) saved_fields.get("Phone"));
+        int dateofbirth = Integer.parseInt((String) saved_fields.get("Date of Birth"));
+        String occupation = (String) saved_fields.get("Occupation");
+
+        // create a new volunteer object
+        Volunteer newVolunteer = new Volunteer(username, password, fullname, email, phone, dateofbirth, occupation);
+
+        // add the new volunteer to the volunteer list
+        SchoolHELP.addUser(newVolunteer);
+    }
+
+    public static void createNewAdminUser(HashMap<String, String> saved_fields) {
+        // this method takes in a Hashmap of the fields from the volunteer registration
+        // screen and creates a new volunteer user based on them
+
+        // get the values from the fieldmap
+        String username = (String) saved_fields.get("Username");
+        String password = (String) saved_fields.get("Password");
+        String name = (String) saved_fields.get("Name");
+        String address = (String) saved_fields.get("Address");
+        String city = (String) saved_fields.get("City");
+        String phone = (String) saved_fields.get("Phone");
+        String email = (String) saved_fields.get("Email");
+
+        // create a new admin object
+        SchoolAdmin newAdmin = new SchoolAdmin(username, password, name, address, city, phone, email);
+
+        // add the new admin to the admin list
+        SchoolHELP.addAdmin(newAdmin);
+    }
+
+    public static void createNewRequest(HashMap<String, String> saved_fields) {
+        // this method takes in a Hashmap of the fields from the volunteer registration
+        // screen and creates a new volunteer user based on them
+
+        // get the values from the fieldmap
+        String requestName = (String) saved_fields.get("Request Name");
+        String requestDescription = (String) saved_fields.get("Request Description");
+        String requestCategory = (String) saved_fields.get("Request Category");
+        String requestStatus = "PENDING";
+        String requestSchool = (String) saved_fields.get("Request School");
+
+        // create a new request object
+        Request newRequest = new Request(request
+	}
 }

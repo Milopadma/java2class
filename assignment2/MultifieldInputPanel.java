@@ -1,19 +1,17 @@
 import java.awt.*;
+import java.util.HashMap;
 import java.util.stream.Stream;
 
 import javax.swing.*;
 
-// this class represents the generic panel with multiple buttons in it
+// this class represents the multifield input panel. 
 public class MultifieldInputPanel extends JPanel {
-    // class fields
-    // todo
-
     // GUI element initializations
     JPanel field_panel = new JPanel();
     JPanel text_field = new JPanel();
 
     // class constructor
-    MultifieldInputPanel(String[] fieldNames, Runnable[] button_functions) {
+    MultifieldInputPanel(String[] fieldNames) {
         // field layout are vertically stacked with same width using BoxLayout
         field_panel.setLayout(new BoxLayout(field_panel, BoxLayout.Y_AXIS));
 
@@ -30,20 +28,6 @@ public class MultifieldInputPanel extends JPanel {
             field_panel.add(text_field);
         });
 
-        // for the Next button
-        JButton next_button = new JButton("Next");
-        // also saves the text_field values to the MainView class'
-        next_button
-                .addActionListener(e -> MainView.saveMultifieldTextFields(getSavedfieldNames(), getSavedfieldValues()));
-        // ! this throws a null exception
-        next_button.addActionListener(e -> button_functions[0].run());
-        field_panel.add(next_button);
-
-        // for the Back button
-        JButton back_button = new JButton("Back");
-        back_button.addActionListener(e -> button_functions[1].run());
-        field_panel.add(back_button);
-
         // parent panel layout, items are stacked horizontally
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
@@ -54,30 +38,24 @@ public class MultifieldInputPanel extends JPanel {
         add(field_panel, new GridBagConstraints());
     }
 
-    private String[] getSavedfieldNames() {
-        // iterate overe the text_field panel and get the text from each label
-        // and save it to the string array
-        String[] savedfieldNames = new String[text_field.getComponentCount()];
+    // method to return a hashmap of the saved field names and values
+    public HashMap<String, String> getSavedFields() {
+        // create a new hashmap
+        HashMap<String, String> savedFields = new HashMap<String, String>();
+        // iterate over the text_field panel and get the text from each label and text
+        // field
+        // and save it to the hashmap
         Stream.iterate(0, i -> i + 1).limit(text_field.getComponentCount()).forEach(i -> {
-            // if its a JLabel, get the text from it and save it to the string array
+            // if its a JLabel, get the text from it and save it to the hashmap
             if (text_field.getComponent(i) instanceof JLabel) {
-                savedfieldNames[i] = ((JLabel) text_field.getComponent(i)).getText();
+                savedFields.put(((JLabel) text_field.getComponent(i)).getText(), "");
             }
-        });
-        return savedfieldNames;
-    }
-
-    private String[] getSavedfieldValues() {
-        // iterate over the text_field panel and get the text from each text field
-        // and save it to the string array
-        String[] savedfieldValues = new String[text_field.getComponentCount()];
-        Stream.iterate(0, i -> i + 1).limit(text_field.getComponentCount()).forEach(i -> {
-            // if its a JTextField, get the text from it and save it to the string array
+            // if its a JTextField, get the text from it and save it to the hashmap
             if (text_field.getComponent(i) instanceof JTextField) {
-                savedfieldValues[i] = ((JTextField) text_field.getComponent(i)).getText();
+                savedFields.put(((JLabel) text_field.getComponent(i)).getText(),
+                        ((JTextField) text_field.getComponent(i)).getText());
             }
         });
-        return savedfieldValues;
+        return savedFields;
     }
-
 }

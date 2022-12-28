@@ -7,6 +7,7 @@
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -898,6 +899,47 @@ public class MainView {
     // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE VOLUNTEER
     // * USER */
 
+    public static Object showVolunteerRegisterView() {
+        // this method is called when a user wants to register as a volunteer, this
+        // meethod shows the volunteer register view panel
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Registering a new School Admin</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // new multifieldinput panel object
+        String input_labels[] = { "Your Username", "Your Password", "Fullname",
+                "Phone Number", "Email", "Occupation", "Date of Birth" };
+        MultifieldInputPanel volunteer_register_field_panel = new MultifieldInputPanel(input_labels);
+
+        // for the next button, saves the input fields locally in this function first
+        JButton next_button = new JButton("Next");
+        // next button will show the next panel and call the getSavedFields() method of
+        // the panel and save the fields to a Hashmap
+        next_button.addActionListener(e -> {
+            // get the saved fields
+            HashMap<String, String> saved_fields = volunteer_register_field_panel.getSavedFields();
+            // create a VOLUNTEER USER object from the saved fields
+            SchoolHELPGUI.createNewVolunteerUser(saved_fields);
+        });
+
+        // set the layout of the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
+
+        main_frame.setVisible(true);
+
+    }
+
     // this method is called when the volunteer user logs in, this method shows the
     // volunteer main menu view panel
     public static void showVolunteerMenuView() {
@@ -1039,20 +1081,25 @@ public class MainView {
         JLabel subtitle_label = new JLabel("<html><h3>Submit Offer</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
+        // new text area
+        JTextArea text_area = new JTextArea();
+
         // panel view content
         // the buttons and their event handlers
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> showRequestDetails(selected_request));
 
-        JTextArea text_are         // create the text area
-        text_area = new JTextArea();
-
+        // new submit button
         JButton submit_button = new JButton("Submit");
         submit_button.addActionListener(e -> {
             // get the text from the text area
             String remarks = text_area.getText();
 
             SchoolHELPGUI.createNewOffer(selected_request, remarks);
+
+            // show a dialog box to show that the offer has been submitted
+            JOptionPane.showMessageDialog(null, "Offer Submitted Successfully", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
 
             // show the volunteer menu view
             showVolunteerMenuView();
@@ -1061,13 +1108,11 @@ public class MainView {
         // add the buttons to the JButton array
         JButton buttons[] = { submit_button, back_button };
 
-
-
         // create the panel view object
         JPanel list = new JPanel();
         list.setLayout(new BorderLayout());
         list.add(text_area, BorderLayout.CENTER);
-        
+
         // add the buttons to the panel
         for (JButton button : buttons) {
             list.add(button, BorderLayout.SOUTH);
@@ -1083,6 +1128,7 @@ public class MainView {
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
         main_frame.setVisible(true);
     }
+
 }
 
 // !notes

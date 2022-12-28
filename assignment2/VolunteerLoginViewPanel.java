@@ -19,6 +19,7 @@ public class VolunteerLoginViewPanel extends LoginPanel {
         loginButton
                 .addActionListener(
                         e -> SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword()));
+        registerButton.addActionListener(e -> MainView.showVolunteerRegisterView());
     }
 
 }
