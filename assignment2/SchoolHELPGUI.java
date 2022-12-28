@@ -166,24 +166,24 @@ public class SchoolHELPGUI {
         SchoolHELP.addUser(newVolunteer);
     }
 
-    public static void createNewAdminUser(HashMap<String, String> saved_fields) {
+    public static void createNewAdminUser(HashMap<String, String> saved_fields, School school) {
         // this method takes in a Hashmap of the fields from the volunteer registration
         // screen and creates a new volunteer user based on them
 
         // get the values from the fieldmap
         String username = (String) saved_fields.get("Username");
         String password = (String) saved_fields.get("Password");
-        String name = (String) saved_fields.get("Name");
-        String address = (String) saved_fields.get("Address");
-        String city = (String) saved_fields.get("City");
-        String phone = (String) saved_fields.get("Phone");
+        String fullname = (String) saved_fields.get("Fullname");
         String email = (String) saved_fields.get("Email");
+        Long phone = Long.parseLong((String) saved_fields.get("Phone"));
+        int staffID = Integer.parseInt((String) saved_fields.get("Staff ID"));
+        String position = (String) saved_fields.get("Position");
 
         // create a new admin object
-        SchoolAdmin newAdmin = new SchoolAdmin(username, password, name, address, city, phone, email);
+        SchoolAdmin newAdmin = new SchoolAdmin(username, password, fullname, email, phone, staffID, position, school);
 
         // add the new admin to the admin list
-        SchoolHELP.addAdmin(newAdmin);
+        SchoolHELP.addUser(newAdmin);
     }
 
     public static void createNewRequest(HashMap<String, String> saved_fields) {
