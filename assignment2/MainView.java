@@ -676,7 +676,7 @@ public class MainView {
         title_label.setVerticalAlignment(JLabel.TOP);
 
         // new label as title using html h1
-        JLabel subtitle_label = new JLabel("<html><h3>Review Offers</h3></html>");
+        JLabel subtitle_label = new JLabel("<html><h3>Viewing Requests</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
@@ -710,9 +710,28 @@ public class MainView {
         // create the column names
         String column_names[] = { "ID", "Status", "Request Date", "Request Type", "City", "Description" };
 
-        // create the panel view object
-        TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(
-                column_names, thisSchoolRequestsForOffers, buttons);
+        // ! TODO VERY unsure that this works
+        // function to invoke when a row is clicked, essentially to show the offers of
+        // that request
+        Runnable row_clicked_function = () -> {
+            try {
+                // get the selected row
+                Object value_as_object = TableModelViewPanel.getSelectedRowValue();
+
+                // get the selected request
+                Request selected_request = (Request) value_as_object;
+
+                // show the offers of that request
+                showOffersOfRequest(selected_request);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
+        // ! TODO VERY unsure that this works
+
+        // create the table model
+        TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(column_names,
+                thisSchoolRequestsForOffers, buttons, row_clicked_function);
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -727,10 +746,10 @@ public class MainView {
 
     // this method is to show the offers of a request, when its clicked in a table
     // cell
-    public static void showOffersOfRequest(Request request) {
+    public static void showOffersOfRequest(Request selected_request) {
         // ask SchoolHELPGUI to search for the request and return the offers of that
         // request object
-        if (SchoolHELPGUI.getOffersOfRequest(request) != null) {
+        if (SchoolHELPGUI.getOffersOfRequest(selected_request) != null) {
             // if there are offers for that request, do this method
             // using TableModelViewPanel class to display the table, from the Requests data
             // of this school
@@ -742,7 +761,8 @@ public class MainView {
             title_label.setVerticalAlignment(JLabel.TOP);
 
             // new label as title using html h1
-            JLabel subtitle_label = new JLabel("<html><h3>Offers of Request</h3></html>");
+            JLabel subtitle_label = new JLabel(
+                    "<html><h3>Offers of Request</h3></html>" + selected_request.getRequestID());
             subtitle_label.setVerticalAlignment(JLabel.TOP);
 
             // panel view content
@@ -756,29 +776,32 @@ public class MainView {
             // get the current user's school's available requests for offers
             ArrayList<Offer> thisRequestOffers = new ArrayList<Offer>();
 
-            // get the current user
-            User currentUser = SchoolHELPGUI.getCurrentUser();
-
-            try {
-                if (((SchoolAdmin) currentUser).getSchool().getRequests().size() == 0)
-                // if there are no requests for offers
-                {
-                    // display a message
-                    JOptionPane.showMessageDialog(null, "There are no requests for offers for your school.");
-                } else {
-                    // get the requests for offers
-                    thisRequestOffers = SchoolHELPGUI.getOffersOfRequest(value);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             // create the column names
             String column_names[] = { "ID", "Status", "Offer Date", "Volunteer Name", "Remarks" };
 
-            // create the panel view object
-            TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(
-                    column_names, thisRequestOffers, buttons);
+            // ! TODO VERY unsure that this works
+            // function to invoke when a row is clicked, essentially to show the Offer
+            // details of that Offer
+            Runnable row_clicked_function = () -> {
+                try {
+                    // get the selected row
+                    Object value_as_object = TableModelViewPanel.getSelectedRowValue();
+
+                    // get the selected request
+                    Offer selected_offer = (Offer) value_as_object;
+
+                    // show the offers of that request
+                    showOfferDetails(selected_offer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            };
+
+            // ! TODO VERY unsure that this works
+
+            // create the table model
+            TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(column_names,
+                    thisRequestOffers, buttons, row_clicked_function);
 
             // add these elements to the right menu panel
             right_menu_view_panel.setLayout(new BorderLayout());
@@ -798,7 +821,8 @@ public class MainView {
             title_label.setVerticalAlignment(JLabel.TOP);
 
             // new label as title using html h1
-            JLabel subtitle_label = new JLabel("<html><h3>Offers of Request ID: </h3></html>" + request.getRequestID());
+            JLabel subtitle_label = new JLabel(
+                    "<html><h3>Offers of Request ID: </h3></html>" + selected_request.getRequestID());
             subtitle_label.setVerticalAlignment(JLabel.TOP);
 
             // panel view content
@@ -826,7 +850,50 @@ public class MainView {
 
     }
 
-    // if there are no offers for that request, do this method
+    private static void showOfferDetails(Offer selected_offer) {
+        // just show the details in a JList
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Offer Details</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // the buttons and their event handlers
+        JButton reject_button = new JButton("Reject");
+        reject_button.addActionListener(e -> SchoolHELPGUI.rejectOffer(selected_offer));
+
+        JButton accept_button = new JButton("Accept");
+        accept_button.addActionListener(e -> SchoolHELPGUI.acceptOffer(selected_offer));
+
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> MainView.showAdminOffersMenuView());
+
+        // add the buttons to the JButton array
+        JButton buttons[] = { reject_button, accept_button, back_button };
+
+        // turn the selected_offer details to a String Array first by means of stream
+        // iteration
+        String offer_details[] = selected_offer.toString().split(" ");
+
+        // create the panel view object using JList
+        StandardListViewPanel list = new StandardListViewPanel(offer_details);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(listScroller, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
+    }
 
 }
 

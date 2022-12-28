@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
@@ -12,12 +13,14 @@ public class TableModelViewPanel extends JPanel {
     // class fields
     // todo
 
+    private static JTable table;
+
     // GUI element initializations
     private DefaultTableModel tableModel;
     JPanel table_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
-    public TableModelViewPanel(String[] columnNames, ArrayList data, JButton[] buttons) {
+    public TableModelViewPanel(String[] columnNames, ArrayList data, JButton[] buttons, Runnable runnable_function) {
         // table layout are vertically stacked with same width using BoxLayout
         table_panel.setLayout(new BoxLayout(table_panel, BoxLayout.Y_AXIS));
 
@@ -27,26 +30,30 @@ public class TableModelViewPanel extends JPanel {
             tableModel.addRow((Object[]) row);
         }
 
-        // add a click listener to the table
+        // listen for click events in the table rows
         tableModel.addTableModelListener(e -> {
-            // get the row and column of the cell that was clicked
-            int row = e.getFirstRow();
-            int column = e.getColumn();
+            // if the table is clicked
+            if (e.getType() == TableModelEvent.UPDATE) {
+                // get the selected row
+                int selectedRow = table.getSelectedRow();
 
-            // get the value of the cell that was clicked
-            Object value = tableModel.getValueAt(row, column);
+                // get the value of the first column of the selected row
+                Object value = table.getValueAt(selectedRow, 0);
 
-            // pass the value to the MainView class to show the offers of that request
-            MainView.showOffersOfRequest((Request) value);
+                // run the function
+                runnable_function.run();
+                //! TODO VERY unsure that this works
+            }
         });
 
         // create the table and add the table model to it
-        JTable table = new JTable(tableModel);
+        table = new JTable(tableModel);
 
-        // add the table to the table panel
-        table_panel.add(table);
+        // put table in a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        table_panel.add(scrollPane);
 
-        // add the buttons to the button panel
+        // add the buttons
         for (JButton button : buttons) {
             button_panel.add(button);
         }
@@ -57,5 +64,15 @@ public class TableModelViewPanel extends JPanel {
         // to add the table panel and button panel to the parent panel
         add(table_panel, new GridBagConstraints());
         add(button_panel, new GridBagConstraints());
+    }
+
+    public static Object getSelectedRowValue() {
+        // get the selected row
+        int selectedRow = table.getSelectedRow();
+
+        // get the value of the first column of the selected row
+        Object value = table.getValueAt(selectedRow, 0);
+
+        return value;
     }
 }
