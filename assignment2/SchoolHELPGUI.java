@@ -69,6 +69,10 @@ public class SchoolHELPGUI {
 
                 // if the user is an admin, show the admin menu
                 MainView.showAdminSchoolsMenuView();
+
+                // at this point, the user has logged in, so it's not the first time login
+                // anymore
+                setFirstTimeLogin(false);
             } else if (SchoolHELP.isUserVolunteer(username, password_stringified)) {
                 // set the current user to the user that just logged in
                 setCurrentUser(SchoolHELP.getUser(username, password_stringified));
@@ -154,10 +158,10 @@ public class SchoolHELPGUI {
         String username = (String) saved_fields.get("Username");
         String password = (String) saved_fields.get("Password");
         String fullname = (String) saved_fields.get("Fullname");
+        Long phone = Long.parseLong((String) saved_fields.get("Phone Number"));
         String email = (String) saved_fields.get("Email");
-        Long phone = Long.parseLong((String) saved_fields.get("Phone"));
-        int dateofbirth = Integer.parseInt((String) saved_fields.get("Date of Birth"));
         String occupation = (String) saved_fields.get("Occupation");
+        int dateofbirth = Integer.parseInt((String) saved_fields.get("Date of Birth"));
 
         // create a new volunteer object
         Volunteer newVolunteer = new Volunteer(username, password, fullname, email, phone, dateofbirth, occupation);
@@ -173,12 +177,15 @@ public class SchoolHELPGUI {
         // this method takes in a Hashmap of the fields from the volunteer registration
         // screen and creates a new volunteer user based on them
 
+        // printout the hashmap
+        System.out.println(saved_fields);
+
         // get the values from the fieldmap
         String username = (String) saved_fields.get("Username");
         String password = (String) saved_fields.get("Password");
         String fullname = (String) saved_fields.get("Fullname");
         String email = (String) saved_fields.get("Email");
-        Long phone = Long.parseLong((String) saved_fields.get("Phone"));
+        Long phone = Long.parseLong((String) saved_fields.get("Phone Number"));
         int staffID = Integer.parseInt((String) saved_fields.get("Staff ID"));
         String position = (String) saved_fields.get("Position");
 

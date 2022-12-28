@@ -10,6 +10,9 @@ public class VolunteerLoginViewPanel extends LoginPanel {
         // init the template from LoginPanel
         super("<html><h1>SchoolHELP Volunteer</h1><h1> Login</h1></html>");
 
+        // !BUG ; titleString and register button shows up twice, seems like it does not
+        // !BUG ; get deconstructed as expected, happens to both login views
+
         // volunteer has a new button to register
         JButton registerButton = new JButton("Register");
         // add the register button to the button panel

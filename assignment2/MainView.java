@@ -8,9 +8,6 @@
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import javax.swing.*;
 
@@ -186,7 +183,7 @@ public class MainView {
         right_menu_view_panel.setLayout(new BorderLayout());
 
         // add the elements to their respective panels
-        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        main_frame.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_schools_view_panel, BorderLayout.CENTER);
 
@@ -378,8 +375,8 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        String input_labels[] = { "Admin Name", "Admin Email", "Admin Password", "Admin Fullname", "Admin Phone",
-                "Admin StaffID", "Admin Position" };
+        String input_labels[] = { "Username", "Password", "Fullname", "Email",
+                "Phone Number", "Staff ID", "Position" };
 
         // create the panel with the buttons
         MultifieldInputPanel admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels);
@@ -404,7 +401,7 @@ public class MainView {
             SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
 
             // show the next panel
-            showSchoolAdminAndSchoolCompletionView(current_school);
+            showSchoolAdminAndSchoolCompletionView();
         });
         back_button.addActionListener(e -> {
             // show the previous panel
@@ -426,7 +423,7 @@ public class MainView {
     }
 
     // this is shown when both a school and school admin is registered
-    public static void showSchoolAdminAndSchoolCompletionView(School newSchool) {
+    public static void showSchoolAdminAndSchoolCompletionView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -440,7 +437,7 @@ public class MainView {
         JButton view_full_info_button = new JButton("View Full Info");
         view_full_info_button.addActionListener(e -> {
             // show the school info view
-            showSchoolInfoView(newSchool, true);
+            // showSchoolInfoView(newSchool, true);
         });
 
         JButton back_button = new JButton("Back");
@@ -555,7 +552,7 @@ public class MainView {
         right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
 
     }
@@ -593,7 +590,7 @@ public class MainView {
         right_menu_view_panel.add(admin_request_submission_view_panel, BorderLayout.CENTER);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
 
     }
@@ -648,7 +645,7 @@ public class MainView {
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
 
     }
@@ -702,7 +699,7 @@ public class MainView {
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -747,6 +744,10 @@ public class MainView {
             {
                 // display a message
                 JOptionPane.showMessageDialog(null, "There are no requests for offers for your school.");
+
+                // show the admin offers menu view
+                showAdminOffersMenuView();
+
             } else {
                 // get the requests for offers
                 thisSchoolRequestsForOffers = ((SchoolAdmin) currentUser).getSchool().getRequests();
@@ -788,7 +789,7 @@ public class MainView {
         right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -858,7 +859,7 @@ public class MainView {
             right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
 
             // then add the right menu panel to the main frame
-            main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+            main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         } else {
             // show an info view panel that there are no offers for this Request
             // clear the right menu panel
@@ -892,7 +893,7 @@ public class MainView {
             right_menu_view_panel.add(info_view_panel, BorderLayout.CENTER);
 
             // then add the right menu panel to the main frame
-            main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+            main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
             main_frame.setVisible(true);
         }
 
@@ -939,7 +940,7 @@ public class MainView {
         right_menu_view_panel.add(list, BorderLayout.CENTER);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -951,7 +952,7 @@ public class MainView {
         // this method is called when a user wants to register as a volunteer, this
         // meethod shows the volunteer register view panel
         // clear the right menu panel
-        right_menu_view_panel.removeAll();
+        main_frame.getContentPane().removeAll();
 
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Registration</h1></html>");
@@ -987,6 +988,8 @@ public class MainView {
         right_menu_view_panel.add(volunteer_register_field_panel, BorderLayout.CENTER);
         right_menu_view_panel.add(next_button, BorderLayout.SOUTH);
 
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
 
     }
@@ -1025,7 +1028,7 @@ public class MainView {
         right_menu_view_panel.add(list, BorderLayout.CENTER);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -1044,7 +1047,7 @@ public class MainView {
 
         // new label as title using html h1
         JLabel subtitle_label = new JLabel(
-                "<html><h3>Volunteer ID: </h3></html>");
+                "<html><h3>Viewing Requests</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
@@ -1160,11 +1163,11 @@ public class MainView {
         right_menu_view_panel.add(list, BorderLayout.CENTER);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
-    private static void showSubmitOfferView(Request selected_request) {
+    public static void showSubmitOfferView(Request selected_request) {
         // this method shows the submit offer view panel to allow the user to input
         // remarks into a JTextArea and have it submitted to the system
         // clear the right menu panel
@@ -1216,7 +1219,7 @@ public class MainView {
         right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 

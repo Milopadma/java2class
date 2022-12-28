@@ -70,7 +70,41 @@ public class SidemenuView extends JPanel {
         }
         // the volunteer view
         else if (user.isVolunteer()) {
-            // todo
+            // setting the profile picture panel layout to be centered vertically and
+            // horizontally
+            profile_picture_panel.setLayout(new GridBagLayout());
+            profile_picture_panel.add(generateProfilePicture(user));
+
+            // setting the name and occupation panel layout to be centered vertically and
+            // horizontally
+            name_occupation_panel.setLayout(new GridBagLayout());
+            name_occupation_panel.add(new JLabel(user.getUsername()));
+            // since its a volunteer, assume User is of Volunteer instance and get the
+            // position field
+            name_occupation_panel.add(new JLabel(((Volunteer) user).getOccupation()));
+
+            // setting the button panel layout to be stacked vertically
+            button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
+            button_panel.add(requests_button);
+            button_panel.add(offers_button);
+
+            // adding the event handlers for the buttons
+            requests_button.addActionListener(e -> {
+                // call the MainView method to show the Requests volunteer menu view
+                MainView.showVolunteerMenuView();
+            });
+
+            // offers_button.addActionListener(e -> {
+            // // call the MainView method to show the Offers volunteer menu view
+            // MainView.showSubmitOfferView();
+            // });
+
+            // now add all these elements to the parent panel
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            add(profile_picture_panel);
+            add(name_occupation_panel);
+            add(button_panel);
+            add(logout_button);
         }
         // catch this edge case
         else {
