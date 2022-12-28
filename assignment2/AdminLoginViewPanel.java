@@ -21,7 +21,7 @@ public class AdminLoginViewPanel extends LoginPanel {
         // event handlers
         backButton.addActionListener(e -> MainView.showUserChoiceView());
         loginButton
-                .addActionListener(e -> SchoolHELPGUI.adminLogin(usernameField.getText(), passwordField.getPassword()));
+                .addActionListener(e -> SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword()));
     }
 
 }

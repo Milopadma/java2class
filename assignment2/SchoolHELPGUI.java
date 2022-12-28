@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -57,55 +58,29 @@ public class SchoolHELPGUI {
 
     // * CLASS HELPER METHODS */
     // this method handles the login process for admin user
-    public static void adminLogin(String username, char[] password) {
+    public static void userLogin(String username, char[] password) {
         String password_stringified = new String(password);
         try {
-            // check if the username and password are correct
-            if (SchoolHELPGUI.checkLogin(username, password_stringified)) {
-                // if the login is successful, show the admin menu
-                MainView.showAdminSchoolsMenuView();
-            } else {
-                // if the login is unsuccessful, show an error message
-                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-    }
+            // find out if this user is a volunteer or an admin
+            if (SchoolHELP.isUserAdmin(username, password_stringified)) {
+                // set the current user to the user that just logged in
+                setCurrentUser(SchoolHELP.getUser(username, password_stringified));
 
-    public static void volunteerLogin(String username, char[] password) {
-        String password_stringified = new String(password);
-        try {
-            // check if the username and password are correct
-            if (SchoolHELPGUI.checkLogin(username, password_stringified)) {
-                // if the login is successful, show the admin menu
+                // if the user is an admin, show the admin menu
+                MainView.showAdminSchoolsMenuView();
+            } else if (SchoolHELP.isUserVolunteer(username, password_stringified)) {
+                // set the current user to the user that just logged in
+                setCurrentUser(SchoolHELP.getUser(username, password_stringified));
+
+                // if the user is a volunteer, show the volunteer menu
                 MainView.showVolunteerMenuView();
             } else {
-                // if the login is unsuccessful, show an error message
+                // if the user is not found, show an error message
                 JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception err) {
             err.printStackTrace();
-        }
-    }
-
-    // this method is called when the login button is clicked
-    public static boolean checkLogin(String username, String password) {
-        if (SchoolHELP.isUserAdmin(username, password)) {
-
-            // call the AdminScreen class
-            // AdminScreen admin_screen = new AdminScreen();
-            // set the current user to the admin
-            currentUser = SchoolHELP.getUser(username, password);
-            // set the first time login to false
-            isFirstTimeLogin = false;
-            // return true
-            return true;
-        } else {
-            // return false
-            return false;
         }
     }
 
@@ -147,5 +122,26 @@ public class SchoolHELPGUI {
     public static void acceptOffer(Offer selected_offer) {
         // set the status of the offer to accepted
         selected_offer.setOfferStatus("ACCEPTED");
+    }
+
+    public static ArrayList<Request> getAllRequests() {
+        // get all the requests frrom all the schools
+        return SchoolHELP.getAllRequests();
+    }
+
+    public static void createNewOffer(Request selected_request, String remarks) {
+        // this method takes the Request and Remarks from the volunteer screen and
+        // creates a new offer based on them
+
+        // get the current user
+        Volunteer currentUser = (Volunteer) getCurrentUser();
+
+        LocalDateTime offerDate = LocalDateTime.now();
+        
+        // create a new offer object
+        Offer newOffer = new Offer(offerDate, remarks, "PENDING", currentUser)
+
+        // add the new offer to the request
+        selected_request.addOffer(newOffer);
     }
 }

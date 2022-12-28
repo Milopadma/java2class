@@ -134,15 +134,14 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
-    // * */ ADMIN USER FUNCTIONALITY STAGE
-    // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE ADMIN USER */
-    // * DIRECTLY CORRELATES WITH THE DECLARED PUBLIC STATIC FIELDS OF THIS CLASS */
     // initialize the side menu view
     public static void showSideMenuView() {
         admin_sidemenu_view_panel = new SidemenuView(SchoolHELPGUI.getCurrentUser());
         main_frame.add(admin_sidemenu_view_panel, BorderLayout.WEST);
     }
 
+    // * */ ADMIN USER FUNCTIONALITY STAGE
+    // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE ADMIN USER */
     // * */ for the sidemenu buttons
     // show AdminSchoolsMenuView (school admin menu with sidemenu dashboard)
     // method 1/3 for the admin sidemenu buttons
@@ -895,6 +894,195 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    // * */ VOLUNTEER USER FUNCTIONALITY STAGE
+    // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE VOLUNTEER
+    // * USER */
+
+    // this method is called when the volunteer user logs in, this method shows the
+    // volunteer main menu view panel
+    public static void showVolunteerMenuView() {
+        // clear the frame
+        main_frame.getContentPane().removeAll();
+
+        // init the sidemenuview
+        showSideMenuView();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel(
+                "<html><h3>Volunteer ID: </h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // table view of available requests of all schools
+        String[] column_names = { "ID", "Status", "Request Date", "School Name", "City", "Description" };
+        ArrayList<Request> requests = SchoolHELPGUI.getAllRequests();
+
+        // for the "Sort By" dropdown menu in the table { School Name, City, Date }
+        JButton sort_by_button = new JButton("Sort By");
+        // when clicked, open a dialog menu
+        sort_by_button.addActionListener(e -> {
+            // create a new dialog menu
+            JDialog dialog = new JDialog();
+            // set the title
+            dialog.setTitle("Sort By");
+            // set the size
+            dialog.setSize(300, 200);
+            // set the layout
+            dialog.setLayout(new BorderLayout());
+            // set the location
+            dialog.setLocationRelativeTo(null);
+            // set the modality
+            dialog.setModal(true);
+
+            // create the buttons
+            JButton school_name_button = new JButton("School Name");
+            JButton city_button = new JButton("City");
+            JButton date_button = new JButton("Date");
+
+            // add the buttons to the button array
+            JButton buttons[] = { school_name_button, city_button, date_button };
+
+            // create the panel view object
+            JPanel list = new JPanel();
+            list.setLayout(new GridLayout(3, 1));
+
+            // add the buttons to the panel
+            for (JButton button : buttons) {
+                list.add(button);
+            }
+
+            // add the list to the dialog
+            dialog.add(list, BorderLayout.CENTER);
+
+            // set the dialog to visible
+            dialog.setVisible(true);
+        });
+
+        JButton buttons[] = { sort_by_button };
+
+        // runnable function
+        Runnable Runnable = () -> {
+            // get the selected row
+            Object selected_row = TableModelViewPanel.getSelectedRowValue();
+
+            // if the selected row is not null
+            if (selected_row != null) {
+                // get the selected request
+                Request selected_request = (Request) selected_row;
+
+                // show the request details
+                showRequestDetails(selected_request);
+            }
+        };
+
+        // create the table view object
+        TableModelViewPanel table = new TableModelViewPanel(column_names, requests, buttons, Runnable);
+    }
+
+    private static void showRequestDetails(Request selected_request) {
+        // this method shows teh request details from the selected request
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Request Details</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // the buttons and their event handlers
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> showVolunteerMenuView());
+
+        JButton submit_an_offer_button = new JButton("Submit an Offer");
+        submit_an_offer_button.addActionListener(e -> showSubmitOfferView(selected_request));
+
+        // add the buttons to the JButton array
+        JButton buttons[] = { submit_an_offer_button, back_button };
+
+        // turn the selected_request details to a String Array first by means of stream
+        // iteration
+        String request_details[] = selected_request.toString().split(" ");
+
+        // create the panel view object
+        StandardListViewPanel list = new StandardListViewPanel(request_details, buttons);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(list, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
+    }
+
+    private static Object showSubmitOfferView(Request selected_request) {
+        // this method shows the submit offer view panel to allow the user to input
+        // remarks into a JTextArea and have it submitted to the system
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new label as title using html h1
+        JLabel subtitle_label = new JLabel("<html><h3>Submit Offer</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // panel view content
+        // the buttons and their event handlers
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> showRequestDetails(selected_request));
+
+        JTextArea text_are         // create the text area
+        text_area = new JTextArea();
+
+        JButton submit_button = new JButton("Submit");
+        submit_button.addActionListener(e -> {
+            // get the text from the text area
+            String remarks = text_area.getText();
+
+            SchoolHELPGUI.createNewOffer(selected_request, remarks);
+
+            // show the volunteer menu view
+            showVolunteerMenuView();
+        });
+
+        // add the buttons to the JButton array
+        JButton buttons[] = { submit_button, back_button };
+
+
+
+        // create the panel view object
+        JPanel list = new JPanel();
+        list.setLayout(new BorderLayout());
+        list.add(text_area, BorderLayout.CENTER);
+        
+        // add the buttons to the panel
+        for (JButton button : buttons) {
+            list.add(button, BorderLayout.SOUTH);
+        }
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(list, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
+    }
 }
 
 // !notes
