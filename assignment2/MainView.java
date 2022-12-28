@@ -28,11 +28,11 @@ public class MainView {
     static LoginPanel volunteer_login_view_panel;
 
     // all admin-related view panels
-    static MultibuttonInputPanel admin_schools_view_panel;
-    static MultifieldInputPanel admin_register_school_view_panel;
-    static MultifieldInputPanel admin_register_school_admin_view_panel;
-    static StandardInfoPanel admin_school_registration_complete_view_panel;
-    static ThreestepTimelinePanel admin_timeline_view_panel;
+    // static MultibuttonInputPanel admin_schools_view_panel;
+    // static MultifieldInputPanel admin_register_school_view_panel;
+    // static MultifieldInputPanel admin_register_school_admin_view_panel;
+    // static StandardInfoPanel admin_school_registration_complete_view_panel;
+    // static ThreestepTimelinePanel admin_timeline_view_panel;
 
     // all volunteer-related view panels
     // todo
@@ -45,11 +45,11 @@ public class MainView {
     static JPanel right_menu_view_panel = new JPanel();
 
     // to save the values of the MultifieldInputPanel
-    static Map<String, String> multifield_input_panel_values;
+    // static Map<String, String> multifield_input_panel_values;
 
-    private static MultibuttonInputPanel admin_requests_view_panel;
+    // private static MultibuttonInputPanel admin_requests_view_panel;
 
-    private static MultibuttonInputPanel admin_offers_view_panel;
+    // private static MultibuttonInputPanel admin_offers_view_panel;
 
     // constructor
     public MainView() {
@@ -97,14 +97,8 @@ public class MainView {
                 .boxed()
                 .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
         // ! this throws a null exception
+        // ? is method this even used?
         multifield_input_panel_values = fieldMap;
-    }
-
-    // this helper class method calls into the SchoolHELPGUI class to create a new
-    // school by passing in the saved multitextfields of adminschoolregistration
-    public static void createNewSchool(Map<String, String> fieldMap) {
-        // call the SchoolHELPGUI method to create a new school
-        SchoolHELPGUI.createNewSchool(fieldMap);
     }
 
     // * */ USER SELECT AND LOGIN STAGE
@@ -215,36 +209,30 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        String button_labels[] = { "View all Requests for this school", "View every Request from all Schools" };
+        // String button_labels[] = { "View all Requests for this school", "View every
+        // Request from all Schools" };
 
-        // an array of functions to be called when the buttons are clicked
-        Runnable button_functions[] = { MainView::showRequestSubmissionForSchoolView, MainView::showAllRequestsView };
+        // // an array of functions to be called when the buttons are clicked
+        // Runnable button_functions[] = { MainView::showRequestSubmissionForSchoolView,
+        // MainView::showAllRequestsView };
 
         // buttons for the admin school menu view
-        JButton view_school_requests_button = new JButton(button_labels[0]);
-
-        // action listeners for the buttons
-        register_button.addActionListener(e -> {
+        JButton submit_request_button = new JButton("Submit a Request for this School");
+        submit_request_button.addActionListener(e -> {
             // clear the frame before adding new elements
-            showAdminRegisterSchoolView();
+            showRequestSubmissionForSchoolView();
         });
-        register_admin_button.addActionListener(e -> {
-            // clear the frame before adding new elements
-            showAdminRegisterSchoolAdminView();
-        });
-        view_schools_button.addActionListener(e -> {
-            // clear the frame before adding new elements
-            showAllSchoolsView();
-        });
+        JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> {
             // clear the frame before adding new elements
             showUserChoiceView();
         });
 
         // create the array of buttons
-        JButton buttons[] = { register_button, register_admin_button, view_schools_button, back_button };
+        JButton buttons[] = { submit_request_button, back_button };
 
         // create the panel with the buttons
+        MultibuttonInputPanel admin_requests_view_panel = new MultibuttonInputPanel(buttons);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -278,17 +266,23 @@ public class MainView {
         title_label.setVerticalAlignment(JLabel.TOP);
 
         // new label as title using html h1
-        JLabel subtitle_label = new JLabel("<html><h3>Requests</h3></html>");
+        JLabel subtitle_label = new JLabel("<html><h3>Offers</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        String button_labels[] = { "Review Offers for this School" };
-
-        // an array of functions to be called when the buttons are clicked
-        Runnable button_functions[] = { MainView::showReviewsForOffersView };
+        // buttons for the admin school menu view
+        JButton review_offers_for_school_button = new JButton("Review Offers for this School");
+        review_offers_for_school_button.addActionListener(e -> {
+            showReviewsForOffersView();
+        });
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> {
+            showAdminSchoolsMenuView();
+        });
+        JButton buttons[] = { review_offers_for_school_button, back_button };
 
         // create the panel with the buttons
-        admin_offers_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
+        MultibuttonInputPanel admin_offers_view_panel = new MultibuttonInputPanel(buttons);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -336,10 +330,8 @@ public class MainView {
         next_button.addActionListener(e -> {
             // get the saved fields and saved to Hashmap
             HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
-            // create a new school object by calling from SchoolHELPGUI
-            School newSchool = SchoolHELPGUI.createSchool(saved_fields);
             // then invoke the showAdminRegisterSchoolAdminView method
-            showAdminRegisterSchoolAdminView(newSchool);
+            showAdminRegisterSchoolAdminView();
         });
 
         // set the layout of the right menu panel
@@ -357,7 +349,7 @@ public class MainView {
 
     // to show the school admin registration panel view
     // method 2/2 of the school side menu for admin
-    public static void showAdminRegisterSchoolAdminView(School newSchool) {
+    public static void showAdminRegisterSchoolAdminView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -393,7 +385,7 @@ public class MainView {
             SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
 
             // show the next panel
-            showSchoolAdminAndSchoolCompletionView(newSchool);
+            showSchoolAdminAndSchoolCompletionView(current_school);
         });
         back_button.addActionListener(e -> {
             // show the previous panel
@@ -438,7 +430,7 @@ public class MainView {
         JButton[] buttons = { view_full_info_button, back_button };
 
         // create the standardinfopanel
-        admin_school_registration_complete_view_panel = new StandardInfoPanel(
+        StandardInfoPanel admin_school_registration_complete_view_panel = new StandardInfoPanel(
                 "School and SchoolAdmin registration complete!",
                 "You can now login to the SchoolHELP app with the SchoolAdmin credentials you just registered.",
                 buttons);
@@ -651,21 +643,39 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        // the buttons and their event handlers
-        String input_labels[] = { "Resource Description", "Resource Type",
-                "Amount Expected"};
-
-        //two buttons, "Done" and "Back"
-        Runnable button_functions[] = { MainView::showAdminRequestsMenuView, MainView::showRequestSubmissionChoiceView;  };
+        // labels for the input JTextFields
+        String input_labels[] = { "Resource Description", "Resource Type", "Amount Expected" };
 
         // create the panel view object
-        RequestSubmissionViewPanel resource_request_submission_view_panel = new RequestSubmissionViewPanel(
-                input_labels, button_functions);
+        MultifieldInputPanel resource_request_submission_view_panel = new MultifieldInputPanel(input_labels);
+
+        // buttons for this panel
+        JButton done_button = new JButton("Done");
+        // done button saves the fields
+        done_button.addActionListener(e -> {
+            try {
+                // get the input fields
+                HashMap<String, String> saved_fields = resource_request_submission_view_panel.getSavedFields();
+                SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
+                School thisSchool = current_user.getSchool();
+                // call the method to save the request
+                SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            // show the admin requests menu view
+            showAdminRequestsMenuView();
+        });
+
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> showRequestSubmissionChoiceView());
 
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(resource_request_submission_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(done_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.EAST);
@@ -920,11 +930,11 @@ public class MainView {
         right_menu_view_panel.removeAll();
 
         // new label as title using html h1
-        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Registration</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
 
         // new label as title using html h1
-        JLabel subtitle_label = new JLabel("<html><h3>Registering a new School Admin</h3></html>");
+        JLabel subtitle_label = new JLabel("<html><h3>Registering as new Volunteer</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
@@ -941,18 +951,58 @@ public class MainView {
             // get the saved fields
             HashMap<String, String> saved_fields = volunteer_register_field_panel.getSavedFields();
             // create a VOLUNTEER USER object from the saved fields
-            SchoolHELPGUI.createNewVolunteerUser(saved_fields);
-            // ? does this go somewhere else after?
+            Volunteer new_volunteer = SchoolHELPGUI.createNewVolunteerUser(saved_fields);
+            // go to volunteer successfull register view
+            showVolunteerRegisterSuccessView(new_volunteer);
         });
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(volunteer_register_field_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(next_button, BorderLayout.SOUTH);
 
         main_frame.setVisible(true);
 
+    }
+
+    private static void showVolunteerRegisterSuccessView(Volunteer new_volunteer) {
+        // this method is called when a volunteer user is successfully registered, this
+        // method shows the volunteer register success view panel
+
+        // clear the frame
+        main_frame.getContentPane().removeAll();
+
+        // buttons
+        JButton login_button = new JButton("Login");
+        login_button.addActionListener(e -> {
+            // go to the login view
+            showLoginView();
+        });
+
+        // panel view content
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Registration</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // add the buttons to the JButton array
+        JButton buttons[] = { login_button };
+
+        // create the panel view object
+        StandardListViewPanel list = new StandardListViewPanel(
+                new String[] { "You have successfully registered as a volunteer user.",
+                        "Welcome, " + new_volunteer.getFullname() },
+                buttons);
+
+        // add these elements to the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(list, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.EAST);
+        main_frame.setVisible(true);
     }
 
     // this method is called when the volunteer user logs in, this method shows the
