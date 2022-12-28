@@ -3,33 +3,30 @@ import java.util.stream.Stream;
 
 import javax.swing.*;
 
-// this class represents the generic panel with multiple buttons in it
+// this class represents the generic panel with multiple buttons in it. Only cares about the display of n amount of buttons.
 public class MultibuttonInputPanel extends JPanel {
-    // class fields
-    // todo
-
     // GUI element initializations
     JPanel button_panel = new JPanel();
+    JPanel back_button_panel = new JPanel();
 
     // class constructor that accepts a String array of button names and an Event
     // listener to add to the buttons
-    public MultibuttonInputPanel(String[] buttonNames, Runnable[] button_functions) {
+    public MultibuttonInputPanel(JButton[] buttons) {
+        Stream.iterate(0, i -> i + 1).limit(buttons.length).forEach(i -> {
+            // if the button is the "Back" button, add it to the back_button_panel
+            if (buttons[i].getText().equals("Back")) {
+                back_button_panel.add(buttons[i]);
+                return;
+            } else {
+                button_panel.add(buttons[i]);
+            }
+        });
+
         // button layout are vertically stacked with same width using BoxLayout
         button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
 
-        // loop to create each button in buttonNames array and attach the functions
-        // to the buttons ActionListener, using Stream() to iterate through the array
-        // and attach the functions, since using a traditional for (i) loop doesnt work
-        // here
-        Stream.iterate(0, i -> i + 1).limit(buttonNames.length).forEach(i -> {
-            JButton button = new JButton(buttonNames[i]);
-
-            // and save this panel to the MainView class' currentPanel field
-            // button.addActionListener(e -> MainView.saveCurrentPanel(this));
-            button.addActionListener(e -> button_functions[i].run());
-
-            button_panel.add(button);
-        });
+        // back button will be placed on the bottom portion of the parent panel
+        back_button_panel.setLayout(new BoxLayout(back_button_panel, BoxLayout.Y_AXIS));
 
         // parent panel layout, items are stacked horizontally
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -37,7 +34,8 @@ public class MultibuttonInputPanel extends JPanel {
         // to center the button panel
         setLayout(new GridBagLayout());
 
-        // to add the button panel to the parent panel
+        // addding the panels to the parent
         add(button_panel, new GridBagConstraints());
+        add(back_button_panel, new GridBagConstraints());
     }
 }

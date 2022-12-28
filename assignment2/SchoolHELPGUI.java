@@ -91,7 +91,7 @@ public class SchoolHELPGUI {
 
     // method that takes the fieldmap from the admin screen and creates a new school
     // based on its values
-    public static School createNewSchool(Map<String, String> fieldMap) {
+    public static School createSchool(HashMap<String, String> fieldMap) {
         // get the values from the fieldmap
         String schoolName = (String) fieldMap.get("School Name");
         int schoolID = ((int) (Math.random() * 1000));

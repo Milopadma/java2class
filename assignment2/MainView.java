@@ -158,19 +158,33 @@ public class MainView {
         title_label.setVerticalAlignment(JLabel.TOP);
 
         // new subtitle label
-        JLabel subtitle_label = new JLabel("<html><h3>Choose an option below</h3></html>");
+        JLabel subtitle_label = new JLabel("<html><h3>Schools - Choose an option below</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
-        // the buttons and their event handlers
-        String button_labels[] = { "Register a new School", "Register a new School Admin", "View all Schools" };
+        // buttons for the admin school menu view
+        JButton register_button = new JButton("Register a new School");
+        JButton register_admin_button = new JButton("Register a new School Admin");
+        JButton back_button = new JButton("Back");
 
-        // an array of functions to be called when the buttons are clicked
-        Runnable button_functions[] = { MainView::showAdminRegisterSchoolView,
-                MainView::showAdminRegisterSchoolAdminView,
-                MainView::showAllSchoolsView };
+        // action listeners for the buttons
+        register_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAdminRegisterSchoolView();
+        });
+        register_admin_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAdminRegisterSchoolAdminView();
+        });
+        back_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showUserChoiceView();
+        });
+
+        // create the array of buttons
+        JButton buttons[] = { register_button, register_admin_button, back_button };
 
         // create the panel with the buttons
-        admin_schools_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
+        admin_schools_view_panel = new MultibuttonInputPanel(buttons);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -179,12 +193,6 @@ public class MainView {
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_schools_view_panel, BorderLayout.CENTER);
-
-        // for the back button to go back to the admin login view
-        back_button.addActionListener(e -> {
-            // clear the frame before adding new elements
-            showAdminLoginView();
-        });
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -212,8 +220,31 @@ public class MainView {
         // an array of functions to be called when the buttons are clicked
         Runnable button_functions[] = { MainView::showRequestSubmissionForSchoolView, MainView::showAllRequestsView };
 
+        // buttons for the admin school menu view
+        JButton view_school_requests_button = new JButton(button_labels[0]);
+
+        // action listeners for the buttons
+        register_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAdminRegisterSchoolView();
+        });
+        register_admin_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAdminRegisterSchoolAdminView();
+        });
+        view_schools_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAllSchoolsView();
+        });
+        back_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showUserChoiceView();
+        });
+
+        // create the array of buttons
+        JButton buttons[] = { register_button, register_admin_button, view_schools_button, back_button };
+
         // create the panel with the buttons
-        admin_requests_view_panel = new MultibuttonInputPanel(button_labels, button_functions);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -282,7 +313,7 @@ public class MainView {
 
     // * */ show METHODS FOR ADMIN SCHOOL MENU
     // to show the view for registering a new school, step
-    // method 1/3 of the school side menu for admin
+    // method 1/2 of the school side menu for admin
     public static void showAdminRegisterSchoolView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -295,14 +326,21 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        String input_labels[] = { "School Name", "School Address", "School City" };
-        String input_field_values[] = { "", "", "", "" };
-        // an array of functions to be called when the buttons are clicked, there are 2,
-        // "Next" and "Back"
-        Runnable button_functions[] = { MainView::showAdminRegisterSchoolAdminView,
-                MainView::showAdminSchoolsMenuView };
-        admin_register_school_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
-                button_functions);
+        String input_labels[] = { "School Name", "School Address", "School Phone Number", "School Email" };
+        MultifieldInputPanel admin_register_school_view_panel = new MultifieldInputPanel(input_labels);
+
+        // for the next button, saves the input fields locally in this function first
+        JButton next_button = new JButton("Next");
+        // next button will show the next panel and call the getSavedFields method of
+        // the panel and save the fields to a hashmap
+        next_button.addActionListener(e -> {
+            // get the saved fields and saved to Hashmap
+            HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
+            // create a new school object by calling from SchoolHELPGUI
+            SchoolHELPGUI.createSchool(saved_fields);
+            // then invoke the showAdminRegisterSchoolAdminView method
+            showAdminRegisterSchoolAdminView();
+        });
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -318,7 +356,7 @@ public class MainView {
     }
 
     // to show the school admin registration panel view
-    // method 2/3 of the school side menu for admin
+    // method 2/2 of the school side menu for admin
     public static void showAdminRegisterSchoolAdminView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -334,11 +372,33 @@ public class MainView {
         // panel view content
         String input_labels[] = { "Admin Name", "Admin Email", "Admin Password", "Admin Fullname", "Admin Phone",
                 "Admin StaffID", "Admin Position" };
-        String input_field_values[] = { "", "", "", "", "", "", "" };
-        Runnable button_functions[] = { MainView::showSchoolAdminAndSchoolCompletionView,
-                MainView::showAdminSchoolsMenuView };
-        admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels, input_field_values,
-                button_functions);
+
+        // create the panel with the buttons
+        MultifieldInputPanel admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels);
+
+        // buttons for this panel
+        JButton next_button = new JButton("Next");
+        JButton back_button = new JButton("Back");
+
+        // next button will show the next panel and call the getSavedFields method of
+        // the panel and save the fields to a hashmap
+        next_button.addActionListener(e -> {
+            // get the saved fields and saved to Hashmap
+            HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
+
+            // get the current user's schoool
+            School current_school = ((SchoolAdmin) SchoolHELPGUI.getCurrentUser()).getSchool();
+
+            // create a new school object by calling from SchoolHELPGUI
+            SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
+
+            // show the next panel
+            showSchoolAdminAndSchoolCompletionView();
+        });
+        back_button.addActionListener(e -> {
+            // show the previous panel
+            showAdminSchoolsMenuView();
+        });
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -346,49 +406,6 @@ public class MainView {
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
 
-        main_frame.setVisible(true);
-    }
-
-    // provide a JList of all the schools in the database
-    // method 3/3 of the school side menu for admin
-    public static void showAllSchoolsView() {
-        // clear the right menu panel
-        right_menu_view_panel.removeAll();
-
-        // new label as title using html h1
-        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
-        title_label.setVerticalAlignment(JLabel.TOP);
-        // new label as title using html h1
-        JLabel subtitle_label = new JLabel("<html><h3>Viewing all Schools</h3></html>");
-        subtitle_label.setVerticalAlignment(JLabel.TOP);
-
-        // get data from SchoolHELPGUI class
-        ArrayList<School> schools = SchoolHELPGUI.getAllSchools();
-
-        // create a new JList with the data
-        JList<School> school_list = new JList<School>(schools.toArray(new School[schools.size()]));
-        school_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        school_list.setLayoutOrientation(JList.VERTICAL);
-        school_list.setVisibleRowCount(-1);
-
-        // create a scroll pane for the list
-        JScrollPane school_list_scroll_pane = new JScrollPane(school_list);
-
-        // add the elements to their respective panels
-        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(school_list_scroll_pane, BorderLayout.CENTER);
-
-        // for the back button to go back to the admin login view
-        JButton back_button = new JButton("Back");
-        back_button.addActionListener(e -> {
-            // clear the frame before adding new elements
-            showAdminSchoolsMenuView();
-        });
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
-
-        // then add the right menu panel to the main frame
-        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -401,12 +418,7 @@ public class MainView {
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
 
-        // create the new school using the saved input fields in this class
-        try {
-            School newSchool = SchoolHELPGUI.createNewSchool(multifield_input_panel_values);
-
             // panel view content
-
             // need to create buttons here so that they can be passed into the
             // standardinfopanel object, and since Runnable[] does not support adding params
             JButton view_full_info_button = new JButton("View Full Info");
@@ -437,9 +449,6 @@ public class MainView {
             // add the elements to the right menu panel
             right_menu_view_panel.add(title_label, BorderLayout.NORTH);
             right_menu_view_panel.add(admin_school_registration_complete_view_panel, BorderLayout.CENTER);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // this is shown when the schoolinfo is requested
@@ -926,6 +935,7 @@ public class MainView {
             HashMap<String, String> saved_fields = volunteer_register_field_panel.getSavedFields();
             // create a VOLUNTEER USER object from the saved fields
             SchoolHELPGUI.createNewVolunteerUser(saved_fields);
+            // ? does this go somewhere else after?
         });
 
         // set the layout of the right menu panel
