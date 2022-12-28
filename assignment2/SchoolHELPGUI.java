@@ -140,7 +140,7 @@ public class SchoolHELPGUI {
         LocalDateTime offerDate = LocalDateTime.now();
         
         // create a new offer object
-        Offer newOffer = new Offer(offerDate, remarks, "PENDING", currentUser)
+        Offer newOffer = new Offer(offerDate, remarks, "PENDING", currentUser);
 
         // add the new offer to the request
         selected_request.addOffer(newOffer);

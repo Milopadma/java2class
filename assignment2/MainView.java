@@ -186,8 +186,6 @@ public class MainView {
             showAdminLoginView();
         });
 
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
-
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
@@ -899,7 +897,7 @@ public class MainView {
     // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE VOLUNTEER
     // * USER */
 
-    public static Object showVolunteerRegisterView() {
+    public static void showVolunteerRegisterView() {
         // this method is called when a user wants to register as a volunteer, this
         // meethod shows the volunteer register view panel
         // clear the right menu panel
@@ -1023,6 +1021,14 @@ public class MainView {
 
         // create the table view object
         TableModelViewPanel table = new TableModelViewPanel(column_names, requests, buttons, Runnable);
+
+        // set the layout of the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(table, BorderLayout.CENTER);
+
+        main_frame.setVisible(true);
     }
 
     private static void showRequestDetails(Request selected_request) {
@@ -1067,7 +1073,7 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
-    private static Object showSubmitOfferView(Request selected_request) {
+    private static void showSubmitOfferView(Request selected_request) {
         // this method shows the submit offer view panel to allow the user to input
         // remarks into a JTextArea and have it submitted to the system
         // clear the right menu panel
