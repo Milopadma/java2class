@@ -86,4 +86,14 @@ public abstract class LoginPanel extends JPanel {
         // to add the center panel to the parent panel, vertical alignment
         add(center_panel, new GridBagConstraints());
     }
+
+    // proper deconstructor
+    public void destroy() {
+        // remove all the components from the center panel
+        center_panel.removeAll();
+        // remove all the components from the button panel
+        button_panel.removeAll();
+        // remove all the components from the parent panel
+        removeAll();
+    }
 }

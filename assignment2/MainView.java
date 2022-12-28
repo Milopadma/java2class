@@ -325,6 +325,8 @@ public class MainView {
         String input_labels[] = { "School Name", "School Address", "School Phone Number", "School Email" };
         MultifieldInputPanel admin_register_school_view_panel = new MultifieldInputPanel(input_labels);
 
+        // for the buttons to have a panel
+        JPanel buttons_panel = new JPanel();
         // for the next button, saves the input fields locally in this function first
         JButton next_button = new JButton("Next");
         // next button will show the next panel and call the getSavedFields method of
@@ -338,13 +340,23 @@ public class MainView {
             showAdminRegisterSchoolAdminView();
         });
 
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> {
+            showAdminSchoolsMenuView();
+        });
+
+        // add the buttons to the panel
+        buttons_panel.add(next_button);
+        buttons_panel.add(back_button);
+
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
 
         // add the elements to the panel
-        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
+        main_frame.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_register_school_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(buttons_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -372,6 +384,9 @@ public class MainView {
         // create the panel with the buttons
         MultifieldInputPanel admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels);
 
+        // for the buttons to have a panel
+        JPanel buttons_panel = new JPanel();
+
         // buttons for this panel
         JButton next_button = new JButton("Next");
         JButton back_button = new JButton("Back");
@@ -396,11 +411,16 @@ public class MainView {
             showAdminSchoolsMenuView();
         });
 
+        // add the buttons to the panel
+        buttons_panel.add(next_button);
+        buttons_panel.add(back_button);
+
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(buttons_panel, BorderLayout.SOUTH);
 
         main_frame.setVisible(true);
     }

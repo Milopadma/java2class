@@ -29,7 +29,7 @@ public class MultibuttonInputPanel extends JPanel {
         back_button_panel.setLayout(new BoxLayout(back_button_panel, BoxLayout.Y_AXIS));
 
         // parent panel layout, items are stacked horizontally
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // to center the button panel
         setLayout(new GridBagLayout());

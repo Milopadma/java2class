@@ -2,7 +2,6 @@
 // I GUSTI BAGUS MILO PADMA WIJAYA //e2000426
 // class imports
 import javax.swing.*;
-import java.awt.*;
 
 public class AdminLoginViewPanel extends LoginPanel {
     // constructor
@@ -20,6 +19,7 @@ public class AdminLoginViewPanel extends LoginPanel {
 
         // event handlers
         backButton.addActionListener(e -> MainView.showUserChoiceView());
+        backButton.addActionListener(e -> destroy());
         loginButton
                 .addActionListener(e -> SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword()));
     }
