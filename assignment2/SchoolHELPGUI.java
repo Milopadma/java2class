@@ -1,7 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -17,8 +16,11 @@ public class SchoolHELPGUI {
     private static boolean isFirstTimeLogin = true;
 
     public static void main(String[] args) {
-        // init the main view
         try {
+            // first off, we need to serialize the data from the appdata folder
+            SchoolHELP = getSchoolHELPFromAppdata();
+
+            // init the main view
             MainView main_view = new MainView();
             // send an event listener to the login button
             // when the login button is clicked, the login() method is called
@@ -38,6 +40,20 @@ public class SchoolHELPGUI {
             err.printStackTrace();
         }
 
+    }
+
+    private static SchoolHELP getSchoolHELPFromAppdata() {
+        SchoolHELP SchoolHELPInstance = null;
+        // call Filemanager to get the data from the appdata folder
+        try {
+            SchoolHELPInstance = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
+            System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.toString());
+            System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.getUsers().toString());
+            return SchoolHELPInstance;
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+        return null;
     }
 
     // * getters and setters
@@ -212,5 +228,19 @@ public class SchoolHELPGUI {
         // add the new request to the request list
         SchoolHELP.getSchool(school.getSchoolName()).addRequest(newRequest);
 
+    }
+
+    // this method is called when the User clicks on the Exit button, this method
+    // attempts to save the SchoolHELP object to a file
+    public static void saveSchoolHELPInstance() {
+        try {
+            // using FileManager class
+            FileManager.saveData(SchoolHELP, "SchoolHELP.ser");
+
+            // printout a message to the console
+            System.out.println("Serialized data is saved in SchoolHELP.ser");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author I Gusti Bagus Milo Padma Wijaya
  * 
  */
-public class SchoolHELP {
+public class SchoolHELP implements java.io.Serializable{
     // class variables
     private static ArrayList<User> users = new ArrayList<User>();
     private static ArrayList<School> schools = new ArrayList<School>();
