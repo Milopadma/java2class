@@ -86,12 +86,19 @@ public class SidemenuView extends JPanel {
             // setting the button panel layout to be stacked vertically
             button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
             button_panel.add(requests_button);
+            // offers button will change to "your offers" button
+            offers_button.setText("Your Offers");
             button_panel.add(offers_button);
 
             // adding the event handlers for the buttons
             requests_button.addActionListener(e -> {
                 // call the MainView method to show the Requests volunteer menu view
                 MainView.showVolunteerMenuView();
+            });
+
+            offers_button.addActionListener(e -> {
+                // call the MainView method to show the Offers volunteer menu view
+                MainView.showVolunteerOffersMenuView();
             });
 
             // offers_button.addActionListener(e -> {

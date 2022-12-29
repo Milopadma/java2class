@@ -818,6 +818,11 @@ public class MainView {
         RequestTableModelViewPanel reviews_for_offers_view_panel = new RequestTableModelViewPanel(column_names,
                 thisSchoolRequestsForOffers, buttons);
 
+        // ! BUG no description shown
+
+        // ! BUG no warning when searching for a request ID that does not have an offer
+
+        // ! BUG requests date might be broken?
         // new label, jtextfield, and button to search for the request
         JPanel search_panel = new JPanel();
         JLabel search_label = new JLabel("Search for Request by ID:");
@@ -1171,6 +1176,7 @@ public class MainView {
         // init the sidemenuview
         showSideMenuView();
         JPanel title_panel = new JPanel();
+        title_panel.setLayout(new BoxLayout(title_panel, BoxLayout.Y_AXIS));
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Menu</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
@@ -1237,7 +1243,7 @@ public class MainView {
 
         // new label, jtextfield, and jbutton to seacrh for a request
         JPanel search_panel = new JPanel();
-        JLabel search_label = new JLabel("Search: ");
+        JLabel search_label = new JLabel("Search request by ID: ");
         JTextField search_field = new JTextField(10);
         JButton search_button = new JButton("Search");
         search_button.addActionListener(e -> {
@@ -1262,8 +1268,9 @@ public class MainView {
             if (search_result == null) {
                 JOptionPane.showMessageDialog(null, "No request found with that ID.");
             } else {
-                // show the offers of that request
-                showOffersOfRequest(search_result);
+                // show submit offer
+                showSubmitOfferView(search_result);
+
             }
         });
 
@@ -1379,6 +1386,12 @@ public class MainView {
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
+    }
+
+    public static void showVolunteerOffersMenuView() {
+        // this goes to a view where it shows all the offers this volunteer has
+        // submitted
+        // todo!
     }
 
 }

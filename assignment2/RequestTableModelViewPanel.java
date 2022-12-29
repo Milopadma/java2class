@@ -28,6 +28,8 @@ public class RequestTableModelViewPanel extends JPanel {
                     row.getSchool().getSchoolName(), row.getSchool().getCity(), row.getRequestDescription() });
         }
 
+        // ! BUG no request description shown on table views
+
         // // listen for click events in the table rows
         // tableModel.addTableModelListener(e -> {
         //     // if the table is clicked
