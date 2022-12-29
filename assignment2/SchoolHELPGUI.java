@@ -19,23 +19,9 @@ public class SchoolHELPGUI {
         try {
             // first off, we need to serialize the data from the appdata folder
             SchoolHELP = getSchoolHELPFromAppdata();
+            // then init the main_view class
+            new MainView();
 
-            // init the main view
-            MainView main_view = new MainView();
-            // send an event listener to the login button
-            // when the login button is clicked, the login() method is called
-            // main_view.login_view_panel.AdminButton.addActionListener(event -> {
-            // System.out.println("Admin button clicked");
-            // MainView.showAdminLoginView();
-            // });
-            // main_view.VolunteerButton.addActionListener(e -> {
-            // System.out.println("Volunteer button clicked");
-            // MainView.showVolunteerLoginView();
-            // });
-            // main_view.admin_login_view_panel.UsernameTextField.addActionListener(e -> {
-            // System.out.println("Username text field clicked");
-            // MainView.showAdminLoginView();
-            // });
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -48,7 +34,8 @@ public class SchoolHELPGUI {
         try {
             SchoolHELPInstance = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
             System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.toString());
-            System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.getUsers().toString());
+            System.out
+                    .println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.getUsers().toString());
             return SchoolHELPInstance;
         } catch (Exception err) {
             err.printStackTrace();
@@ -74,35 +61,31 @@ public class SchoolHELPGUI {
     }
 
     // * CLASS HELPER METHODS */
-    // this method handles the login process for admin user
-    public static void userLogin(String username, char[] password) {
+    // this method handles the login process for both admin and volunteer, returns
+    // true if the user is found and is valid
+    public static boolean userLogin(String username, char[] password) {
         String password_stringified = new String(password);
         try {
             // find out if this user is a volunteer or an admin
             if (SchoolHELP.isUserAdmin(username, password_stringified)) {
                 // set the current user to the user that just logged in
                 setCurrentUser(SchoolHELP.getUser(username, password_stringified));
-
-                // if the user is an admin, show the admin menu
-                MainView.showAdminSchoolsMenuView();
-
                 // at this point, the user has logged in, so it's not the first time login
                 // anymore
                 setFirstTimeLogin(false);
+                return true;
             } else if (SchoolHELP.isUserVolunteer(username, password_stringified)) {
                 // set the current user to the user that just logged in
                 setCurrentUser(SchoolHELP.getUser(username, password_stringified));
-
-                // if the user is a volunteer, show the volunteer menu
-                MainView.showVolunteerMenuView();
+                return true;
             } else {
-                // if the user is not found, show an error message
-                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                // if the user is not found, return false
+                return false;
             }
         } catch (Exception err) {
             err.printStackTrace();
         }
+        return false;
     }
 
     public static boolean isFirstTimeLogin() {
@@ -169,24 +152,31 @@ public class SchoolHELPGUI {
     public static Volunteer createNewVolunteerUser(HashMap<String, String> saved_fields) {
         // this method takes in a Hashmap of the fields from the volunteer registration
         // screen and creates a new volunteer user based on them
+        try {
+            // get the values from the fieldmap
+            String username = (String) saved_fields.get("Your Username");
+            String password = (String) saved_fields.get("Your Password");
+            String fullname = (String) saved_fields.get("Fullname");
+            Long phone = Long.parseLong((String) saved_fields.get("Phone Number"));
+            String email = (String) saved_fields.get("Email");
+            String occupation = (String) saved_fields.get("Occupation");
+            int dateofbirth = Integer.parseInt((String) saved_fields.get("Date of Birth"));
 
-        // get the values from the fieldmap
-        String username = (String) saved_fields.get("Username");
-        String password = (String) saved_fields.get("Password");
-        String fullname = (String) saved_fields.get("Fullname");
-        Long phone = Long.parseLong((String) saved_fields.get("Phone Number"));
-        String email = (String) saved_fields.get("Email");
-        String occupation = (String) saved_fields.get("Occupation");
-        int dateofbirth = Integer.parseInt((String) saved_fields.get("Date of Birth"));
+            // create a new volunteer object
+            Volunteer newVolunteer = new Volunteer(username, password, fullname, email, phone, dateofbirth, occupation);
 
-        // create a new volunteer object
-        Volunteer newVolunteer = new Volunteer(username, password, fullname, email, phone, dateofbirth, occupation);
+            // add the new volunteer to the volunteer list
+            SchoolHELP.addUser(newVolunteer);
 
-        // add the new volunteer to the volunteer list
-        SchoolHELP.addUser(newVolunteer);
+            // print
+            System.out.println(newVolunteer.getUsername());
 
-        // return the new volunteer
-        return newVolunteer;
+            // return the new volunteer
+            return newVolunteer;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return null;
+        }
     }
 
     public static void createNewAdminUser(HashMap<String, String> saved_fields, School school) {
@@ -204,9 +194,20 @@ public class SchoolHELPGUI {
         Long phone = Long.parseLong((String) saved_fields.get("Phone Number"));
         int staffID = Integer.parseInt((String) saved_fields.get("Staff ID"));
         String position = (String) saved_fields.get("Position");
+        String schoolName = (String) saved_fields.get("School Name");
+
+        SchoolAdmin newAdmin = null;
+        // if schoolName isnt provided, use the school that was passed in
+        if (schoolName == null || schoolName.equals("")) {
+            newAdmin = new SchoolAdmin(username, password, fullname, email, phone, staffID, position,
+                    school);
+        } else {
+            // if schoolName is provided, use the school that was found
+            newAdmin = new SchoolAdmin(username, password, fullname, email, phone, staffID, position,
+                    SchoolHELP.getSchool(schoolName));
+        }
 
         // create a new admin object
-        SchoolAdmin newAdmin = new SchoolAdmin(username, password, fullname, email, phone, staffID, position, school);
 
         // add the new admin to the admin list
         SchoolHELP.addUser(newAdmin);
@@ -242,5 +243,18 @@ public class SchoolHELPGUI {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static Request searchForRequest(int search_id) {
+        // iterate over the stream arraylist of all requests of all schools
+        return SchoolHELP.getAllRequests().stream().filter(request -> request.getRequestID() == search_id).findFirst()
+                .orElse(null);
+    }
+
+    public static Offer searchForOffer(int search_id) {
+        // iterate over the stream arraylist of all offers of all requests of all
+        // schools
+        return SchoolHELP.getAllRequests().stream().flatMap(request -> request.getOffers().stream())
+                .filter(offer -> offer.getOfferID() == search_id).findFirst().orElse(null);
     }
 }

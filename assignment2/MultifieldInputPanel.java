@@ -10,6 +10,8 @@ public class MultifieldInputPanel extends JPanel {
     JPanel field_panel = new JPanel();
     JPanel text_field_panel = new JPanel();
 
+    boolean allFieldsFilled = false;
+
     // class constructor
     MultifieldInputPanel(String[] fieldNames) {
         // field layout are vertically stacked with same width using BoxLayout
@@ -68,5 +70,25 @@ public class MultifieldInputPanel extends JPanel {
             // }
         });
         return savedFields;
+    }
+
+    // method to check if all fields are filled
+    public boolean checkFields() {
+        // iterate over the text_field panel and get the text from each label and text
+        Stream.iterate(0, i -> i + 1).limit(text_field_panel.getComponentCount()).forEach(i -> {
+            try {
+                if (text_field_panel.getComponent(i) instanceof JLabel) {
+                    if (((JTextField) text_field_panel.getComponent(i + 1)).getText().equals("")) {
+                        allFieldsFilled = false;
+                        return;
+                    } else {
+                        allFieldsFilled = true;
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        });
+        return allFieldsFilled;
     }
 }

@@ -20,9 +20,7 @@ public class MainView {
     static JPanel current_previous_panel;
 
     // GUI component views
-    static UserChoiceViewPanel user_choice_view_panel;
-    static LoginPanel admin_login_view_panel;
-    static LoginPanel volunteer_login_view_panel;
+    // static UserChoiceViewPanel user_choice_view_panel;
 
     // all admin-related view panels
     // static MultibuttonInputPanel admin_schools_view_panel;
@@ -58,15 +56,6 @@ public class MainView {
         main_frame.setTitle("SchoolHELP");
         main_frame.setLayout(new BorderLayout());
 
-        // !Deprecated
-        // // back button functionality
-        // back_button.addActionListener(e -> {
-        // // clear the frame before adding new elements
-        // main_frame.getContentPane().removeAll();
-        // main_frame.add(current_previous_panel, BorderLayout.CENTER);
-        // main_frame.setVisible(true);
-        // });
-
         // TODO: add icon, fade animations, splashscreen
 
         // show the login view
@@ -91,7 +80,6 @@ public class MainView {
     // // and Collectors
     // System.out.println("Saving multifield text fields: " + fieldNames[0] + " " +
     // fieldValues[0]);
-    // // ! BUG fieldValues[0] is null
     // Map<String, String> fieldMap = IntStream.range(0, fieldNames.length)
     // .boxed()
     // .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
@@ -105,7 +93,7 @@ public class MainView {
     public static void showUserChoiceView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        user_choice_view_panel = new UserChoiceViewPanel();
+        UserChoiceViewPanel user_choice_view_panel = new UserChoiceViewPanel();
         main_frame.add(user_choice_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
@@ -114,7 +102,7 @@ public class MainView {
     public static void showAdminLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        admin_login_view_panel = new AdminLoginViewPanel(SchoolHELPGUI.isFirstTimeLogin());
+        AdminLoginViewPanel admin_login_view_panel = new AdminLoginViewPanel(SchoolHELPGUI.isFirstTimeLogin());
         main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
@@ -123,7 +111,7 @@ public class MainView {
     public static void showVolunteerLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        volunteer_login_view_panel = new VolunteerLoginViewPanel();
+        VolunteerLoginViewPanel volunteer_login_view_panel = new VolunteerLoginViewPanel();
         main_frame.add(volunteer_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
@@ -140,7 +128,8 @@ public class MainView {
     // show AdminSchoolsMenuView (school admin menu with sidemenu dashboard)
     // method 1/3 for the admin sidemenu buttons
     public static void showAdminSchoolsMenuView() {
-        // clear the frame before adding new elements
+        // clear the frame
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // init sidemenuview
@@ -165,8 +154,9 @@ public class MainView {
             showAdminRegisterSchoolView();
         });
         register_admin_button.addActionListener(e -> {
+            School newSchool = null;
             // clear the frame before adding new elements
-            showAdminRegisterSchoolAdminView();
+            showAdminRegisterSchoolAdminView(newSchool);
         });
         back_button.addActionListener(e -> {
             // clear the frame before adding new elements
@@ -329,12 +319,21 @@ public class MainView {
         // next button will show the next panel and call the getSavedFields method of
         // the panel and save the fields to a hashmap
         next_button.addActionListener(e -> {
-            // get the saved fields and saved to Hashmap
-            HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
-            // call the createSchool method of the SchoolHELPGUI class
-            SchoolHELPGUI.createSchool(saved_fields);
-            // then invoke the showAdminRegisterSchoolAdminView method
-            showAdminRegisterSchoolAdminView();
+            try {
+                if (admin_register_school_view_panel.checkFields() == false) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all the fields");
+                    return;
+                } else {
+                    // get the saved fields and saved to Hashmap
+                    HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
+                    // call the createSchool method of the SchoolHELPGUI class
+                    School newSchool = SchoolHELPGUI.createSchool(saved_fields);
+                    // then invoke the showAdminRegisterSchoolAdminView method
+                    showAdminRegisterSchoolAdminView(newSchool);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
 
         JButton back_button = new JButton("Back");
@@ -362,7 +361,7 @@ public class MainView {
 
     // to show the school admin registration panel view
     // method 2/2 of the school side menu for admin
-    public static void showAdminRegisterSchoolAdminView() {
+    public static void showAdminRegisterSchoolAdminView(School newSchool) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -374,9 +373,18 @@ public class MainView {
         JLabel subtitle_label = new JLabel("<html><h3>Registering a new School Admin</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
+        String input_labels[] = {};
         // panel view content
-        String input_labels[] = { "Username", "Password", "Fullname", "Email",
-                "Phone Number", "Staff ID", "Position" };
+        if (newSchool == null) {
+            // this is null if it was called from the admin register school admin view and
+            // not from the admin register school view
+            input_labels = new String[] { "Username", "Password", "Fullname", "Email",
+                    "Phone Number", "Staff ID", "Position", "School Name" };
+        } else {
+            // this is not null if it was called from the admin register school view
+            input_labels = new String[] { "Username", "Password", "Fullname", "Email",
+                    "Phone Number", "Staff ID", "Position" };
+        }
 
         // create the panel with the buttons
         MultifieldInputPanel admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels);
@@ -391,17 +399,22 @@ public class MainView {
         // next button will show the next panel and call the getSavedFields method of
         // the panel and save the fields to a hashmap
         next_button.addActionListener(e -> {
-            // get the saved fields and saved to Hashmap
-            HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
+            try {
+                if (admin_register_school_admin_view_panel.checkFields() == false) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all the fields");
+                    return;
+                }
+                // get the saved fields and saved to Hashmap
+                HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
 
-            // get the current user's schoool
-            School current_school = ((SchoolAdmin) SchoolHELPGUI.getCurrentUser()).getSchool();
+                // create a new school object by calling from SchoolHELPGUI
+                SchoolHELPGUI.createNewAdminUser(saved_fields, newSchool);
 
-            // create a new school object by calling from SchoolHELPGUI
-            SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
-
-            // show the next panel
-            showSchoolAdminAndSchoolCompletionView();
+                // show the next panel
+                showSchoolAdminAndSchoolCompletionView(newSchool);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
         back_button.addActionListener(e -> {
             // show the previous panel
@@ -419,11 +432,13 @@ public class MainView {
         right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
         right_menu_view_panel.add(buttons_panel, BorderLayout.SOUTH);
 
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
     // this is shown when both a school and school admin is registered
-    public static void showSchoolAdminAndSchoolCompletionView() {
+    public static void showSchoolAdminAndSchoolCompletionView(School newSchool) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -437,7 +452,7 @@ public class MainView {
         JButton view_full_info_button = new JButton("View Full Info");
         view_full_info_button.addActionListener(e -> {
             // show the school info view
-            // showSchoolInfoView(newSchool, true);
+            showSchoolInfoView(newSchool, true);
         });
 
         JButton back_button = new JButton("Back");
@@ -452,8 +467,8 @@ public class MainView {
 
         // create the standardinfopanel
         StandardInfoPanel admin_school_registration_complete_view_panel = new StandardInfoPanel(
-                "School and SchoolAdmin registration complete!",
-                "You can now login to the SchoolHELP app with the SchoolAdmin credentials you just registered.",
+                new String[] { "School Admin and School Registration Complete",
+                        "The school admin and school has been registered successfully." },
                 buttons);
 
         // set the layout of the right menu panel
@@ -462,6 +477,11 @@ public class MainView {
         // add the elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_school_registration_complete_view_panel, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
+
     }
 
     // this is shown when the schoolinfo is requested
@@ -492,6 +512,9 @@ public class MainView {
                     Integer.toString(newSchool.getSchoolAdmins().get(0).getStaffID()),
                     newSchool.getSchoolAdmins().get(0).getPosition() };
 
+            // !BUG CANT ACCESS THE SCHOOL ADMIN INFO BECAUSE IT IS NOT SAVED IN THE SCHOOL
+            // ! OBJECT
+
             Runnable button_function = MainView::showAdminSchoolsMenuView;
             admin_school_info_view_panel = new InfoListViewPanel(input_labels, input_field_values,
                     button_function);
@@ -515,6 +538,10 @@ public class MainView {
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_school_info_view_panel, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
 
     }
 
@@ -616,17 +643,28 @@ public class MainView {
         // create the panel view object
         MultifieldInputPanel tutorial_request_submission_view_panel = new MultifieldInputPanel(input_labels);
 
+        // buttons panel
+        JPanel button_panel = new JPanel();
+
         // buttons for this panel
         JButton done_button = new JButton("Done");
         // done button saves the fields
         done_button.addActionListener(e -> {
             try {
-                // get the input fields
-                HashMap<String, String> saved_fields = tutorial_request_submission_view_panel.getSavedFields();
-                SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
-                School thisSchool = current_user.getSchool();
-                // call the method to save the request
-                SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+                if (!tutorial_request_submission_view_panel.checkFields()) {
+                    JOptionPane.showMessageDialog(main_frame, "Please fill in all the fields!");
+                    return;
+                } else {
+                    // get the input fields
+                    HashMap<String, String> saved_fields = tutorial_request_submission_view_panel.getSavedFields();
+                    SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
+                    School thisSchool = current_user.getSchool();
+                    // call the method to save the request
+                    SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+
+                    // then show a message dialog
+                    JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -637,12 +675,15 @@ public class MainView {
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> showRequestSubmissionChoiceView());
 
+        // add the buttons to the button panel
+        button_panel.add(done_button);
+        button_panel.add(back_button);
+
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(tutorial_request_submission_view_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(done_button, BorderLayout.SOUTH);
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(button_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -670,17 +711,28 @@ public class MainView {
         // create the panel view object
         MultifieldInputPanel resource_request_submission_view_panel = new MultifieldInputPanel(input_labels);
 
+        // buttons panel
+        JPanel button_panel = new JPanel();
+
         // buttons for this panel
         JButton done_button = new JButton("Done");
         // done button saves the fields
         done_button.addActionListener(e -> {
             try {
-                // get the input fields
-                HashMap<String, String> saved_fields = resource_request_submission_view_panel.getSavedFields();
-                SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
-                School thisSchool = current_user.getSchool();
-                // call the method to save the request
-                SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+                if (!resource_request_submission_view_panel.checkFields()) {
+                    JOptionPane.showMessageDialog(main_frame, "Please fill in all the fields!");
+                    return;
+                } else {
+                    // get the input fields
+                    HashMap<String, String> saved_fields = resource_request_submission_view_panel.getSavedFields();
+                    SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
+                    School thisSchool = current_user.getSchool();
+                    // call the method to save the request
+                    SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+
+                    // then show a message dialog
+                    JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -691,12 +743,15 @@ public class MainView {
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> showRequestSubmissionChoiceView());
 
+        // add the buttons to the button panel
+        button_panel.add(done_button);
+        button_panel.add(back_button);
+
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(resource_request_submission_view_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(done_button, BorderLayout.SOUTH);
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(button_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -759,34 +814,59 @@ public class MainView {
         // create the column names
         String column_names[] = { "ID", "Status", "Request Date", "Request Type", "City", "Description" };
 
-        // ! TODO VERY unsure that this works
-        // function to invoke when a row is clicked, essentially to show the offers of
-        // that request
-        Runnable row_clicked_function = () -> {
-            try {
-                // get the selected row
-                Object value_as_object = TableModelViewPanel.getSelectedRowValue();
-
-                // get the selected request
-                Request selected_request = (Request) value_as_object;
-
-                // show the offers of that request
-                showOffersOfRequest(selected_request);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-        // ! TODO VERY unsure that this works
-
         // create the table model
-        TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(column_names,
-                thisSchoolRequestsForOffers, buttons, row_clicked_function);
+        RequestTableModelViewPanel reviews_for_offers_view_panel = new RequestTableModelViewPanel(column_names,
+                thisSchoolRequestsForOffers, buttons);
+
+        // ! BUG no description shown
+
+        // ! BUG no warning when searching for a request ID that does not have an offer
+
+        // ! BUG requests date might be broken?
+        // new label, jtextfield, and button to search for the request
+        JPanel search_panel = new JPanel();
+        JLabel search_label = new JLabel("Search for Request by ID:");
+        JTextField search_textfield = new JTextField();
+        JButton search_button = new JButton("Search");
+        search_button.addActionListener(e -> {
+            // make sure the textfield is not empty
+            if (search_textfield.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter a request ID.");
+                return;
+            }
+            // get the text from the search textfield
+            String search_text = search_textfield.getText();
+            Request search_result = null;
+            try {
+                // make sure that the search text is an integer
+                int search_id = Integer.parseInt(search_text);
+                // search for the request
+                search_result = SchoolHELPGUI.searchForRequest(search_id);
+            } catch (Exception ex) {
+                // if it is not, then display a message
+                JOptionPane.showMessageDialog(null, "Please enter a valid request ID.");
+                return;
+            }
+            // if the search result is null, then display a message
+            if (search_result == null) {
+                JOptionPane.showMessageDialog(null, "No request found with that ID.");
+            } else {
+                // show the offers of that request
+                showOffersOfRequest(search_result);
+            }
+        });
+
+        // add the search components to the search panel
+        search_panel.add(search_label);
+        search_panel.add(search_textfield);
+        search_panel.add(search_button);
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(search_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -828,38 +908,76 @@ public class MainView {
             // create the column names
             String column_names[] = { "ID", "Status", "Offer Date", "Volunteer Name", "Remarks" };
 
-            // ! TODO VERY unsure that this works
+            //// VERY unsure that this works
             // function to invoke when a row is clicked, essentially to show the Offer
-            // details of that Offer
-            Runnable row_clicked_function = () -> {
-                try {
-                    // get the selected row
-                    Object value_as_object = TableModelViewPanel.getSelectedRowValue();
+            // // details of that Offer
+            // Runnable row_clicked_function = () -> {
+            // try {
+            // // get the selected row
+            // Object value_as_object = RequestTableModelViewPanel.getSelectedRowValue();
 
-                    // get the selected request
-                    Offer selected_offer = (Offer) value_as_object;
+            // // get the selected request
+            // Offer selected_offer = (Offer) value_as_object;
 
-                    // show the offers of that request
-                    showOfferDetails(selected_offer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            };
-
-            // ! TODO VERY unsure that this works
+            // // show the offers of that request
+            // showOfferDetails(selected_offer);
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // }
+            // };
 
             // create the table model
-            TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(column_names,
-                    thisRequestOffers, buttons, row_clicked_function);
+            OfferTableModelViewPanel reviews_for_offers_view_panel = new OfferTableModelViewPanel(column_names,
+                    thisRequestOffers, buttons);
+
+            // new label, jtextfield, and button to search for the offers
+            JPanel search_panel = new JPanel();
+            JLabel search_label = new JLabel("Search for Offer by ID:");
+            JTextField search_textfield = new JTextField();
+            JButton search_button = new JButton("Search");
+            search_button.addActionListener(e -> {
+                // make sure the textfield is not empty
+                if (search_textfield.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter an offer ID.");
+                    return;
+                }
+                // get the text from the search textfield
+                String search_text = search_textfield.getText();
+                Offer search_result = null;
+                try {
+                    // make sure that the search text is an integer
+                    int search_id = Integer.parseInt(search_text);
+                    // search for the request
+                    search_result = SchoolHELPGUI.searchForOffer(search_id);
+                } catch (Exception ex) {
+                    // if it is not, then display a message
+                    JOptionPane.showMessageDialog(null, "Please enter a valid offer ID.");
+                    return;
+                }
+                // if the search result is null, then display a message
+                if (search_result == null) {
+                    JOptionPane.showMessageDialog(null, "No offer found with that ID.");
+                } else {
+                    // show the offers of that request
+                    showOfferDetails(search_result);
+                }
+            });
+
+            // add the search components to the search panel
+            search_panel.add(search_label);
+            search_panel.add(search_textfield);
+            search_panel.add(search_button);
 
             // add these elements to the right menu panel
             right_menu_view_panel.setLayout(new BorderLayout());
             right_menu_view_panel.add(title_label, BorderLayout.NORTH);
             right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
             right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
+            right_menu_view_panel.add(search_panel, BorderLayout.SOUTH);
 
             // then add the right menu panel to the main frame
             main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+            main_frame.setVisible(true);
         } else {
             // show an info view panel that there are no offers for this Request
             // clear the right menu panel
@@ -883,7 +1001,8 @@ public class MainView {
             JButton buttons[] = { back_button };
 
             // create the panel view object
-            StandardInfoPanel info_view_panel = new StandardInfoPanel("There are no offers", "for this request.",
+            StandardInfoPanel info_view_panel = new StandardInfoPanel(
+                    new String[] { "No offers for this request yet." },
                     buttons);
 
             // add these elements to the right menu panel
@@ -952,15 +1071,12 @@ public class MainView {
         // this method is called when a user wants to register as a volunteer, this
         // meethod shows the volunteer register view panel
         // clear the right menu panel
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Registration</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
-
-        // new label as title using html h1
-        JLabel subtitle_label = new JLabel("<html><h3>Registering as new Volunteer</h3></html>");
-        subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
         // new multifieldinput panel object
@@ -968,30 +1084,49 @@ public class MainView {
                 "Phone Number", "Email", "Occupation", "Date of Birth" };
         MultifieldInputPanel volunteer_register_field_panel = new MultifieldInputPanel(input_labels);
 
+        // the button panel
+        JPanel button_panel = new JPanel();
+
         // for the next button, saves the input fields locally in this function first
         JButton next_button = new JButton("Next");
         // next button will show the next panel and call the getSavedFields() method of
         // the panel and save the fields to a Hashmap
         next_button.addActionListener(e -> {
-            // get the saved fields
-            HashMap<String, String> saved_fields = volunteer_register_field_panel.getSavedFields();
-            // create a VOLUNTEER USER object from the saved fields
-            Volunteer new_volunteer = SchoolHELPGUI.createNewVolunteerUser(saved_fields);
-            // go to volunteer successfull register view
-            showVolunteerRegisterSuccessView(new_volunteer);
+            try {
+                if (volunteer_register_field_panel.checkFields() == false) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all fields");
+                    return;
+                } else {
+                    // get the saved fields
+                    HashMap<String, String> saved_fields = volunteer_register_field_panel.getSavedFields();
+                    // create a VOLUNTEER USER object from the saved fields
+                    Volunteer new_volunteer = SchoolHELPGUI.createNewVolunteerUser(saved_fields);
+                    // go to volunteer successfull register view
+                    showVolunteerRegisterSuccessView(new_volunteer);
+                }
+            } catch (NullPointerException ex) {
+                JOptionPane.showMessageDialog(null, "Please fill in all fields");
+                return;
+            }
         });
+
+        // back button
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> MainView.showVolunteerLoginView());
+
+        // add the buttons to panel
+        button_panel.add(back_button);
+        button_panel.add(next_button);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(volunteer_register_field_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(next_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(button_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
-
     }
 
     private static void showVolunteerRegisterSuccessView(Volunteer new_volunteer) {
@@ -999,6 +1134,7 @@ public class MainView {
         // method shows the volunteer register success view panel
 
         // clear the frame
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // buttons
@@ -1017,10 +1153,8 @@ public class MainView {
         JButton buttons[] = { login_button };
 
         // create the panel view object
-        StandardListViewPanel list = new StandardListViewPanel(
-                new String[] { "You have successfully registered as a volunteer user.",
-                        "Welcome, " + new_volunteer.getFullname() },
-                buttons);
+        StandardInfoPanel list = new StandardInfoPanel(
+                new String[] { "You have successfully registered as a volunteer user!" }, buttons);
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -1036,11 +1170,13 @@ public class MainView {
     // volunteer main menu view panel
     public static void showVolunteerMenuView() {
         // clear the frame
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // init the sidemenuview
         showSideMenuView();
-
+        JPanel title_panel = new JPanel();
+        title_panel.setLayout(new BoxLayout(title_panel, BoxLayout.Y_AXIS));
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Menu</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
@@ -1049,6 +1185,10 @@ public class MainView {
         JLabel subtitle_label = new JLabel(
                 "<html><h3>Viewing Requests</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // add the title and subtitle to the title panel
+        title_panel.add(title_label);
+        title_panel.add(subtitle_label);
 
         // panel view content
         // table view of available requests of all schools
@@ -1098,30 +1238,55 @@ public class MainView {
 
         JButton buttons[] = { sort_by_button };
 
-        // runnable function
-        Runnable Runnable = () -> {
-            // get the selected row
-            Object selected_row = TableModelViewPanel.getSelectedRowValue();
-
-            // if the selected row is not null
-            if (selected_row != null) {
-                // get the selected request
-                Request selected_request = (Request) selected_row;
-
-                // show the request details
-                showRequestDetails(selected_request);
-            }
-        };
-
         // create the table view object
-        TableModelViewPanel table = new TableModelViewPanel(column_names, requests, buttons, Runnable);
+        RequestTableModelViewPanel table = new RequestTableModelViewPanel(column_names, requests, buttons);
+
+        // new label, jtextfield, and jbutton to seacrh for a request
+        JPanel search_panel = new JPanel();
+        JLabel search_label = new JLabel("Search request by ID: ");
+        JTextField search_field = new JTextField(10);
+        JButton search_button = new JButton("Search");
+        search_button.addActionListener(e -> {
+            // make sure the text field is not empty
+            if (search_field.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter a search term.");
+                return;
+            }
+            String search_text = search_field.getText();
+            Request search_result = null;
+            try {
+                // make sure that the search text is an integer
+                int search_id = Integer.parseInt(search_text);
+                // search for the request
+                search_result = SchoolHELPGUI.searchForRequest(search_id);
+            } catch (Exception ex) {
+                // if it is not, then display a message
+                JOptionPane.showMessageDialog(null, "Please enter a valid request ID.");
+                return;
+            }
+            // if the search result is null, then display a message
+            if (search_result == null) {
+                JOptionPane.showMessageDialog(null, "No request found with that ID.");
+            } else {
+                // show submit offer
+                showSubmitOfferView(search_result);
+
+            }
+        });
+
+        // add the search elements to the title panel
+        search_panel.add(search_label);
+        search_panel.add(search_field);
+        search_panel.add(search_button);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
-        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(title_panel, BorderLayout.NORTH);
         right_menu_view_panel.add(table, BorderLayout.CENTER);
+        right_menu_view_panel.add(search_panel, BorderLayout.SOUTH);
 
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -1221,6 +1386,12 @@ public class MainView {
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
+    }
+
+    public static void showVolunteerOffersMenuView() {
+        // this goes to a view where it shows all the offers this volunteer has
+        // submitted
+        // todo!
     }
 
 }

@@ -9,42 +9,40 @@ import java.util.ArrayList;
 // creates an object that takes in an arraylist of data and displays 
 // it onto a table view
 
-public class TableModelViewPanel extends JPanel {
-    // class fields
-    // todo
-
-    private static JTable table;
+public class OfferTableModelViewPanel extends JPanel {
+    private static JTable table = new JTable();
 
     // GUI element initializations
     private DefaultTableModel tableModel;
     JPanel table_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
-    public TableModelViewPanel(String[] columnNames, ArrayList data, JButton[] buttons, Runnable runnable_function) {
+    public OfferTableModelViewPanel(String[] columnNames, ArrayList<Offer> data, JButton[] buttons) {
         // table layout are vertically stacked with same width using BoxLayout
         table_panel.setLayout(new BoxLayout(table_panel, BoxLayout.Y_AXIS));
 
         // create the table model and add the data to it
         tableModel = new DefaultTableModel(columnNames, 0);
-        for (Object row : data) {
-            tableModel.addRow((Object[]) row);
+        for (Offer row : data) {
+            tableModel.addRow(new Object[] { row.getOfferID(), row.getOfferStatus(), row.getOfferDate(),
+                    row.getIsOwnedBy().getFullname(), row.getOfferRemarks() });
         }
 
-        // listen for click events in the table rows
-        tableModel.addTableModelListener(e -> {
-            // if the table is clicked
-            if (e.getType() == TableModelEvent.UPDATE) {
-                // get the selected row
-                int selectedRow = table.getSelectedRow();
+        // // listen for click events in the table rows
+        // tableModel.addTableModelListener(e -> {
+        // // if the table is clicked
+        // if (e.getType() == TableModelEvent.UPDATE) {
+        // // get the selected row
+        // int selectedRow = table.getSelectedRow();
 
-                // get the value of the first column of the selected row
-                Object value = table.getValueAt(selectedRow, 0);
+        // // get the value of the first column of the selected row
+        // Object value = table.getValueAt(selectedRow, 0);
 
-                // run the function
-                runnable_function.run();
-                //! TODO VERY unsure that this works
-            }
-        });
+        // // run the function
+        // runnable_function.run();
+        // // ! TODO VERY unsure that this works
+        // }
+        // });
 
         // create the table and add the table model to it
         table = new JTable(tableModel);

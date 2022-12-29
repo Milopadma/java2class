@@ -6,10 +6,8 @@ import java.awt.*;
 
 // this class handles the user login screen GUI, and it also handles the AdminLogin functionalities,
 // takes and processes data from and for the SchoolAdmin class
-public abstract class LoginPanel extends JPanel {
+public class LoginPanel extends JPanel {
     // class fields
-    public static JTextField usernameField = new JTextField(10);
-    public static JPasswordField passwordField = new JPasswordField(10);
     public static JButton loginButton = new JButton("Login");
     public static JButton backButton = new JButton("Back");
     public static JLabel usernameLabel = new JLabel("Username");
@@ -22,7 +20,7 @@ public abstract class LoginPanel extends JPanel {
     public static JPanel button_panel = new JPanel();
 
     // constructor
-    public LoginPanel(String titleString) {
+    public LoginPanel(String titleString, JTextField usernameField, JTextField passwordField) {
         // title label with string
         JLabel titleLabel = new JLabel(titleString);
 
