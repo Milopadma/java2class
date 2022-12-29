@@ -99,9 +99,12 @@ public class VolunteerLoginViewPanel extends JPanel {
                             // check if the fields are empty
                             if (usernameField.getText().equals("") || passwordField.getPassword().length == 0) {
                                 JOptionPane.showMessageDialog(null, "Please fill in all the fields");
-                            } else {
-                                SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword());
+                            } else if (SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword())) {
+                                // show the volunteer view
+                                MainView.showVolunteerMenuView();
                                 destroy();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Invalid username or password");
                             }
                         });
         // !BUG ; this throws a nullpointerexception when the login button is pressed in

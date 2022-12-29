@@ -128,7 +128,8 @@ public class MainView {
     // show AdminSchoolsMenuView (school admin menu with sidemenu dashboard)
     // method 1/3 for the admin sidemenu buttons
     public static void showAdminSchoolsMenuView() {
-        // clear the frame before adding new elements
+        // clear the frame
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // init sidemenuview
@@ -153,8 +154,9 @@ public class MainView {
             showAdminRegisterSchoolView();
         });
         register_admin_button.addActionListener(e -> {
+            School newSchool = null;
             // clear the frame before adding new elements
-            showAdminRegisterSchoolAdminView();
+            showAdminRegisterSchoolAdminView(newSchool);
         });
         back_button.addActionListener(e -> {
             // clear the frame before adding new elements
@@ -325,9 +327,9 @@ public class MainView {
                     // get the saved fields and saved to Hashmap
                     HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
                     // call the createSchool method of the SchoolHELPGUI class
-                    SchoolHELPGUI.createSchool(saved_fields);
+                    School newSchool = SchoolHELPGUI.createSchool(saved_fields);
                     // then invoke the showAdminRegisterSchoolAdminView method
-                    showAdminRegisterSchoolAdminView();
+                    showAdminRegisterSchoolAdminView(newSchool);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -359,7 +361,7 @@ public class MainView {
 
     // to show the school admin registration panel view
     // method 2/2 of the school side menu for admin
-    public static void showAdminRegisterSchoolAdminView() {
+    public static void showAdminRegisterSchoolAdminView(School newSchool) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -371,9 +373,18 @@ public class MainView {
         JLabel subtitle_label = new JLabel("<html><h3>Registering a new School Admin</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
+        String input_labels[] = {};
         // panel view content
-        String input_labels[] = { "Username", "Password", "Fullname", "Email",
-                "Phone Number", "Staff ID", "Position" };
+        if (newSchool == null) {
+            // this is null if it was called from the admin register school admin view and
+            // not from the admin register school view
+            input_labels = new String[] { "Username", "Password", "Fullname", "Email",
+                    "Phone Number", "Staff ID", "Position", "School Name" };
+        } else {
+            // this is not null if it was called from the admin register school view
+            input_labels = new String[] { "Username", "Password", "Fullname", "Email",
+                    "Phone Number", "Staff ID", "Position" };
+        }
 
         // create the panel with the buttons
         MultifieldInputPanel admin_register_school_admin_view_panel = new MultifieldInputPanel(input_labels);
@@ -396,14 +407,11 @@ public class MainView {
                 // get the saved fields and saved to Hashmap
                 HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
 
-                // get the current user's schoool
-                School current_school = ((SchoolAdmin) SchoolHELPGUI.getCurrentUser()).getSchool();
-
                 // create a new school object by calling from SchoolHELPGUI
-                SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
+                SchoolHELPGUI.createNewAdminUser(saved_fields, newSchool);
 
                 // show the next panel
-                showSchoolAdminAndSchoolCompletionView();
+                showSchoolAdminAndSchoolCompletionView(newSchool);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -430,7 +438,7 @@ public class MainView {
     }
 
     // this is shown when both a school and school admin is registered
-    public static void showSchoolAdminAndSchoolCompletionView() {
+    public static void showSchoolAdminAndSchoolCompletionView(School newSchool) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -444,7 +452,7 @@ public class MainView {
         JButton view_full_info_button = new JButton("View Full Info");
         view_full_info_button.addActionListener(e -> {
             // show the school info view
-            // showSchoolInfoView(newSchool, true);
+            showSchoolInfoView(newSchool, true);
         });
 
         JButton back_button = new JButton("Back");
@@ -459,8 +467,8 @@ public class MainView {
 
         // create the standardinfopanel
         StandardInfoPanel admin_school_registration_complete_view_panel = new StandardInfoPanel(
-                "School and SchoolAdmin registration complete!",
-                "You can now login to the SchoolHELP app with the SchoolAdmin credentials you just registered.",
+                new String[] { "School Admin and School Registration Complete",
+                        "The school admin and school has been registered successfully." },
                 buttons);
 
         // set the layout of the right menu panel
@@ -503,6 +511,9 @@ public class MainView {
                     Long.toString(newSchool.getSchoolAdmins().get(0).getPhone()),
                     Integer.toString(newSchool.getSchoolAdmins().get(0).getStaffID()),
                     newSchool.getSchoolAdmins().get(0).getPosition() };
+
+            // !BUG CANT ACCESS THE SCHOOL ADMIN INFO BECAUSE IT IS NOT SAVED IN THE SCHOOL
+            // ! OBJECT
 
             Runnable button_function = MainView::showAdminSchoolsMenuView;
             admin_school_info_view_panel = new InfoListViewPanel(input_labels, input_field_values,
@@ -803,34 +814,54 @@ public class MainView {
         // create the column names
         String column_names[] = { "ID", "Status", "Request Date", "Request Type", "City", "Description" };
 
-        // ! TODO VERY unsure that this works
-        // function to invoke when a row is clicked, essentially to show the offers of
-        // that request
-        Runnable row_clicked_function = () -> {
-            try {
-                // get the selected row
-                Object value_as_object = TableModelViewPanel.getSelectedRowValue();
-
-                // get the selected request
-                Request selected_request = (Request) value_as_object;
-
-                // show the offers of that request
-                showOffersOfRequest(selected_request);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        };
-        // ! TODO VERY unsure that this works
-
         // create the table model
-        TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(column_names,
-                thisSchoolRequestsForOffers, buttons, row_clicked_function);
+        RequestTableModelViewPanel reviews_for_offers_view_panel = new RequestTableModelViewPanel(column_names,
+                thisSchoolRequestsForOffers, buttons);
+
+        // new label, jtextfield, and button to search for the request
+        JPanel search_panel = new JPanel();
+        JLabel search_label = new JLabel("Search for Request by ID:");
+        JTextField search_textfield = new JTextField();
+        JButton search_button = new JButton("Search");
+        search_button.addActionListener(e -> {
+            // make sure the textfield is not empty
+            if (search_textfield.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter a request ID.");
+                return;
+            }
+            // get the text from the search textfield
+            String search_text = search_textfield.getText();
+            Request search_result = null;
+            try {
+                // make sure that the search text is an integer
+                int search_id = Integer.parseInt(search_text);
+                // search for the request
+                search_result = SchoolHELPGUI.searchForRequest(search_id);
+            } catch (Exception ex) {
+                // if it is not, then display a message
+                JOptionPane.showMessageDialog(null, "Please enter a valid request ID.");
+                return;
+            }
+            // if the search result is null, then display a message
+            if (search_result == null) {
+                JOptionPane.showMessageDialog(null, "No request found with that ID.");
+            } else {
+                // show the offers of that request
+                showOffersOfRequest(search_result);
+            }
+        });
+
+        // add the search components to the search panel
+        search_panel.add(search_label);
+        search_panel.add(search_textfield);
+        search_panel.add(search_button);
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(search_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -872,35 +903,72 @@ public class MainView {
             // create the column names
             String column_names[] = { "ID", "Status", "Offer Date", "Volunteer Name", "Remarks" };
 
-            // ! TODO VERY unsure that this works
+            //// VERY unsure that this works
             // function to invoke when a row is clicked, essentially to show the Offer
-            // details of that Offer
-            Runnable row_clicked_function = () -> {
-                try {
-                    // get the selected row
-                    Object value_as_object = TableModelViewPanel.getSelectedRowValue();
+            // // details of that Offer
+            // Runnable row_clicked_function = () -> {
+            // try {
+            // // get the selected row
+            // Object value_as_object = RequestTableModelViewPanel.getSelectedRowValue();
 
-                    // get the selected request
-                    Offer selected_offer = (Offer) value_as_object;
+            // // get the selected request
+            // Offer selected_offer = (Offer) value_as_object;
 
-                    // show the offers of that request
-                    showOfferDetails(selected_offer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            };
-
-            // ! TODO VERY unsure that thi
+            // // show the offers of that request
+            // showOfferDetails(selected_offer);
+            // } catch (Exception e) {
+            // e.printStackTrace();
+            // }
+            // };
 
             // create the table model
-            TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(column_names,
-                    thisRequestOffers, buttons, row_clicked_function);
+            OfferTableModelViewPanel reviews_for_offers_view_panel = new OfferTableModelViewPanel(column_names,
+                    thisRequestOffers, buttons);
+
+            // new label, jtextfield, and button to search for the offers
+            JPanel search_panel = new JPanel();
+            JLabel search_label = new JLabel("Search for Offer by ID:");
+            JTextField search_textfield = new JTextField();
+            JButton search_button = new JButton("Search");
+            search_button.addActionListener(e -> {
+                // make sure the textfield is not empty
+                if (search_textfield.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter an offer ID.");
+                    return;
+                }
+                // get the text from the search textfield
+                String search_text = search_textfield.getText();
+                Offer search_result = null;
+                try {
+                    // make sure that the search text is an integer
+                    int search_id = Integer.parseInt(search_text);
+                    // search for the request
+                    search_result = SchoolHELPGUI.searchForOffer(search_id);
+                } catch (Exception ex) {
+                    // if it is not, then display a message
+                    JOptionPane.showMessageDialog(null, "Please enter a valid offer ID.");
+                    return;
+                }
+                // if the search result is null, then display a message
+                if (search_result == null) {
+                    JOptionPane.showMessageDialog(null, "No offer found with that ID.");
+                } else {
+                    // show the offers of that request
+                    showOfferDetails(search_result);
+                }
+            });
+
+            // add the search components to the search panel
+            search_panel.add(search_label);
+            search_panel.add(search_textfield);
+            search_panel.add(search_button);
 
             // add these elements to the right menu panel
             right_menu_view_panel.setLayout(new BorderLayout());
             right_menu_view_panel.add(title_label, BorderLayout.NORTH);
             right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
             right_menu_view_panel.add(reviews_for_offers_view_panel, BorderLayout.CENTER);
+            right_menu_view_panel.add(search_panel, BorderLayout.SOUTH);
 
             // then add the right menu panel to the main frame
             main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -928,7 +996,8 @@ public class MainView {
             JButton buttons[] = { back_button };
 
             // create the panel view object
-            StandardInfoPanel info_view_panel = new StandardInfoPanel("There are no offers", "for this request.",
+            StandardInfoPanel info_view_panel = new StandardInfoPanel(
+                    new String[] { "No offers for this request yet." },
                     buttons);
 
             // add these elements to the right menu panel
@@ -997,6 +1066,7 @@ public class MainView {
         // this method is called when a user wants to register as a volunteer, this
         // meethod shows the volunteer register view panel
         // clear the right menu panel
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // new label as title using html h1
@@ -1059,6 +1129,7 @@ public class MainView {
         // method shows the volunteer register success view panel
 
         // clear the frame
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // buttons
@@ -1077,10 +1148,8 @@ public class MainView {
         JButton buttons[] = { login_button };
 
         // create the panel view object
-        StandardListViewPanel list = new StandardListViewPanel(
-                new String[] { "You have successfully registered as a volunteer user.",
-                        "Welcome, " + new_volunteer.getFullname() },
-                buttons);
+        StandardInfoPanel list = new StandardInfoPanel(
+                new String[] { "You have successfully registered as a volunteer user!" }, buttons);
 
         // add these elements to the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
@@ -1096,11 +1165,12 @@ public class MainView {
     // volunteer main menu view panel
     public static void showVolunteerMenuView() {
         // clear the frame
+        right_menu_view_panel.removeAll();
         main_frame.getContentPane().removeAll();
 
         // init the sidemenuview
         showSideMenuView();
-
+        JPanel title_panel = new JPanel();
         // new label as title using html h1
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Menu</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
@@ -1109,6 +1179,10 @@ public class MainView {
         JLabel subtitle_label = new JLabel(
                 "<html><h3>Viewing Requests</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // add the title and subtitle to the title panel
+        title_panel.add(title_label);
+        title_panel.add(subtitle_label);
 
         // panel view content
         // table view of available requests of all schools
@@ -1158,29 +1232,51 @@ public class MainView {
 
         JButton buttons[] = { sort_by_button };
 
-        // runnable function
-        Runnable Runnable = () -> {
-            // get the selected row
-            Object selected_row = TableModelViewPanel.getSelectedRowValue();
-
-            // if the selected row is not null
-            if (selected_row != null) {
-                // get the selected request
-                Request selected_request = (Request) selected_row;
-
-                // show the request details
-                showRequestDetails(selected_request);
-            }
-        };
-
         // create the table view object
-        TableModelViewPanel table = new TableModelViewPanel(column_names, requests, buttons, Runnable);
+        RequestTableModelViewPanel table = new RequestTableModelViewPanel(column_names, requests, buttons);
+
+        // new label, jtextfield, and jbutton to seacrh for a request
+        JPanel search_panel = new JPanel();
+        JLabel search_label = new JLabel("Search: ");
+        JTextField search_field = new JTextField(10);
+        JButton search_button = new JButton("Search");
+        search_button.addActionListener(e -> {
+            // make sure the text field is not empty
+            if (search_field.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter a search term.");
+                return;
+            }
+            String search_text = search_field.getText();
+            Request search_result = null;
+            try {
+                // make sure that the search text is an integer
+                int search_id = Integer.parseInt(search_text);
+                // search for the request
+                search_result = SchoolHELPGUI.searchForRequest(search_id);
+            } catch (Exception ex) {
+                // if it is not, then display a message
+                JOptionPane.showMessageDialog(null, "Please enter a valid request ID.");
+                return;
+            }
+            // if the search result is null, then display a message
+            if (search_result == null) {
+                JOptionPane.showMessageDialog(null, "No request found with that ID.");
+            } else {
+                // show the offers of that request
+                showOffersOfRequest(search_result);
+            }
+        });
+
+        // add the search elements to the title panel
+        search_panel.add(search_label);
+        search_panel.add(search_field);
+        search_panel.add(search_button);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
-        right_menu_view_panel.add(title_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(title_panel, BorderLayout.NORTH);
         right_menu_view_panel.add(table, BorderLayout.CENTER);
+        right_menu_view_panel.add(search_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);

@@ -49,9 +49,18 @@ public class UserChoiceViewPanel extends JPanel {
 
         // action listeners and lambda handlers for the buttons
         // exit button calls the save function and exits the application
-        ExitButton.addActionListener(e -> SchoolHELPGUI.saveSchoolHELPInstance());
-        // TODO wait for the save function to finish before exiting
-        ExitButton.addActionListener(e -> System.exit(0));
+
+        ExitButton.addActionListener(e -> {
+            SchoolHELPGUI.saveSchoolHELPInstance();
+            // wait 5 seconds, then call the exit
+            try {
+                Thread.sleep(5000);
+                System.exit(0);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+
+        });
         AdminChoiceButton.addActionListener(e -> {
             // call mainview's method to show the admin login view
             MainView.showAdminLoginView();
