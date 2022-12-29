@@ -462,6 +462,11 @@ public class MainView {
         // add the elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_school_registration_complete_view_panel, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
+
     }
 
     // this is shown when the schoolinfo is requested

@@ -19,6 +19,9 @@ public class SchoolHELPGUI {
         try {
             // first off, we need to serialize the data from the appdata folder
             SchoolHELP = getSchoolHELPFromAppdata();
+            // then init the main_view class
+            new MainView();
+
         } catch (Exception err) {
             err.printStackTrace();
         }
