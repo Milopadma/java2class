@@ -978,35 +978,51 @@ public class MainView {
         JLabel title_label = new JLabel("<html><h1>SchoolHELP Volunteer Registration</h1></html>");
         title_label.setVerticalAlignment(JLabel.TOP);
 
-        // new label as title using html h1
-        JLabel subtitle_label = new JLabel("<html><h3>Registering as new Volunteer</h3></html>");
-        subtitle_label.setVerticalAlignment(JLabel.TOP);
-
         // panel view content
         // new multifieldinput panel object
         String input_labels[] = { "Your Username", "Your Password", "Fullname",
                 "Phone Number", "Email", "Occupation", "Date of Birth" };
         MultifieldInputPanel volunteer_register_field_panel = new MultifieldInputPanel(input_labels);
 
+        // the button panel
+        JPanel button_panel = new JPanel();
+
         // for the next button, saves the input fields locally in this function first
         JButton next_button = new JButton("Next");
         // next button will show the next panel and call the getSavedFields() method of
         // the panel and save the fields to a Hashmap
         next_button.addActionListener(e -> {
-            // get the saved fields
-            HashMap<String, String> saved_fields = volunteer_register_field_panel.getSavedFields();
-            // create a VOLUNTEER USER object from the saved fields
-            Volunteer new_volunteer = SchoolHELPGUI.createNewVolunteerUser(saved_fields);
-            // go to volunteer successfull register view
-            showVolunteerRegisterSuccessView(new_volunteer);
+            try {
+                if (volunteer_register_field_panel.checkFields() == false) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all fields");
+                    return;
+                } else {
+                    // get the saved fields
+                    HashMap<String, String> saved_fields = volunteer_register_field_panel.getSavedFields();
+                    // create a VOLUNTEER USER object from the saved fields
+                    Volunteer new_volunteer = SchoolHELPGUI.createNewVolunteerUser(saved_fields);
+                    // go to volunteer successfull register view
+                    showVolunteerRegisterSuccessView(new_volunteer);
+                }
+            } catch (NullPointerException ex) {
+                JOptionPane.showMessageDialog(null, "Please fill in all fields");
+                return;
+            }
         });
+
+        // back button
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> MainView.showVolunteerLoginView());
+
+        // add the buttons to panel
+        button_panel.add(back_button);
+        button_panel.add(next_button);
 
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
-        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(volunteer_register_field_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(next_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(button_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
