@@ -10,17 +10,15 @@ import java.util.ArrayList;
 // it onto a table view
 
 public class TableModelViewPanel extends JPanel {
-    // class fields
-    // todo
-
-    private static JTable table;
+    private static JTable table = new JTable();
 
     // GUI element initializations
     private DefaultTableModel tableModel;
     JPanel table_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
-    public TableModelViewPanel(String[] columnNames, ArrayList data, JButton[] buttons, Runnable runnable_function) {
+    public TableModelViewPanel(String[] columnNames, ArrayList data, JButton[] buttons,
+            Runnable runnable_function) {
         // table layout are vertically stacked with same width using BoxLayout
         table_panel.setLayout(new BoxLayout(table_panel, BoxLayout.Y_AXIS));
 
@@ -42,7 +40,7 @@ public class TableModelViewPanel extends JPanel {
 
                 // run the function
                 runnable_function.run();
-                //! TODO VERY unsure that this works
+                // ! TODO VERY unsure that this works
             }
         });
 

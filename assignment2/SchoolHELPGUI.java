@@ -19,23 +19,6 @@ public class SchoolHELPGUI {
         try {
             // first off, we need to serialize the data from the appdata folder
             SchoolHELP = getSchoolHELPFromAppdata();
-
-            // init the main view
-            MainView main_view = new MainView();
-            // send an event listener to the login button
-            // when the login button is clicked, the login() method is called
-            // main_view.login_view_panel.AdminButton.addActionListener(event -> {
-            // System.out.println("Admin button clicked");
-            // MainView.showAdminLoginView();
-            // });
-            // main_view.VolunteerButton.addActionListener(e -> {
-            // System.out.println("Volunteer button clicked");
-            // MainView.showVolunteerLoginView();
-            // });
-            // main_view.admin_login_view_panel.UsernameTextField.addActionListener(e -> {
-            // System.out.println("Username text field clicked");
-            // MainView.showAdminLoginView();
-            // });
         } catch (Exception err) {
             err.printStackTrace();
         }
@@ -48,7 +31,8 @@ public class SchoolHELPGUI {
         try {
             SchoolHELPInstance = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
             System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.toString());
-            System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.getUsers().toString());
+            System.out
+                    .println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.getUsers().toString());
             return SchoolHELPInstance;
         } catch (Exception err) {
             err.printStackTrace();

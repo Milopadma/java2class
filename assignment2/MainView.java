@@ -846,7 +846,7 @@ public class MainView {
                 }
             };
 
-            // ! TODO VERY unsure that this works
+            // ! TODO VERY unsure that thi
 
             // create the table model
             TableModelViewPanel reviews_for_offers_view_panel = new TableModelViewPanel(column_names,
