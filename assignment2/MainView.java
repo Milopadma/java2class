@@ -319,12 +319,21 @@ public class MainView {
         // next button will show the next panel and call the getSavedFields method of
         // the panel and save the fields to a hashmap
         next_button.addActionListener(e -> {
-            // get the saved fields and saved to Hashmap
-            HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
-            // call the createSchool method of the SchoolHELPGUI class
-            SchoolHELPGUI.createSchool(saved_fields);
-            // then invoke the showAdminRegisterSchoolAdminView method
-            showAdminRegisterSchoolAdminView();
+            try {
+                if (admin_register_school_view_panel.checkFields() == false) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all the fields");
+                    return;
+                } else {
+                    // get the saved fields and saved to Hashmap
+                    HashMap<String, String> saved_fields = admin_register_school_view_panel.getSavedFields();
+                    // call the createSchool method of the SchoolHELPGUI class
+                    SchoolHELPGUI.createSchool(saved_fields);
+                    // then invoke the showAdminRegisterSchoolAdminView method
+                    showAdminRegisterSchoolAdminView();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
 
         JButton back_button = new JButton("Back");
@@ -381,17 +390,25 @@ public class MainView {
         // next button will show the next panel and call the getSavedFields method of
         // the panel and save the fields to a hashmap
         next_button.addActionListener(e -> {
-            // get the saved fields and saved to Hashmap
-            HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
+            try {
+                if (admin_register_school_admin_view_panel.checkFields() == false) {
+                    JOptionPane.showMessageDialog(null, "Please fill in all the fields");
+                    return;
+                }
+                // get the saved fields and saved to Hashmap
+                HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
 
-            // get the current user's schoool
-            School current_school = ((SchoolAdmin) SchoolHELPGUI.getCurrentUser()).getSchool();
+                // get the current user's schoool
+                School current_school = ((SchoolAdmin) SchoolHELPGUI.getCurrentUser()).getSchool();
 
-            // create a new school object by calling from SchoolHELPGUI
-            SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
+                // create a new school object by calling from SchoolHELPGUI
+                SchoolHELPGUI.createNewAdminUser(saved_fields, current_school);
 
-            // show the next panel
-            showSchoolAdminAndSchoolCompletionView();
+                // show the next panel
+                showSchoolAdminAndSchoolCompletionView();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
         back_button.addActionListener(e -> {
             // show the previous panel
@@ -625,15 +642,20 @@ public class MainView {
         // done button saves the fields
         done_button.addActionListener(e -> {
             try {
-                // get the input fields
-                HashMap<String, String> saved_fields = tutorial_request_submission_view_panel.getSavedFields();
-                SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
-                School thisSchool = current_user.getSchool();
-                // call the method to save the request
-                SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+                if (!tutorial_request_submission_view_panel.checkFields()) {
+                    JOptionPane.showMessageDialog(main_frame, "Please fill in all the fields!");
+                    return;
+                } else {
+                    // get the input fields
+                    HashMap<String, String> saved_fields = tutorial_request_submission_view_panel.getSavedFields();
+                    SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
+                    School thisSchool = current_user.getSchool();
+                    // call the method to save the request
+                    SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
 
-                // then show a message dialog
-                JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
+                    // then show a message dialog
+                    JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -688,15 +710,20 @@ public class MainView {
         // done button saves the fields
         done_button.addActionListener(e -> {
             try {
-                // get the input fields
-                HashMap<String, String> saved_fields = resource_request_submission_view_panel.getSavedFields();
-                SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
-                School thisSchool = current_user.getSchool();
-                // call the method to save the request
-                SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+                if (!resource_request_submission_view_panel.checkFields()) {
+                    JOptionPane.showMessageDialog(main_frame, "Please fill in all the fields!");
+                    return;
+                } else {
+                    // get the input fields
+                    HashMap<String, String> saved_fields = resource_request_submission_view_panel.getSavedFields();
+                    SchoolAdmin current_user = (SchoolAdmin) SchoolHELPGUI.getCurrentUser();
+                    School thisSchool = current_user.getSchool();
+                    // call the method to save the request
+                    SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
 
-                // then show a message dialog
-                JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
+                    // then show a message dialog
+                    JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
