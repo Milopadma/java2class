@@ -21,16 +21,27 @@ public class VolunteerLoginViewPanel extends LoginPanel {
         // event handlers
         // back button goes back to the user choice view and properly cleans the center
         // panel
-        backButton.addActionListener(e -> MainView.showUserChoiceView());
-        backButton.addActionListener(e -> destroy());
+        backButton.addActionListener(e -> {
+            MainView.showUserChoiceView();
+            destroy();
+        });
         loginButton
                 .addActionListener(
-                        e -> SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword()));
+                        e -> {
+                            // check if the fields are empty
+                            if (usernameField.getText().equals("") || passwordField.getPassword().length == 0) {
+                                JOptionPane.showMessageDialog(null, "Please fill in all the fields");
+                            } else {
+                                SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword());
+                                destroy();
+                            }
+                        });
         // !BUG ; this throws a nullpointerexception when the login button is pressed in
         // !BUG ; volunteer view
-        registerButton.addActionListener(e -> MainView.showVolunteerRegisterView());
-        registerButton.addActionListener(e -> destroy());
-        loginButton.addActionListener(e -> destroy());
+        registerButton.addActionListener(e -> {
+            MainView.showVolunteerRegisterView();
+            destroy();
+        });
     }
 
 }

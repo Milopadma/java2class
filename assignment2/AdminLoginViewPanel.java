@@ -18,11 +18,20 @@ public class AdminLoginViewPanel extends LoginPanel {
         }
 
         // event handlers
-        backButton.addActionListener(e -> MainView.showUserChoiceView());
-        backButton.addActionListener(e -> destroy());
+        backButton.addActionListener(e -> {
+            MainView.showUserChoiceView();
+            destroy();
+        });
         loginButton
-                .addActionListener(e -> SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword()));
-        loginButton.addActionListener(e -> destroy());
+                .addActionListener(e -> {
+                    // check if the fields are empty
+                    if (usernameField.getText().equals("") || passwordField.getPassword().length == 0) {
+                        JOptionPane.showMessageDialog(null, "Please fill in all the fields");
+                    } else {
+                        SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword());
+                        destroy();
+                    }
+                });
     }
 
 }
