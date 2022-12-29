@@ -22,6 +22,7 @@ public class AdminLoginViewPanel extends LoginPanel {
         backButton.addActionListener(e -> destroy());
         loginButton
                 .addActionListener(e -> SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword()));
+        loginButton.addActionListener(e -> destroy());
     }
 
 }

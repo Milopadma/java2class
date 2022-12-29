@@ -29,6 +29,8 @@ public class VolunteerLoginViewPanel extends LoginPanel {
         // !BUG ; this throws a nullpointerexception when the login button is pressed in
         // !BUG ; volunteer view
         registerButton.addActionListener(e -> MainView.showVolunteerRegisterView());
+        registerButton.addActionListener(e -> destroy());
+        loginButton.addActionListener(e -> destroy());
     }
 
 }

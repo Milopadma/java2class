@@ -58,15 +58,6 @@ public class MainView {
         main_frame.setTitle("SchoolHELP");
         main_frame.setLayout(new BorderLayout());
 
-        // !Deprecated
-        // // back button functionality
-        // back_button.addActionListener(e -> {
-        // // clear the frame before adding new elements
-        // main_frame.getContentPane().removeAll();
-        // main_frame.add(current_previous_panel, BorderLayout.CENTER);
-        // main_frame.setVisible(true);
-        // });
-
         // TODO: add icon, fade animations, splashscreen
 
         // show the login view
@@ -91,7 +82,6 @@ public class MainView {
     // // and Collectors
     // System.out.println("Saving multifield text fields: " + fieldNames[0] + " " +
     // fieldValues[0]);
-    // // ! BUG fieldValues[0] is null
     // Map<String, String> fieldMap = IntStream.range(0, fieldNames.length)
     // .boxed()
     // .collect(Collectors.toMap(i -> fieldNames[i], i -> fieldValues[i]));
@@ -419,6 +409,8 @@ public class MainView {
         right_menu_view_panel.add(admin_register_school_admin_view_panel, BorderLayout.CENTER);
         right_menu_view_panel.add(buttons_panel, BorderLayout.SOUTH);
 
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 
@@ -521,6 +513,10 @@ public class MainView {
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_school_info_view_panel, BorderLayout.CENTER);
 
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
+
     }
 
     // * */ show METHODS FOR ADMIN REQUESTS MENU]
@@ -621,6 +617,9 @@ public class MainView {
         // create the panel view object
         MultifieldInputPanel tutorial_request_submission_view_panel = new MultifieldInputPanel(input_labels);
 
+        // buttons panel
+        JPanel button_panel = new JPanel();
+
         // buttons for this panel
         JButton done_button = new JButton("Done");
         // done button saves the fields
@@ -632,6 +631,9 @@ public class MainView {
                 School thisSchool = current_user.getSchool();
                 // call the method to save the request
                 SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+
+                // then show a message dialog
+                JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -642,12 +644,15 @@ public class MainView {
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> showRequestSubmissionChoiceView());
 
+        // add the buttons to the button panel
+        button_panel.add(done_button);
+        button_panel.add(back_button);
+
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(tutorial_request_submission_view_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(done_button, BorderLayout.SOUTH);
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(button_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -675,6 +680,9 @@ public class MainView {
         // create the panel view object
         MultifieldInputPanel resource_request_submission_view_panel = new MultifieldInputPanel(input_labels);
 
+        // buttons panel
+        JPanel button_panel = new JPanel();
+
         // buttons for this panel
         JButton done_button = new JButton("Done");
         // done button saves the fields
@@ -686,6 +694,9 @@ public class MainView {
                 School thisSchool = current_user.getSchool();
                 // call the method to save the request
                 SchoolHELPGUI.createNewRequest(saved_fields, thisSchool);
+
+                // then show a message dialog
+                JOptionPane.showMessageDialog(main_frame, "Request Submitted Successfully!");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -696,12 +707,15 @@ public class MainView {
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> showRequestSubmissionChoiceView());
 
+        // add the buttons to the button panel
+        button_panel.add(done_button);
+        button_panel.add(back_button);
+
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(resource_request_submission_view_panel, BorderLayout.CENTER);
-        right_menu_view_panel.add(done_button, BorderLayout.SOUTH);
-        right_menu_view_panel.add(back_button, BorderLayout.SOUTH);
+        right_menu_view_panel.add(button_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -865,6 +879,7 @@ public class MainView {
 
             // then add the right menu panel to the main frame
             main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+            main_frame.setVisible(true);
         } else {
             // show an info view panel that there are no offers for this Request
             // clear the right menu panel
@@ -996,7 +1011,6 @@ public class MainView {
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
-
     }
 
     private static void showVolunteerRegisterSuccessView(Volunteer new_volunteer) {
@@ -1127,6 +1141,8 @@ public class MainView {
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(table, BorderLayout.CENTER);
 
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
 

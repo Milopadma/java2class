@@ -89,6 +89,10 @@ public abstract class LoginPanel extends JPanel {
 
     // proper deconstructor
     public void destroy() {
+        // clear the fields
+        usernameField.setText("");
+        passwordField.setText("");
+
         // remove all the components from the center panel
         center_panel.removeAll();
         // remove all the components from the button panel
