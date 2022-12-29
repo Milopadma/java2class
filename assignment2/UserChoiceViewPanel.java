@@ -47,7 +47,10 @@ public class UserChoiceViewPanel extends JPanel {
         // to add the center panel to the parent panel
         add(center_panel, new GridBagConstraints());
 
-        // event handlers
+        // action listeners and lambda handlers for the buttons
+        // exit button calls the save function and exits the application
+        ExitButton.addActionListener(e -> SchoolHELPGUI.saveSchoolHELPInstance());
+        // TODO wait for the save function to finish before exiting
         ExitButton.addActionListener(e -> System.exit(0));
         AdminChoiceButton.addActionListener(e -> {
             // call mainview's method to show the admin login view

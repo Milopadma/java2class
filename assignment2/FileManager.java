@@ -23,11 +23,31 @@ public class FileManager {
      * @param data
      * @return
      */
-    public static boolean saveData(String data, String fileName) {
+    public static boolean saveData(Object data, String fileName) {
         // check if the file exists
         File file = new File(FILE_PATH + fileName);
         if (!file.exists()) {
-            // create the file
+            // create the file with the given name
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("File created: " + file.getName());
+                } else
+                    System.out.println("File already exists.");
+                // create the file output stream
+                // and save the data to it
+                FileOutputStream fos = new FileOutputStream(file);
+                ObjectOutputStream out = new ObjectOutputStream(fos);
+                out.writeObject(data);
+                out.close();
+                fos.close();
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        // if the file exists, then just save the data to it
+        else {
             try {
                 FileOutputStream fos = new FileOutputStream(file);
                 ObjectOutputStream out = new ObjectOutputStream(fos);
@@ -40,7 +60,6 @@ public class FileManager {
                 return false;
             }
         }
-        return false;
     }
 
     /**
@@ -48,7 +67,7 @@ public class FileManager {
      * 
      * @return
      */
-    public static String loadData(String fileName) {
+    public static Object loadData(String fileName) {
         // check if the file exists
         File file = new File(FILE_PATH + fileName);
         if (file.exists()) {
@@ -56,7 +75,7 @@ public class FileManager {
             try {
                 FileInputStream fis = new FileInputStream(file);
                 ObjectInputStream in = new ObjectInputStream(fis);
-                String data = (String) in.readObject();
+                Object data = in.readObject();
                 in.close();
                 fis.close();
                 return data;
