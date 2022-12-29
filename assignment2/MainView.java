@@ -20,9 +20,7 @@ public class MainView {
     static JPanel current_previous_panel;
 
     // GUI component views
-    static UserChoiceViewPanel user_choice_view_panel;
-    static LoginPanel admin_login_view_panel;
-    static LoginPanel volunteer_login_view_panel;
+    // static UserChoiceViewPanel user_choice_view_panel;
 
     // all admin-related view panels
     // static MultibuttonInputPanel admin_schools_view_panel;
@@ -95,7 +93,7 @@ public class MainView {
     public static void showUserChoiceView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        user_choice_view_panel = new UserChoiceViewPanel();
+        UserChoiceViewPanel user_choice_view_panel = new UserChoiceViewPanel();
         main_frame.add(user_choice_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
@@ -104,7 +102,7 @@ public class MainView {
     public static void showAdminLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        admin_login_view_panel = new AdminLoginViewPanel(SchoolHELPGUI.isFirstTimeLogin());
+        AdminLoginViewPanel admin_login_view_panel = new AdminLoginViewPanel(SchoolHELPGUI.isFirstTimeLogin());
         main_frame.add(admin_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
@@ -113,7 +111,7 @@ public class MainView {
     public static void showVolunteerLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
-        volunteer_login_view_panel = new VolunteerLoginViewPanel();
+        VolunteerLoginViewPanel volunteer_login_view_panel = new VolunteerLoginViewPanel();
         main_frame.add(volunteer_login_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
     }
