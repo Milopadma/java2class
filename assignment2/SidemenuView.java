@@ -12,6 +12,7 @@ public class SidemenuView extends JPanel {
     JPanel name_occupation_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
+    JButton edit_profile_button = new JButton("Edit Profile");
     JButton schools_button = new JButton("Schools");
     JButton requests_button = new JButton("Requests");
     JButton offers_button = new JButton("Offers");
@@ -43,12 +44,17 @@ public class SidemenuView extends JPanel {
 
             // setting the button panel layout to be stacked vertically using GridLayout
             button_panel.setLayout(new GridLayout(4, 1, 10, 10));
+            button_panel.add(edit_profile_button);
             button_panel.add(schools_button);
             button_panel.add(requests_button);
             button_panel.add(offers_button);
             button_panel.add(logout_button);
 
             // adding the event handlers for the buttons
+            edit_profile_button.addActionListener(e -> {
+                // call the MainView method to show the edit profile view
+                MainView.showEditProfileView();
+            });
             schools_button.addActionListener(e -> {
                 // call the MainView method to show the School admin menu view
                 MainView.showAdminSchoolsMenuView();

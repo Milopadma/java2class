@@ -13,8 +13,7 @@ public class MultibuttonInputPanel extends JPanel {
     // listener to add to the buttons
     public MultibuttonInputPanel(JButton[] buttons) {
         // button layout are vertically stacked with same width using BoxLayout
-        // button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
-        button_panel.setLayout(new GridLayout(0, 1, 0, 10));
+        button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
 
         // back button will be placed on the bottom portion of the parent panel
         back_button_panel.setLayout(new BoxLayout(back_button_panel, BoxLayout.Y_AXIS));
@@ -31,10 +30,10 @@ public class MultibuttonInputPanel extends JPanel {
         });
 
         // to center the panel
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
 
         // addding the panels to the parent
-        add(button_panel, new GridBagConstraints());
-        add(back_button_panel, new GridBagConstraints());
+        add(button_panel, BorderLayout.CENTER);
+        add(back_button_panel, BorderLayout.SOUTH);
     }
 }

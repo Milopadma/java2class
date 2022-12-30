@@ -185,6 +185,9 @@ public class SchoolHELPGUI {
 
         // add the new offer to the request
         selected_request.addOffer(newOffer);
+
+        // add the new offer to the volunteer
+        currentUser.addOffer(newOffer);
     }
 
     public static Volunteer createNewVolunteerUser(HashMap<String, String> saved_fields) {
@@ -220,8 +223,8 @@ public class SchoolHELPGUI {
     }
 
     public static void createNewAdminUser(HashMap<String, String> saved_fields, School school) {
-        // this method takes in a Hashmap of the fields from the volunteer registration
-        // screen and creates a new volunteer user based on them
+        // this method takes in a Hashmap of the fields from the admin registration
+        // screen and creates a new schooladmin user based on them
 
         // printout the hashmap
         System.out.println(saved_fields);
@@ -252,8 +255,8 @@ public class SchoolHELPGUI {
     }
 
     public static void createNewRequest(HashMap<String, String> saved_fields, School school) {
-        // this method takes in a Hashmap of the fields from the volunteer registration
-        // screen and creates a new volunteer user based on them
+        // this method takes in a Hashmap of the fields from the request submission
+        // screen and creates a new request object based on them
 
         // get the values from the fieldmap
         int requestID = ((int) (Math.random() * 1000));
@@ -267,6 +270,36 @@ public class SchoolHELPGUI {
         // add the new request to the request list
         SchoolHELP.getSchool(school.getSchoolName()).addRequest(newRequest);
 
+    }
+
+    public static boolean updateAdminProfile(HashMap<String, String> inputs, SchoolAdmin thisSchoolAdmin) {
+        // this method takes in a Hashmap of the fields from the admin profile screen
+        // and updates the profile of the current user
+        try {
+            // get the values from the fieldmap
+            String username = (String) inputs.get("Username");
+            String password = (String) inputs.get("Password");
+            String fullname = (String) inputs.get("Fullname");
+            String email = (String) inputs.get("Email");
+            Long phone = Long.parseLong((String) inputs.get("Phone Number"));
+            int staffID = Integer.parseInt((String) inputs.get("Staff ID"));
+            String position = (String) inputs.get("Position");
+
+            // update the current user
+            thisSchoolAdmin.setUsername(username);
+            thisSchoolAdmin.setPassword(password);
+            thisSchoolAdmin.setFullname(fullname);
+            thisSchoolAdmin.setEmail(email);
+            thisSchoolAdmin.setPhone(phone);
+            thisSchoolAdmin.setStaffID(staffID);
+            thisSchoolAdmin.setPosition(position);
+
+            // return true if the update was successful
+            return true;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return false;
+        }
     }
 
 }

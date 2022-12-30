@@ -17,7 +17,7 @@ public class StandardListViewPanel extends JPanel {
         list = new JList<String>(list_content);
 
         JScrollPane listScroller = new JScrollPane(list);
-        listScroller.setPreferredSize(new Dimension(250, 80));
+        listScroller.setPreferredSize(new Dimension(500, 240));
 
         // add the list to the list panel
         list_panel.add(listScroller);
