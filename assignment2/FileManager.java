@@ -28,10 +28,11 @@ public class FileManager {
         try {
             FileOutputStream fos = new FileOutputStream(FILE_PATH + fileName);
             ObjectOutputStream out = new ObjectOutputStream(fos);
+            // out.writeObject(testClass);
             out.writeObject(data);
             System.out.println("Data saved to file:" + data);
             for (User user : data.getUsers()) {
-                System.out.println(user);
+                System.out.println("User: " + user);
             }
             out.close();
             fos.close();

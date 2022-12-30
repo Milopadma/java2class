@@ -28,6 +28,8 @@ public class RequestTableModelViewPanel extends JPanel {
         }
 
         // ! BUG no request description shown on table views
+        // ! this is inconsistent with Admin and Volunteer views
+        // ! city isnt there either, on all views
 
         // create the table and add the table model to it
         table = new JTable(tableModel);

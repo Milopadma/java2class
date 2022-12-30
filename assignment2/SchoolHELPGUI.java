@@ -17,6 +17,7 @@ public class SchoolHELPGUI {
         try {
             // first off, we need to serialize the data from the appdata folder
             SchoolHELP = getSchoolHELPFromAppdata();
+            SchoolHELP.getUsers().forEach(user -> System.out.println(user));
             // then init the main_view class
             new MainView();
 
@@ -31,13 +32,12 @@ public class SchoolHELPGUI {
         try {
             SchoolHELP = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
             if (SchoolHELP == null) {
-                // if it fails to load or the file does not exist, create a new instance
+                // if it fails to load or the ile does not exist, create a new instance
                 SchoolHELP = new SchoolHELP();
                 // print
                 System.out.println("SchoolHELPInstance was Null!");
                 return SchoolHELP;
             } else {
-
                 System.out
                         .println("SchoolHELP data loaded from appdata folder: " + SchoolHELP.getUsers().toString());
                 return SchoolHELP;
@@ -47,6 +47,12 @@ public class SchoolHELPGUI {
         }
         return null;
     }
+
+    // notes
+    // the reading from file works if the schoolhelp instance is instantiated with
+    // schoolhelpgui
+    // but it doesnt work if it isnt instantiated with schoolhelpgui
+    // ! thus something is wrong with the saving functions
 
     // this method is called when the User clicks on the Exit button, this method
     // attempts to save the SchoolHELP object to a file
@@ -95,18 +101,18 @@ public class SchoolHELPGUI {
     // * CLASS HELPER METHODS */
     // this method handles the login process for both admin and volunteer, returns
     // true if the user is found and is valid
-    public static boolean userLogin(String username, char[] password) {
+    public static boolean userLogin(String username, char[] password, String userType) {
         String password_stringified = new String(password);
         try {
             // find out if this user is a volunteer or an admin
-            if (SchoolHELP.isUserAdmin(username, password_stringified)) {
+            if (userType == "ADMIN" && SchoolHELP.isUserAdmin(username, password_stringified)) {
                 // set the current user to the user that just logged in
                 setCurrentUser(SchoolHELP.getUser(username, password_stringified));
                 // at this point, the user has logged in, so it's not the first time login
                 // anymore
                 setFirstTimeLogin(false);
                 return true;
-            } else if (SchoolHELP.isUserVolunteer(username, password_stringified)) {
+            } else if (userType == "VOLUNTEER" && SchoolHELP.isUserVolunteer(username, password_stringified)) {
                 // set the current user to the user that just logged in
                 setCurrentUser(SchoolHELP.getUser(username, password_stringified));
                 return true;

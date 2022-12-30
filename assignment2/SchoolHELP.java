@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class SchoolHELP implements java.io.Serializable{
     // class variables
-    private static ArrayList<User> users = new ArrayList<User>();
-    private static ArrayList<School> schools = new ArrayList<School>();
+    private ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<School> schools = new ArrayList<School>();
 
     // class constructor
     /**
@@ -47,7 +47,7 @@ public class SchoolHELP implements java.io.Serializable{
      * @param users
      */
     public void setUsers(ArrayList<User> users) {
-        SchoolHELP.users = users;
+        this.users = users;
     }
 
     // singular user
@@ -81,7 +81,7 @@ public class SchoolHELP implements java.io.Serializable{
      * @param schools
      */
     public void setSchools(ArrayList<School> schools) {
-        SchoolHELP.schools = schools;
+        this.schools = schools;
     }
 
     // class methods

@@ -639,7 +639,7 @@ public class MainView {
 
         // panel view content
         // labels for the input JTextFields
-        String input_labels[] = { "Tutorial Description", "Proposed Date", "Proposed Time", "Student Level",
+        String input_labels[] = { "Tutorial Request Description", "Proposed Date", "Proposed Time", "Student Level",
                 "Student Amount" };
 
         // create the panel view object
@@ -708,7 +708,7 @@ public class MainView {
 
         // panel view content
         // labels for the input JTextFields
-        String input_labels[] = { "Resource Description", "Resource Type", "Amount Expected" };
+        String input_labels[] = { "Resource Request Description", "Resource Type", "Amount Expected" };
 
         // create the panel view object
         MultifieldInputPanel resource_request_submission_view_panel = new MultifieldInputPanel(input_labels);
