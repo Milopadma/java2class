@@ -6,6 +6,7 @@
 // GUI elements import
 
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -264,7 +265,15 @@ public class MainView {
         // buttons for the admin school menu view
         JButton review_offers_for_school_button = new JButton("Review Offers for this School");
         review_offers_for_school_button.addActionListener(e -> {
-            showReviewsForOffersView();
+            if (((SchoolAdmin) SchoolHELPGUI.getCurrentUser()).getSchool().getRequests().size() == 0)
+            // if there are no requests for offers
+            {
+                // display a message
+                JOptionPane.showMessageDialog(null, "There are no requests for offers for your school.");
+            } else {
+                // clear the frame before adding new elements
+                showReviewsForOffersView();
+            }
         });
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> {
@@ -361,7 +370,7 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        String input_labels[] = { "School Name", "School Address", "School Phone Number", "School Email" };
+        String input_labels[] = { "School Name", "School Address", "School City" };
         MultifieldInputPanel admin_register_school_view_panel = new MultifieldInputPanel(input_labels);
 
         // for the buttons to have a panel
@@ -656,6 +665,7 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // add the title and subtitle to the title panel
+        title_panel.setLayout(new BoxLayout(title_panel, BoxLayout.Y_AXIS));
         title_panel.add(title_label);
         title_panel.add(subtitle_label);
 
@@ -697,7 +707,7 @@ public class MainView {
 
         // panel view content
         // labels for the input JTextFields
-        String input_labels[] = { "Tutorial Request Description", "Proposed Date", "Proposed Time", "Student Level",
+        String input_labels[] = { "Request Description", "Proposed Date", "Proposed Time", "Student Level",
                 "Student Amount" };
 
         // create the panel view object
@@ -766,7 +776,7 @@ public class MainView {
 
         // panel view content
         // labels for the input JTextFields
-        String input_labels[] = { "Resource Request Description", "Resource Type", "Amount Expected" };
+        String input_labels[] = { "Request Description", "Resource Type", "Amount Expected" };
 
         // create the panel view object
         MultifieldInputPanel resource_request_submission_view_panel = new MultifieldInputPanel(input_labels);
@@ -854,25 +864,14 @@ public class MainView {
         User currentUser = SchoolHELPGUI.getCurrentUser();
 
         try {
-            if (((SchoolAdmin) currentUser).getSchool().getRequests().size() == 0)
-            // if there are no requests for offers
-            {
-                // display a message
-                JOptionPane.showMessageDialog(null, "There are no requests for offers for your school.");
-
-                // show the admin offers menu view
-                showAdminOffersMenuView();
-
-            } else {
-                // get the requests for offers
-                thisSchoolRequestsForOffers = ((SchoolAdmin) currentUser).getSchool().getRequests();
-            }
+            // get the requests for offers
+            thisSchoolRequestsForOffers = ((SchoolAdmin) currentUser).getSchool().getRequests();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // create the column names
-        String column_names[] = { "ID", "Status", "Request Date", "Request Type", "City", "Description" };
+        String column_names[] = { "ID", "Status", "Request Date", "City", "Description" };
 
         // create the table model
         RequestTableModelViewPanel reviews_for_offers_view_panel = new RequestTableModelViewPanel(column_names,
@@ -1123,9 +1122,15 @@ public class MainView {
         JButton buttons[] = { reject_button, accept_button, back_button };
 
         // turn the selected_offer details to a String Array first by means of stream
-        // iteration
-        String offer_details[] = selected_offer.toString().split(" ");
-
+        // iteration, by dividng by date submitted, offer status, offer id, submitted by
+        // and offer details
+        // parse offerid to string
+        String offer_details[] = new String[] { "Date: " + selected_offer.getOfferDate().format(
+                DateTimeFormatter.ofPattern("yyyy/MM/dd")).toString() + "Status: " + selected_offer.getOfferStatus()
+                + "ID: " +
+                Integer.toString(selected_offer.getOfferID()) + "Volunteer Name: "
+                + selected_offer.getIsOwnedBy().getFullname() + "Remarks: " +
+                selected_offer.getOfferRemarks() };
         // create the panel view object
         StandardListViewPanel list = new StandardListViewPanel(offer_details, buttons);
 
@@ -1269,7 +1274,8 @@ public class MainView {
 
         // panel view content
         // table view of available requests of all schools
-        String[] column_names = { "ID", "Status", "Request Date", "School Name", "City", "Description" };
+        String[] column_names = { "ID", "Status", "Request Date", "School Name", "City",
+                "Description" };
         ArrayList<Request> requests = SchoolHELPGUI.getAllRequests();
 
         // for the "Sort By" dropdown menu in the table { School Name, City, Date }

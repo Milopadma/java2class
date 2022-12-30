@@ -286,7 +286,7 @@ public class SchoolHELPGUI {
         // get the values from the fieldmap
         int requestID = ((int) (Math.random() * 1000));
         LocalDateTime requestDate = LocalDateTime.now();
-        String requestStatus = "PENDING";
+        String requestStatus = "NEW";
         String requestDescription = (String) saved_fields.get("Request Description");
 
         // create a new request object

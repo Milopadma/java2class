@@ -24,12 +24,9 @@ public class RequestTableModelViewPanel extends JPanel {
         tableModel = new DefaultTableModel(columnNames, 0);
         for (Request row : data) {
             tableModel.addRow(new Object[] { row.getRequestID(), row.getRequestStatus(), row.getRequestDate(),
-                    row.getSchool().getSchoolName(), row.getSchool().getCity(), row.getRequestDescription() });
+                    row.getSchool().getSchoolName(), row.getSchool().getCity(),
+                    row.getRequestDescription() });
         }
-
-        // ! BUG no request description shown on table views
-        // ! this is inconsistent with Admin and Volunteer views
-        // ! city isnt there either, on all views
 
         // create the table and add the table model to it
         table = new JTable(tableModel);

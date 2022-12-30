@@ -4,9 +4,6 @@ import java.awt.*;
 // this class is responsible for the left side of the main view
 // buttons and content varies if its for a School Admin or Volunteer user
 public class SidemenuView extends JPanel {
-    // class fields
-    // todo
-
     // GUI element initializations
     JPanel profile_picture_panel = new JPanel();
     JPanel name_occupation_panel = new JPanel();
@@ -42,8 +39,8 @@ public class SidemenuView extends JPanel {
             position_label.setFont(position_label.getFont().deriveFont(12f));
             name_occupation_panel.add(position_label);
 
-            // setting the button panel layout to be stacked vertically using GridLayout
-            button_panel.setLayout(new GridLayout(4, 1, 10, 10));
+            // setting the button panel layout to be stacked vertically
+            button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
             button_panel.add(edit_profile_button);
             button_panel.add(schools_button);
             button_panel.add(requests_button);
