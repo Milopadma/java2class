@@ -9,7 +9,6 @@ import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 import javax.swing.*;
 
@@ -30,9 +29,6 @@ public class MainView {
     // static MultifieldInputPanel admin_register_school_admin_view_panel;
     // static StandardInfoPanel admin_school_registration_complete_view_panel;
     // static ThreestepTimelinePanel admin_timeline_view_panel;
-
-    // all volunteer-related view panels
-    // todo
 
     // the sidemenu views
     static SidemenuView admin_sidemenu_view_panel;
@@ -59,6 +55,9 @@ public class MainView {
         main_frame.setLayout(new BorderLayout());
 
         // TODO: add icon, fade animations, splashscreen
+        // TODO: sort by button
+        // TODO: feature checks
+        // TODO: bug fixing 3
 
         // show the login view
         showUserChoiceView();
@@ -561,45 +560,50 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // panel view content
-        InfoListViewPanel admin_school_info_view_panel;
+        LabelledListViewPanel admin_school_info_view_panel;
         JPanel button_panel = new JPanel();
         if (extraInfo) {
             // show all info about the school and the school admin
-            String labels[] = { "School Name", "School Address", "School City", "School Admin Name",
-                    "School Admin Email", "School Admin Password", "School Admin Fullname", "School Admin Phone",
-                    "School Admin StaffID", "School Admin Position" };
+            String labels[] = { "School Name:", "School Address:", "School City:", "School Admin Username:",
+                    "School Admin Password:",
+                    "School Admin Fullname:", "School Admin Email:", "School Admin Phone:", "School Admin StaffID:",
+                    "School Admin Position:", "School Admin Schoolname:" };
             String data[] = { newSchool.getSchoolName(), newSchool.getAddress(), newSchool.getCity(),
                     // to view the info of the newly created school admin for this school
                     newAdmin.getUsername(), newAdmin.getPassword(),
                     newAdmin.getFullname(),
+                    newAdmin.getEmail(),
                     Long.toString(newAdmin.getPhone()),
                     Integer.toString(newAdmin.getStaffID()),
-                    newAdmin.getPosition() };
+                    newAdmin.getPosition(),
+                    newAdmin.getSchool().getSchoolName() };
 
-            // !BUG CANT ACCESS THE SCHOOL ADMIN INFO BECAUSE IT IS NOT SAVED IN THE SCHOOL
-            // ! OBJECT
             button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
             JButton back_button = new JButton("Back");
             back_button.addActionListener(e -> showAdminSchoolsMenuView());
             button_panel.add(back_button);
-            admin_school_info_view_panel = new InfoListViewPanel(labels, data);
+            admin_school_info_view_panel = new LabelledListViewPanel(labels, data);
 
         } else {
             // just show the newly created school admin, without the school info
-            String labels[] = { "School Admin Name", "School Admin Email", "School Admin Password",
-                    "School Admin Fullname", "School Admin Phone", "School Admin StaffID", "School Admin Position" };
+            String labels[] = { "School Admin Username:",
+                    "School Admin Password:",
+                    "School Admin Fullname:", "School Admin Email:", "School Admin Phone:", "School Admin StaffID:",
+                    "School Admin Position:", "School Admin Schoolname:" };
             String data[] = {
                     // to view the info of the newly created school admin for this school
                     newAdmin.getUsername(), newAdmin.getPassword(),
                     newAdmin.getFullname(),
+                    newAdmin.getEmail(),
                     Long.toString(newAdmin.getPhone()),
                     Integer.toString(newAdmin.getStaffID()),
-                    newAdmin.getPosition() };
+                    newAdmin.getPosition(),
+                    newAdmin.getSchool().getSchoolName() };
             button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
             JButton back_button = new JButton("Back");
             back_button.addActionListener(e -> showAdminSchoolsMenuView());
             button_panel.add(back_button);
-            admin_school_info_view_panel = new InfoListViewPanel(labels, data);
+            admin_school_info_view_panel = new LabelledListViewPanel(labels, data);
         }
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
@@ -885,6 +889,7 @@ public class MainView {
                 thisSchoolRequestsForOffers, buttons);
 
         // ! BUG no description shown
+        // fixed?
 
         // ! BUG no warning when searching for a request ID that does not have an offer
 
@@ -1283,53 +1288,50 @@ public class MainView {
         String[] column_names = { "ID", "Status", "Request Date", "School Name", "City",
                 "Description" };
         ArrayList<Request> requests = SchoolHELPGUI.getAllRequests();
-
-        // for the "Sort By" dropdown menu in the table { School Name, City, Date }
-        JButton sort_by_button = new JButton("Sort By");
-        // when clicked, open a dialog menu
-        sort_by_button.addActionListener(e -> {
-            // create a new dialog menu
-            JDialog dialog = new JDialog();
-            // set the title
-            dialog.setTitle("Sort By");
-            // set the size
-            dialog.setSize(300, 200);
-            // set the layout
-            dialog.setLayout(new BorderLayout());
-            // set the location
-            dialog.setLocationRelativeTo(null);
-            // set the modality
-            dialog.setModal(true);
-
-            // create the buttons
-            JButton school_name_button = new JButton("School Name");
-            JButton city_button = new JButton("City");
-            JButton date_button = new JButton("Date");
-
-            // add the buttons to the button array
-            JButton buttons[] = { school_name_button, city_button, date_button };
-
-            // create the panel view object
-            JPanel list = new JPanel();
-            list.setLayout(new GridLayout(3, 1));
-
-            // add the buttons to the panel
-            for (JButton button : buttons) {
-                list.add(button);
-            }
-
-            // add the list to the dialog
-            dialog.add(list, BorderLayout.CENTER);
-
-            // set the dialog to visible
-            dialog.setVisible(true);
-        });
-
-        JButton buttons[] = { sort_by_button };
+        // the buttons and their event handlers
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> MainView.showAdminOffersMenuView());
+        // add the buttons to the JButton array
+        JButton buttons[] = { back_button };
 
         // create the table view object
         RequestTableModelViewPanel table = new RequestTableModelViewPanel(column_names, requests, buttons);
 
+        // // when clicked, open a dialog menu
+        // sort_by_button.addActionListener(e -> {
+        // // create a new dialog menu
+        // JDialog dialog = new JDialog();
+        // // set the title
+        // dialog.setTitle("Sort By");
+        // // set the size
+        // dialog.setSize(300, 200);
+        // // set the layout
+        // dialog.setLayout(new BorderLayout());
+        // // set the location
+        // dialog.setLocationRelativeTo(null);
+        // // set the modality
+        // dialog.setModal(true);
+
+        // // create the buttons
+        // JButton school_name_button = new JButton("School Name");
+        // JButton city_button = new JButton("City");
+        // JButton date_button = new JButton("Date");
+
+        // // create the panel view object
+        // JPanel list = new JPanel();
+        // list.setLayout(new GridLayout(3, 1));
+
+        // // add the buttons to the panel
+        // list.add(school_name_button);
+        // list.add(city_button);
+        // list.add(date_button);
+
+        // // add the list to the dialog
+        // dialog.add(list, BorderLayout.CENTER);
+
+        // // set the dialog to visible
+        // dialog.setVisible(true);
+        // });
         // new label, jtextfield, and jbutton to seacrh for a request
         JPanel search_panel = new JPanel();
         JLabel search_label = new JLabel("Search request by ID: ");
@@ -1547,6 +1549,84 @@ public class MainView {
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
         main_frame.setVisible(true);
+    }
+
+    // * METHODS ONLY FOR SCHOOLHELP ADMINS, SCHOOLADMINS OF HELP */
+    public static void showSchoolHELPAdminView() {
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new subtitle label
+        JLabel subtitle_label = new JLabel("<html><h3>Choose an option below</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // buttons for the admin school menu view
+        JButton show_all_users_button = new JButton("Show all Users");
+        JButton back_button = new JButton("Back");
+
+        // action listeners for the buttons
+        show_all_users_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showAllUsersView();
+        });
+        back_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showUserChoiceView();
+        });
+
+        // create the array of buttons
+        JButton buttons[] = { show_all_users_button, back_button };
+
+        // create the panel with the buttons
+        MultibuttonInputPanel schoolhelp_admin_view_panel = new MultibuttonInputPanel(buttons);
+
+        // set the layout of the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+
+        // add the elements to their respective panels
+        main_frame.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(schoolhelp_admin_view_panel, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
+    }
+
+    private static void showAllUsersView() {
+        // this method takes all the users and shows them in a list view
+        // clear the right menu panel
+        right_menu_view_panel.removeAll();
+
+        // new label as title using html h1
+        JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin Menu</h1></html>");
+        title_label.setVerticalAlignment(JLabel.TOP);
+
+        // new subtitle label
+        JLabel subtitle_label = new JLabel("<html><h3>Showing all Users</h3></html>");
+        subtitle_label.setVerticalAlignment(JLabel.TOP);
+
+        // content view panel
+        JPanel button_panel = new JPanel();
+        JButton back_button = new JButton("Back");
+        back_button.addActionListener(e -> {
+            // clear the frame before adding new elements
+            showUserChoiceView();
+        });
+        button_panel.add(back_button);
+
+        // the list
+        String[] labels = { "Username: ", "Password: ", "Fullname: ", "Email: ", "Phone number: ", "User Type: " };
+        String[] data = {
+            SchoolHELPGUI.getAllUsers()
+            // todo!
+        }
+        LabelledListViewPanel list_panel = new LabelledListViewPanel(labels, data);
+
     }
 }
 

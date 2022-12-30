@@ -39,7 +39,6 @@ public class OfferTableModelViewPanel extends JPanel {
 
         // // run the function
         // runnable_function.run();
-        // // ! TODO VERY unsure that this works
         // }
         // });
 

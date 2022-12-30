@@ -10,6 +10,7 @@ public class SidemenuView extends JPanel {
     JPanel button_panel = new JPanel();
 
     JButton edit_profile_button = new JButton("Edit Profile");
+    JButton school_help_admin_button = new JButton("SchoolHELP Admin View");
     JButton schools_button = new JButton("Schools");
     JButton requests_button = new JButton("Requests");
     JButton offers_button = new JButton("Offers");
@@ -19,7 +20,73 @@ public class SidemenuView extends JPanel {
     // class constructors
     public SidemenuView(User user) {
         // the school admin view
-        if (user.isSchoolAdmin()) {
+        // check if the current user is the SchoolHELP admin
+        if (user.getUsername() == "admin") {
+            // school admin side menu view only has one button difference from the volunteer
+            // view
+            // setting the profile picture panel layout to be centered vertically and
+            // horizontally
+            profile_picture_panel.setLayout(new BoxLayout(profile_picture_panel, BoxLayout.Y_AXIS));
+            profile_picture_panel.add(generateProfilePicture(user));
+
+            // setting the name and occupation panel layout to be centered vertically and
+            // horizontally
+            name_occupation_panel.setLayout(new BoxLayout(name_occupation_panel, BoxLayout.Y_AXIS));
+            name_occupation_panel.add(new JLabel(user.getUsername()));
+            // since its a school admin, assume User is of SchoolAdmin instance and get the
+            // position field
+            JLabel position_label = new JLabel(((SchoolAdmin) user).getPosition());
+            position_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+            position_label.setFont(position_label.getFont().deriveFont(Font.ITALIC));
+            position_label.setFont(position_label.getFont().deriveFont(12f));
+            name_occupation_panel.add(position_label);
+
+            // setting the button panel layout to be stacked vertically
+            button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
+            button_panel.add(edit_profile_button);
+            button_panel.add(school_help_admin_button);
+            button_panel.add(schools_button);
+            button_panel.add(requests_button);
+            button_panel.add(offers_button);
+            button_panel.add(logout_button);
+
+            // adding the event handlers for the buttons
+            school_help_admin_button.addActionListener(e -> 
+            {
+                MainView.showSchoolHELPAdminView();
+            })
+            edit_profile_button.addActionListener(e -> {
+                // call the MainView method to show the edit profile view
+                MainView.showEditProfileView();
+            });
+            schools_button.addActionListener(e -> {
+                // call the MainView method to show the School admin menu view
+                MainView.showAdminSchoolsMenuView();
+            });
+
+            requests_button.addActionListener(e -> {
+                // call the MainView method to show the Requests admin menu view
+                MainView.showAdminRequestsMenuView();
+            });
+
+            offers_button.addActionListener(e -> {
+                // call the MainView method to show the Offers admin menu view
+                MainView.showAdminOffersMenuView();
+            });
+
+            logout_button.addActionListener(e -> {
+                // call the MainView method to show the login view
+                MainView.showUserChoiceView();
+            });
+
+            // now add all these elements to the panel
+            profile_picture_panel.add(name_occupation_panel);
+            setLayout(new BorderLayout());
+            add(profile_picture_panel, BorderLayout.NORTH);
+            add(button_panel, BorderLayout.SOUTH);
+
+            // then check if its just a normal school admin
+        } else if (user.isSchoolAdmin()) {
             // school admin side menu view only has one button difference from the volunteer
             // view
             // setting the profile picture panel layout to be centered vertically and

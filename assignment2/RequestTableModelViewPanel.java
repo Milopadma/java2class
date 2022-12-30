@@ -22,6 +22,7 @@ public class RequestTableModelViewPanel extends JPanel {
 
         // create the table model and add the data to it
         tableModel = new DefaultTableModel(columnNames, 0);
+        // todo! this needs to be sorted by school name
         for (Request row : data) {
             tableModel.addRow(new Object[] { row.getRequestID(), row.getRequestStatus(), row.getRequestDate(),
                     row.getSchool().getSchoolName(), row.getSchool().getCity(),
@@ -41,7 +42,7 @@ public class RequestTableModelViewPanel extends JPanel {
         }
 
         // parent panel layout, items are stacked horizontally
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // to add the table panel and button panel to the parent panel
         add(table_panel, new GridBagConstraints());
