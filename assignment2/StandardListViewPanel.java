@@ -31,7 +31,7 @@ public class StandardListViewPanel extends JPanel {
         }
 
         // parent panel layout, items are stacked horizontally
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // to add the list panel and button panel to the parent panel
         add(list_panel, new GridBagConstraints());

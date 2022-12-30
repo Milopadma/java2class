@@ -155,15 +155,27 @@ public class SchoolHELPGUI {
         return SchoolHELP.getRequest(value.getRequestID()).getOffers();
     }
 
-    public static void rejectOffer(Offer selected_offer) {
+    public static boolean rejectOffer(Offer selected_offer) {
         // ßet the status of the offer to rejected
-        selected_offer.setOfferStatus("REJECTED");
+        try {
+            selected_offer.setOfferStatus("REJECTED");
+            return true;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return false;
+        }
 
     }
 
-    public static void acceptOffer(Offer selected_offer) {
+    public static boolean acceptOffer(Offer selected_offer) {
         // set the status of the offer to accepted
-        selected_offer.setOfferStatus("ACCEPTED");
+        try {
+            selected_offer.setOfferStatus("ACCEPTED");
+            return true;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return false;
+        }
     }
 
     public static ArrayList<Request> getAllRequests() {

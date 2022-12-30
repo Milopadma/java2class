@@ -992,7 +992,7 @@ public class MainView {
             // new label, jtextfield, and button to search for the offers
             JPanel search_panel = new JPanel();
             JLabel search_label = new JLabel("Search for Offer by ID:");
-            JTextField search_textfield = new JTextField();
+            JTextField search_textfield = new JTextField(10);
             JButton search_button = new JButton("Search");
             search_button.addActionListener(e -> {
                 // make sure the textfield is not empty
@@ -1018,7 +1018,7 @@ public class MainView {
                     JOptionPane.showMessageDialog(null, "No offer found with that ID.");
                 } else {
                     // show the offers of that request
-                    showOfferDetails(search_result);
+                    showOfferDetails(search_result, selected_request);
                 }
             });
 
@@ -1054,7 +1054,7 @@ public class MainView {
             // panel view content
             // the buttons and their event handlers
             JButton back_button = new JButton("Back");
-            back_button.addActionListener(e -> MainView.showAdminOffersMenuView());
+            back_button.addActionListener(e -> MainView.showReviewsForOffersView());
 
             // add the buttons to the JButton array
             JButton buttons[] = { back_button };
@@ -1077,7 +1077,7 @@ public class MainView {
 
     }
 
-    private static void showOfferDetails(Offer selected_offer) {
+    private static void showOfferDetails(Offer selected_offer, Request selected_request_of_this) {
         // just show the details in a JList
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -1093,10 +1093,27 @@ public class MainView {
         // panel view content
         // the buttons and their event handlers
         JButton reject_button = new JButton("Reject");
-        reject_button.addActionListener(e -> SchoolHELPGUI.rejectOffer(selected_offer));
+        reject_button.addActionListener(e -> {
+            boolean wasSuccess = SchoolHELPGUI.rejectOffer(selected_offer);
+            if (!wasSuccess) {
+                JOptionPane.showMessageDialog(null, "The offer could not be rejected.");
+            } else {
+                JOptionPane.showMessageDialog(null, "The offer was rejected.");
+                showOffersOfRequest(selected_request_of_this);
+            }
+        });
 
         JButton accept_button = new JButton("Accept");
-        accept_button.addActionListener(e -> SchoolHELPGUI.acceptOffer(selected_offer));
+        accept_button.addActionListener(e -> {
+            boolean wasSuccess = SchoolHELPGUI.acceptOffer(selected_offer);
+            if (!wasSuccess) {
+                JOptionPane.showMessageDialog(null, "The offer could not be accepted.");
+            } else {
+                JOptionPane.showMessageDialog(null, "The offer was accepted.");
+                showOffersOfRequest(selected_request_of_this);
+            }
+
+        });
 
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> MainView.showAdminOffersMenuView());
