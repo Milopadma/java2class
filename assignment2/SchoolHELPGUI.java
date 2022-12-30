@@ -322,4 +322,13 @@ public class SchoolHELPGUI {
         }
     }
 
+    public static ArrayList<User> getAllUsers() {
+        // method that returns a array of all the users in SchoolHELP
+        return SchoolHELP.getUsers();
+    }
+
+    public static boolean checkIfSchoolExists(String string) {
+        return false;
+    }
+
 }

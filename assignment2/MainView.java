@@ -465,11 +465,17 @@ public class MainView {
                 // get the saved fields and saved to Hashmap
                 HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
 
-                // create a new school object by calling from SchoolHELPGUI
-                SchoolAdmin newSchoolAdmin = SchoolHELPGUI.createNewAdminUser(saved_fields, newSchool);
+                if (!SchoolHELPGUI.checkIfSchoolExists(saved_fields.get("School Name"))) {
+                    JOptionPane.showMessageDialog(null, "School doesn't exist!");
+                    return;
+                } else {
 
-                // show the next panel
-                showSchoolAdminAndSchoolCompletionView(newSchool, newSchoolAdmin);
+                    // create a new school object by calling from SchoolHELPGUI
+                    SchoolAdmin newSchoolAdmin = SchoolHELPGUI.createNewAdminUser(saved_fields, newSchool);
+
+                    // show the next panel
+                    showSchoolAdminAndSchoolCompletionView(newSchool, newSchoolAdmin);
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -1611,21 +1617,34 @@ public class MainView {
         subtitle_label.setVerticalAlignment(JLabel.TOP);
 
         // content view panel
-        JPanel button_panel = new JPanel();
         JButton back_button = new JButton("Back");
         back_button.addActionListener(e -> {
             // clear the frame before adding new elements
             showUserChoiceView();
         });
-        button_panel.add(back_button);
+        JButton[] buttons = { back_button };
 
         // the list
-        String[] labels = { "Username: ", "Password: ", "Fullname: ", "Email: ", "Phone number: ", "User Type: " };
-        String[] data = {
-            SchoolHELPGUI.getAllUsers()
-            // todo!
-        }
-        LabelledListViewPanel list_panel = new LabelledListViewPanel(labels, data);
+        String[] labels = { "Username: ", "Password: ", "Fullname: ", "Email: ", "Phone number: " };
+        ArrayList<User> data = SchoolHELPGUI.getAllUsers();
+
+        // just iterate over the two String arrays
+        // and add the labels and data to the table
+        JPanel table_panel = new JPanel();
+        UserTableModelViewPanel table_model = new UserTableModelViewPanel(labels, data, buttons);
+        table_panel.add(table_model);
+
+        // set the layout of the right menu panel
+        right_menu_view_panel.setLayout(new BorderLayout());
+
+        // add the elements to their respective panels
+        main_frame.add(title_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
+        right_menu_view_panel.add(table_panel, BorderLayout.CENTER);
+
+        // then add the right menu panel to the main frame
+        main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
+        main_frame.setVisible(true);
 
     }
 }

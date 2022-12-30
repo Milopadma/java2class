@@ -21,7 +21,8 @@ public class SidemenuView extends JPanel {
     public SidemenuView(User user) {
         // the school admin view
         // check if the current user is the SchoolHELP admin
-        if (user.getUsername() == "admin") {
+        if (user.getUsername().equals("admin")) {
+            System.out.println("SidemenuView constructor called" + user.getUsername());
             // school admin side menu view only has one button difference from the volunteer
             // view
             // setting the profile picture panel layout to be centered vertically and
@@ -51,10 +52,9 @@ public class SidemenuView extends JPanel {
             button_panel.add(logout_button);
 
             // adding the event handlers for the buttons
-            school_help_admin_button.addActionListener(e -> 
-            {
+            school_help_admin_button.addActionListener(e -> {
                 MainView.showSchoolHELPAdminView();
-            })
+            });
             edit_profile_button.addActionListener(e -> {
                 // call the MainView method to show the edit profile view
                 MainView.showEditProfileView();
