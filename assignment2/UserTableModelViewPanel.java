@@ -8,7 +8,7 @@ import java.util.ArrayList;
 // creates an object that takes in an arraylist of data and displays 
 // it onto a table view
 
-public class RequestTableModelViewPanel extends JPanel {
+public class UserTableModelViewPanel extends JPanel {
     private static JTable table = new JTable();
 
     // GUI element initializations
@@ -16,17 +16,15 @@ public class RequestTableModelViewPanel extends JPanel {
     JPanel table_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
-    public RequestTableModelViewPanel(String[] columnNames, ArrayList<Request> data, JButton[] buttons) {
+    public UserTableModelViewPanel(String[] columnNames, ArrayList<User> data, JButton[] buttons) {
         // table layout are vertically stacked with same width using BoxLayout
         table_panel.setLayout(new BoxLayout(table_panel, BoxLayout.Y_AXIS));
 
         // create the table model and add the data to it
         tableModel = new DefaultTableModel(columnNames, 0);
-        // todo! this needs to be sorted by school name
-        for (Request row : data) {
-            tableModel.addRow(new Object[] { row.getRequestID(), row.getRequestStatus(), row.getRequestDate(),
-                    row.getSchool().getSchoolName(), row.getSchool().getCity(),
-                    row.getRequestDescription() });
+        for (User row : data) {
+            tableModel.addRow(new Object[] { row.getUsername(), row.getPassword(), row.getFullname(),
+                    row.getEmail(), Long.toString(row.getPhone()) });
         }
 
         // create the table and add the table model to it
@@ -47,15 +45,5 @@ public class RequestTableModelViewPanel extends JPanel {
         // to add the table panel and button panel to the parent panel
         add(table_panel, new GridBagConstraints());
         add(button_panel, new GridBagConstraints());
-    }
-
-    public static Object getSelectedRowValue() {
-        // get the selected row
-        int selectedRow = table.getSelectedRow();
-
-        // get the value of the first column of the selected row
-        Object value = table.getValueAt(selectedRow, 0);
-
-        return value;
     }
 }

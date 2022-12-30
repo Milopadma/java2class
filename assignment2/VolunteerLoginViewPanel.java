@@ -108,8 +108,6 @@ public class VolunteerLoginViewPanel extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Invalid username or password");
                             }
                         });
-        // !BUG ; this throws a nullpointerexception when the login button is pressed in
-        // ! ; volunteer view
         registerButton.addActionListener(e -> {
             MainView.showVolunteerRegisterView();
             destroy();
