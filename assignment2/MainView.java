@@ -61,7 +61,6 @@ public class MainView {
 
         // show the login view
         showUserChoiceView();
-
     }
 
     // class methods, every GUI class actions will eventually call one of these
@@ -888,16 +887,11 @@ public class MainView {
         }
 
         // create the column names
-        String column_names[] = { "ID", "Status", "Request Date", "City", "Description" };
+        String column_names[] = { "ID", "Status", "Request Date", "School", "City", "Description" };
 
         // create the table model
         RequestTableModelViewPanel reviews_for_offers_view_panel = new RequestTableModelViewPanel(column_names,
                 thisSchoolRequestsForOffers, buttons);
-
-        // ! BUG no description shown
-        // fixed?
-
-        // ! BUG no warning when searching for a request ID that does not have an offer
 
         // new label, jtextfield, and button to search for the request
         JPanel search_panel = new JPanel();
