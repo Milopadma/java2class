@@ -2,13 +2,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JOptionPane;
-
 // I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 // this class controls the data flow, and controls the communications between the GUI classes and the data classes
 public class SchoolHELPGUI {
     // init a single instance of the SchoolHELP class
-    private static SchoolHELP SchoolHELP = new SchoolHELP();
+    public static SchoolHELP SchoolHELP;
     // global var to keep track of who's currently logged in in this instance
     private static User currentUser = null;
     // private static SchoolAdmin currentUserAdmin = null;
@@ -19,6 +17,7 @@ public class SchoolHELPGUI {
         try {
             // first off, we need to serialize the data from the appdata folder
             SchoolHELP = getSchoolHELPFromAppdata();
+            SchoolHELP.getUsers().forEach(user -> System.out.println(user));
             // then init the main_view class
             new MainView();
 
@@ -29,18 +28,57 @@ public class SchoolHELPGUI {
     }
 
     private static SchoolHELP getSchoolHELPFromAppdata() {
-        SchoolHELP SchoolHELPInstance = null;
         // call Filemanager to get the data from the appdata folder
         try {
-            SchoolHELPInstance = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
-            System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.toString());
-            System.out
-                    .println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.getUsers().toString());
-            return SchoolHELPInstance;
+            SchoolHELP = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
+            if (SchoolHELP == null) {
+                // if it fails to load or the ile does not exist, create a new instance
+                SchoolHELP = new SchoolHELP();
+                // print
+                System.out.println("SchoolHELPInstance was Null!");
+                return SchoolHELP;
+            } else {
+                System.out
+                        .println("SchoolHELP data loaded from appdata folder: " + SchoolHELP.getUsers().toString());
+                return SchoolHELP;
+            }
         } catch (Exception err) {
             err.printStackTrace();
         }
         return null;
+    }
+
+    // notes
+    // the reading from file works if the schoolhelp instance is instantiated with
+    // schoolhelpgui
+    // but it doesnt work if it isnt instantiated with schoolhelpgui
+    // ! thus something is wrong with the saving functions
+
+    // this method is called when the User clicks on the Exit button, this method
+    // attempts to save the SchoolHELP object to a file
+    public static void saveSchoolHELPInstance() {
+        try {
+            // using FileManager class
+            FileManager.saveData(SchoolHELP, "SchoolHELP.ser");
+
+            // ! BUG ; new objects are not saved, loading is fine though
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static Request searchForRequest(int search_id) {
+        // iterate over the stream arraylist of all requests of all schools
+        return SchoolHELP.getAllRequests().stream().filter(request -> request.getRequestID() == search_id).findFirst()
+                .orElse(null);
+    }
+
+    public static Offer searchForOffer(int search_id) {
+        // iterate over the stream arraylist of all offers of all requests of all
+        // schools
+        return SchoolHELP.getAllRequests().stream().flatMap(request -> request.getOffers().stream())
+                .filter(offer -> offer.getOfferID() == search_id).findFirst().orElse(null);
     }
 
     // * getters and setters
@@ -63,18 +101,18 @@ public class SchoolHELPGUI {
     // * CLASS HELPER METHODS */
     // this method handles the login process for both admin and volunteer, returns
     // true if the user is found and is valid
-    public static boolean userLogin(String username, char[] password) {
+    public static boolean userLogin(String username, char[] password, String userType) {
         String password_stringified = new String(password);
         try {
             // find out if this user is a volunteer or an admin
-            if (SchoolHELP.isUserAdmin(username, password_stringified)) {
+            if (userType == "ADMIN" && SchoolHELP.isUserAdmin(username, password_stringified)) {
                 // set the current user to the user that just logged in
                 setCurrentUser(SchoolHELP.getUser(username, password_stringified));
                 // at this point, the user has logged in, so it's not the first time login
                 // anymore
                 setFirstTimeLogin(false);
                 return true;
-            } else if (SchoolHELP.isUserVolunteer(username, password_stringified)) {
+            } else if (userType == "VOLUNTEER" && SchoolHELP.isUserVolunteer(username, password_stringified)) {
                 // set the current user to the user that just logged in
                 setCurrentUser(SchoolHELP.getUser(username, password_stringified));
                 return true;
@@ -117,15 +155,40 @@ public class SchoolHELPGUI {
         return SchoolHELP.getRequest(value.getRequestID()).getOffers();
     }
 
-    public static void rejectOffer(Offer selected_offer) {
+    public static boolean rejectOffer(Offer selected_offer) {
         // ßet the status of the offer to rejected
-        selected_offer.setOfferStatus("REJECTED");
+        try {
+            selected_offer.setOfferStatus("REJECTED");
+            // also change the status of it in the volunteer object
+            // also change the status of it in the volunteer object, why ? since there are
+            // essentially two copies of the same offer in two different arraylists, one in
+            // the volunteer object and one in the request object
+            selected_offer.getIsOwnedBy().getOffers().stream()
+                    .filter(offer -> offer.getOfferID() == selected_offer.getOfferID()).findFirst().get()
+                    .setOfferStatus("REJECTED");
+            return true;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return false;
+        }
 
     }
 
-    public static void acceptOffer(Offer selected_offer) {
+    public static boolean acceptOffer(Offer selected_offer) {
         // set the status of the offer to accepted
-        selected_offer.setOfferStatus("ACCEPTED");
+        try {
+            selected_offer.setOfferStatus("ACCEPTED");
+            // also change the status of it in the volunteer object, why ? since there are
+            // essentially two copies of the same offer in two different arraylists, one in
+            // the volunteer object and one in the request object
+            selected_offer.getIsOwnedBy().getOffers().stream()
+                    .filter(offer -> offer.getOfferID() == selected_offer.getOfferID()).findFirst().get()
+                    .setOfferStatus("ACCEPTED");
+            return true;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return false;
+        }
     }
 
     public static ArrayList<Request> getAllRequests() {
@@ -147,6 +210,9 @@ public class SchoolHELPGUI {
 
         // add the new offer to the request
         selected_request.addOffer(newOffer);
+
+        // add the new offer to the volunteer
+        currentUser.addOffer(newOffer);
     }
 
     public static Volunteer createNewVolunteerUser(HashMap<String, String> saved_fields) {
@@ -168,8 +234,10 @@ public class SchoolHELPGUI {
             // add the new volunteer to the volunteer list
             SchoolHELP.addUser(newVolunteer);
 
-            // print
-            System.out.println(newVolunteer.getUsername());
+            // iterate over the users and printout the users
+            for (User user : SchoolHELP.getUsers()) {
+                System.out.println(user);
+            }
 
             // return the new volunteer
             return newVolunteer;
@@ -180,8 +248,8 @@ public class SchoolHELPGUI {
     }
 
     public static void createNewAdminUser(HashMap<String, String> saved_fields, School school) {
-        // this method takes in a Hashmap of the fields from the volunteer registration
-        // screen and creates a new volunteer user based on them
+        // this method takes in a Hashmap of the fields from the admin registration
+        // screen and creates a new schooladmin user based on them
 
         // printout the hashmap
         System.out.println(saved_fields);
@@ -207,20 +275,18 @@ public class SchoolHELPGUI {
                     SchoolHELP.getSchool(schoolName));
         }
 
-        // create a new admin object
-
         // add the new admin to the admin list
         SchoolHELP.addUser(newAdmin);
     }
 
     public static void createNewRequest(HashMap<String, String> saved_fields, School school) {
-        // this method takes in a Hashmap of the fields from the volunteer registration
-        // screen and creates a new volunteer user based on them
+        // this method takes in a Hashmap of the fields from the request submission
+        // screen and creates a new request object based on them
 
         // get the values from the fieldmap
         int requestID = ((int) (Math.random() * 1000));
         LocalDateTime requestDate = LocalDateTime.now();
-        String requestStatus = "PENDING";
+        String requestStatus = "NEW";
         String requestDescription = (String) saved_fields.get("Request Description");
 
         // create a new request object
@@ -231,30 +297,34 @@ public class SchoolHELPGUI {
 
     }
 
-    // this method is called when the User clicks on the Exit button, this method
-    // attempts to save the SchoolHELP object to a file
-    public static void saveSchoolHELPInstance() {
+    public static boolean updateAdminProfile(HashMap<String, String> inputs, SchoolAdmin thisSchoolAdmin) {
+        // this method takes in a Hashmap of the fields from the admin profile screen
+        // and updates the profile of the current user
         try {
-            // using FileManager class
-            FileManager.saveData(SchoolHELP, "SchoolHELP.ser");
+            // get the values from the fieldmap
+            String username = (String) inputs.get("Username");
+            String password = (String) inputs.get("Password");
+            String fullname = (String) inputs.get("Fullname");
+            String email = (String) inputs.get("Email");
+            Long phone = Long.parseLong((String) inputs.get("Phone Number"));
+            int staffID = Integer.parseInt((String) inputs.get("Staff ID"));
+            String position = (String) inputs.get("Position");
 
-            // printout a message to the console
-            System.out.println("Serialized data is saved in SchoolHELP.ser");
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            // update the current user
+            thisSchoolAdmin.setUsername(username);
+            thisSchoolAdmin.setPassword(password);
+            thisSchoolAdmin.setFullname(fullname);
+            thisSchoolAdmin.setEmail(email);
+            thisSchoolAdmin.setPhone(phone);
+            thisSchoolAdmin.setStaffID(staffID);
+            thisSchoolAdmin.setPosition(position);
+
+            // return true if the update was successful
+            return true;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return false;
         }
     }
 
-    public static Request searchForRequest(int search_id) {
-        // iterate over the stream arraylist of all requests of all schools
-        return SchoolHELP.getAllRequests().stream().filter(request -> request.getRequestID() == search_id).findFirst()
-                .orElse(null);
-    }
-
-    public static Offer searchForOffer(int search_id) {
-        // iterate over the stream arraylist of all offers of all requests of all
-        // schools
-        return SchoolHELP.getAllRequests().stream().flatMap(request -> request.getOffers().stream())
-                .filter(offer -> offer.getOfferID() == search_id).findFirst().orElse(null);
-    }
 }

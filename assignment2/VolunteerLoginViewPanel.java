@@ -99,7 +99,8 @@ public class VolunteerLoginViewPanel extends JPanel {
                             // check if the fields are empty
                             if (usernameField.getText().equals("") || passwordField.getPassword().length == 0) {
                                 JOptionPane.showMessageDialog(null, "Please fill in all the fields");
-                            } else if (SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword())) {
+                            } else if (SchoolHELPGUI.userLogin(usernameField.getText(), passwordField.getPassword(),
+                                    "VOLUNTEER")) {
                                 // show the volunteer view
                                 MainView.showVolunteerMenuView();
                                 destroy();

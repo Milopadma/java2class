@@ -7,8 +7,8 @@ import javax.swing.*;
 public class UserChoiceViewPanel extends JPanel {
     // a generic 2 choice button for the initial login screen
     // class fields
-    public JButton AdminChoiceButton = new JButton();
-    public JButton VolunteerChoiceButton = new JButton();
+    private JButton AdminChoiceButton = new JButton();
+    private JButton VolunteerChoiceButton = new JButton();
     private JButton ExitButton = new JButton("Exit");
 
     // constructor
@@ -49,12 +49,11 @@ public class UserChoiceViewPanel extends JPanel {
 
         // action listeners and lambda handlers for the buttons
         // exit button calls the save function and exits the application
-
         ExitButton.addActionListener(e -> {
             SchoolHELPGUI.saveSchoolHELPInstance();
             // wait 5 seconds, then call the exit
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1500);
                 System.exit(0);
             } catch (InterruptedException e1) {
                 e1.printStackTrace();

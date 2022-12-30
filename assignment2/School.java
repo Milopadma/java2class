@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author I Gusti Bagus Milo Padma Wijaya
  * 
  */
-public class School {
+public class School implements java.io.Serializable{
     // this class manages School data and also SchoolAdmin classes
 
     // class variables

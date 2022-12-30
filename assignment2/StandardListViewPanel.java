@@ -17,13 +17,13 @@ public class StandardListViewPanel extends JPanel {
         list = new JList<String>(list_content);
 
         JScrollPane listScroller = new JScrollPane(list);
-        listScroller.setPreferredSize(new Dimension(250, 80));
+        listScroller.setPreferredSize(new Dimension(500, 240));
 
         // add the list to the list panel
         list_panel.add(listScroller);
 
         // button layout are vertically stacked with same width using BoxLayout
-        button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
+        button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.X_AXIS));
 
         // add the buttons
         for (JButton button : buttons) {
@@ -31,7 +31,7 @@ public class StandardListViewPanel extends JPanel {
         }
 
         // parent panel layout, items are stacked horizontally
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // to add the list panel and button panel to the parent panel
         add(list_panel, new GridBagConstraints());

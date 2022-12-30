@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author I Gusti Bagus Milo Padma Wijaya
  * 
  */
-public class Request {
+public class Request implements java.io.Serializable{
     // this class receives from the Offer class and each School class has multiple
     // Requests
     // class variables

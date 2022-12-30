@@ -23,42 +23,23 @@ public class FileManager {
      * @param data
      * @return
      */
-    public static boolean saveData(Object data, String fileName) {
-        // check if the file exists
-        File file = new File(FILE_PATH + fileName);
-        if (!file.exists()) {
-            // create the file with the given name
-            try {
-                if (file.createNewFile()) {
-                    System.out.println("File created: " + file.getName());
-                } else
-                    System.out.println("File already exists.");
-                // create the file output stream
-                // and save the data to it
-                FileOutputStream fos = new FileOutputStream(file);
-                ObjectOutputStream out = new ObjectOutputStream(fos);
-                out.writeObject(data);
-                out.close();
-                fos.close();
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
+    public static boolean saveData(SchoolHELP data, String fileName) {
+        // save the data by means of serialization
+        try {
+            FileOutputStream fos = new FileOutputStream(FILE_PATH + fileName);
+            ObjectOutputStream out = new ObjectOutputStream(fos);
+            // out.writeObject(testClass);
+            out.writeObject(data);
+            System.out.println("Data saved to file:" + data);
+            for (User user : data.getUsers()) {
+                System.out.println("User: " + user);
             }
-        }
-        // if the file exists, then just save the data to it
-        else {
-            try {
-                FileOutputStream fos = new FileOutputStream(file);
-                ObjectOutputStream out = new ObjectOutputStream(fos);
-                out.writeObject(data);
-                out.close();
-                fos.close();
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
+            out.close();
+            fos.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -67,7 +48,7 @@ public class FileManager {
      * 
      * @return
      */
-    public static Object loadData(String fileName) {
+    public static SchoolHELP loadData(String fileName) {
         // check if the file exists
         File file = new File(FILE_PATH + fileName);
         if (file.exists()) {
@@ -75,7 +56,11 @@ public class FileManager {
             try {
                 FileInputStream fis = new FileInputStream(file);
                 ObjectInputStream in = new ObjectInputStream(fis);
-                Object data = in.readObject();
+                SchoolHELP data = (SchoolHELP) in.readObject();
+                System.out.println("Data loaded from file: " + data);
+                for (User user : data.getUsers()) {
+                    System.out.println(user);
+                }
                 in.close();
                 fis.close();
                 return data;

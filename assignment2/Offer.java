@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * @author I Gusti Bagus Milo Padma Wijaya
  * 
  */
-public class Offer {
+public class Offer implements java.io.Serializable{
     // class variables
     private LocalDateTime offerDate;
     private String remarks;

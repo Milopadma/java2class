@@ -8,7 +8,7 @@
  * @author I Gusti Bagus Milo Padma Wijaya
  * 
  */
-public class User {
+public class User implements java.io.Serializable {
     private String username;
     private String password;
     private String fullname;
