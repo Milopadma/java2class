@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
@@ -29,22 +28,6 @@ public class RequestTableModelViewPanel extends JPanel {
         }
 
         // ! BUG no request description shown on table views
-
-        // // listen for click events in the table rows
-        // tableModel.addTableModelListener(e -> {
-        //     // if the table is clicked
-        //     if (e.getType() == TableModelEvent.UPDATE) {
-        //         // get the selected row
-        //         int selectedRow = table.getSelectedRow();
-
-        //         // get the value of the first column of the selected row
-        //         Object value = table.getValueAt(selectedRow, 0);
-
-        //         // run the function
-        //         runnable_function.run();
-        //         // ! TODO VERY unsure that this works
-        //     }
-        // });
 
         // create the table and add the table model to it
         table = new JTable(tableModel);

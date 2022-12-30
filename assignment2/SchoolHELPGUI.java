@@ -2,13 +2,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JOptionPane;
-
 // I GUSTI BAGUS MILO PADMA WIJAYA // E2000426
 // this class controls the data flow, and controls the communications between the GUI classes and the data classes
 public class SchoolHELPGUI {
     // init a single instance of the SchoolHELP class
-    private static SchoolHELP SchoolHELP = new SchoolHELP();
+    public static SchoolHELP SchoolHELP;
     // global var to keep track of who's currently logged in in this instance
     private static User currentUser = null;
     // private static SchoolAdmin currentUserAdmin = null;
@@ -29,18 +27,52 @@ public class SchoolHELPGUI {
     }
 
     private static SchoolHELP getSchoolHELPFromAppdata() {
-        SchoolHELP SchoolHELPInstance = null;
         // call Filemanager to get the data from the appdata folder
         try {
-            SchoolHELPInstance = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
-            System.out.println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.toString());
-            System.out
-                    .println("SchoolHELP data loaded from appdata folder: " + SchoolHELPInstance.getUsers().toString());
-            return SchoolHELPInstance;
+            SchoolHELP = (SchoolHELP) FileManager.loadData("SchoolHELP.ser");
+            if (SchoolHELP == null) {
+                // if it fails to load or the file does not exist, create a new instance
+                SchoolHELP = new SchoolHELP();
+                // print
+                System.out.println("SchoolHELPInstance was Null!");
+                return SchoolHELP;
+            } else {
+
+                System.out
+                        .println("SchoolHELP data loaded from appdata folder: " + SchoolHELP.getUsers().toString());
+                return SchoolHELP;
+            }
         } catch (Exception err) {
             err.printStackTrace();
         }
         return null;
+    }
+
+    // this method is called when the User clicks on the Exit button, this method
+    // attempts to save the SchoolHELP object to a file
+    public static void saveSchoolHELPInstance() {
+        try {
+            // using FileManager class
+            FileManager.saveData(SchoolHELP, "SchoolHELP.ser");
+
+            // ! BUG ; new objects are not saved, loading is fine though
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static Request searchForRequest(int search_id) {
+        // iterate over the stream arraylist of all requests of all schools
+        return SchoolHELP.getAllRequests().stream().filter(request -> request.getRequestID() == search_id).findFirst()
+                .orElse(null);
+    }
+
+    public static Offer searchForOffer(int search_id) {
+        // iterate over the stream arraylist of all offers of all requests of all
+        // schools
+        return SchoolHELP.getAllRequests().stream().flatMap(request -> request.getOffers().stream())
+                .filter(offer -> offer.getOfferID() == search_id).findFirst().orElse(null);
     }
 
     // * getters and setters
@@ -168,8 +200,10 @@ public class SchoolHELPGUI {
             // add the new volunteer to the volunteer list
             SchoolHELP.addUser(newVolunteer);
 
-            // print
-            System.out.println(newVolunteer.getUsername());
+            // iterate over the users and printout the users
+            for (User user : SchoolHELP.getUsers()) {
+                System.out.println(user);
+            }
 
             // return the new volunteer
             return newVolunteer;
@@ -207,8 +241,6 @@ public class SchoolHELPGUI {
                     SchoolHELP.getSchool(schoolName));
         }
 
-        // create a new admin object
-
         // add the new admin to the admin list
         SchoolHELP.addUser(newAdmin);
     }
@@ -231,30 +263,4 @@ public class SchoolHELPGUI {
 
     }
 
-    // this method is called when the User clicks on the Exit button, this method
-    // attempts to save the SchoolHELP object to a file
-    public static void saveSchoolHELPInstance() {
-        try {
-            // using FileManager class
-            FileManager.saveData(SchoolHELP, "SchoolHELP.ser");
-
-            // printout a message to the console
-            System.out.println("Serialized data is saved in SchoolHELP.ser");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public static Request searchForRequest(int search_id) {
-        // iterate over the stream arraylist of all requests of all schools
-        return SchoolHELP.getAllRequests().stream().filter(request -> request.getRequestID() == search_id).findFirst()
-                .orElse(null);
-    }
-
-    public static Offer searchForOffer(int search_id) {
-        // iterate over the stream arraylist of all offers of all requests of all
-        // schools
-        return SchoolHELP.getAllRequests().stream().flatMap(request -> request.getOffers().stream())
-                .filter(offer -> offer.getOfferID() == search_id).findFirst().orElse(null);
-    }
 }

@@ -169,6 +169,8 @@ public class MainView {
         // create the panel with the buttons
         MultibuttonInputPanel admin_schools_view_panel = new MultibuttonInputPanel(buttons);
 
+        // ! BUG ; the back button isnt in the right place
+
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
 
@@ -825,6 +827,7 @@ public class MainView {
         // ! BUG requests date might be broken?
         // new label, jtextfield, and button to search for the request
         JPanel search_panel = new JPanel();
+        search_panel.setLayout(new FlowLayout());
         JLabel search_label = new JLabel("Search for Request by ID:");
         JTextField search_textfield = new JTextField();
         JButton search_button = new JButton("Search");
@@ -873,12 +876,11 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
-    // this method is to show the offers of a request, when its clicked in a table
-    // cell
+    
     public static void showOffersOfRequest(Request selected_request) {
         // ask SchoolHELPGUI to search for the request and return the offers of that
         // request object
-        if (SchoolHELPGUI.getOffersOfRequest(selected_request) != null) {
+        if (!SchoolHELPGUI.getOffersOfRequest(selected_request).isEmpty()) {
             // if there are offers for that request, do this method
             // using TableModelViewPanel class to display the table, from the Requests data
             // of this school
