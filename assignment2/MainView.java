@@ -171,8 +171,6 @@ public class MainView {
         // create the panel with the buttons
         MultibuttonInputPanel admin_schools_view_panel = new MultibuttonInputPanel(buttons);
 
-        // ! BUG ; the back button isnt in the right place
-
         // set the layout of the right menu panel
         right_menu_view_panel.setLayout(new BorderLayout());
 
@@ -469,10 +467,10 @@ public class MainView {
                 HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
 
                 // create a new school object by calling from SchoolHELPGUI
-                SchoolHELPGUI.createNewAdminUser(saved_fields, newSchool);
+                SchoolAdmin newSchoolAdmin = SchoolHELPGUI.createNewAdminUser(saved_fields, newSchool);
 
                 // show the next panel
-                showSchoolAdminAndSchoolCompletionView(newSchool);
+                showSchoolAdminAndSchoolCompletionView(newSchool, newSchoolAdmin);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -499,7 +497,7 @@ public class MainView {
     }
 
     // this is shown when both a school and school admin is registered
-    public static void showSchoolAdminAndSchoolCompletionView(School newSchool) {
+    public static void showSchoolAdminAndSchoolCompletionView(School newSchool, SchoolAdmin newSchoolAdmin) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -512,8 +510,12 @@ public class MainView {
         // standardinfopanel object, and since Runnable[] does not support adding params
         JButton view_full_info_button = new JButton("View Full Info");
         view_full_info_button.addActionListener(e -> {
-            // show the school info view
-            showSchoolInfoView(newSchool, true);
+            if (newSchool == null) {
+                showSchoolInfoView(newSchool, newSchoolAdmin, false);
+            } else {
+                // show the school info view
+                showSchoolInfoView(newSchool, newSchoolAdmin, true);
+            }
         });
 
         JButton back_button = new JButton("Back");
@@ -546,7 +548,7 @@ public class MainView {
     }
 
     // this is shown when the schoolinfo is requested
-    public static void showSchoolInfoView(School newSchool, boolean extraInfo) {
+    public static void showSchoolInfoView(School newSchool, SchoolAdmin newAdmin, boolean extraInfo) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
 
@@ -560,45 +562,50 @@ public class MainView {
 
         // panel view content
         InfoListViewPanel admin_school_info_view_panel;
+        JPanel button_panel = new JPanel();
         if (extraInfo) {
             // show all info about the school and the school admin
-            String input_labels[] = { "School Name", "School Address", "School City", "School Admin Name",
+            String labels[] = { "School Name", "School Address", "School City", "School Admin Name",
                     "School Admin Email", "School Admin Password", "School Admin Fullname", "School Admin Phone",
                     "School Admin StaffID", "School Admin Position" };
-            String input_field_values[] = { newSchool.getSchoolName(), newSchool.getAddress(), newSchool.getCity(),
+            String data[] = { newSchool.getSchoolName(), newSchool.getAddress(), newSchool.getCity(),
                     // to view the info of the newly created school admin for this school
-                    newSchool.getSchoolAdmins().get(0).getUsername(), newSchool.getSchoolAdmins().get(0).getPassword(),
-                    newSchool.getSchoolAdmins().get(0).getFullname(),
-                    Long.toString(newSchool.getSchoolAdmins().get(0).getPhone()),
-                    Integer.toString(newSchool.getSchoolAdmins().get(0).getStaffID()),
-                    newSchool.getSchoolAdmins().get(0).getPosition() };
+                    newAdmin.getUsername(), newAdmin.getPassword(),
+                    newAdmin.getFullname(),
+                    Long.toString(newAdmin.getPhone()),
+                    Integer.toString(newAdmin.getStaffID()),
+                    newAdmin.getPosition() };
 
             // !BUG CANT ACCESS THE SCHOOL ADMIN INFO BECAUSE IT IS NOT SAVED IN THE SCHOOL
             // ! OBJECT
+            button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
+            JButton back_button = new JButton("Back");
+            back_button.addActionListener(e -> showAdminSchoolsMenuView());
+            button_panel.add(back_button);
+            admin_school_info_view_panel = new InfoListViewPanel(labels, data);
 
-            Runnable button_function = MainView::showAdminSchoolsMenuView;
-            admin_school_info_view_panel = new InfoListViewPanel(input_labels, input_field_values,
-                    button_function);
         } else {
             // just show the newly created school admin, without the school info
-            String input_labels[] = { "School Admin Name", "School Admin Email", "School Admin Password",
+            String labels[] = { "School Admin Name", "School Admin Email", "School Admin Password",
                     "School Admin Fullname", "School Admin Phone", "School Admin StaffID", "School Admin Position" };
-
-            Runnable button_function = MainView::showAdminSchoolsMenuView;
-            admin_school_info_view_panel = new InfoListViewPanel(input_labels,
+            String data[] = {
                     // to view the info of the newly created school admin for this school
-                    new String[] { newSchool.getSchoolAdmins().get(0).getUsername(),
-                            newSchool.getSchoolAdmins().get(0).getPassword(),
-                            newSchool.getSchoolAdmins().get(0).getFullname(),
-                            Long.toString(newSchool.getSchoolAdmins().get(0).getPhone()),
-                            Integer.toString(newSchool.getSchoolAdmins().get(0).getStaffID()),
-                            newSchool.getSchoolAdmins().get(0).getPosition() },
-                    button_function);
+                    newAdmin.getUsername(), newAdmin.getPassword(),
+                    newAdmin.getFullname(),
+                    Long.toString(newAdmin.getPhone()),
+                    Integer.toString(newAdmin.getStaffID()),
+                    newAdmin.getPosition() };
+            button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
+            JButton back_button = new JButton("Back");
+            back_button.addActionListener(e -> showAdminSchoolsMenuView());
+            button_panel.add(back_button);
+            admin_school_info_view_panel = new InfoListViewPanel(labels, data);
         }
         // add these elements to the right menu panel
         right_menu_view_panel.add(title_label, BorderLayout.NORTH);
         right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
         right_menu_view_panel.add(admin_school_info_view_panel, BorderLayout.CENTER);
+        right_menu_view_panel.add(button_panel, BorderLayout.SOUTH);
 
         // then add the right menu panel to the main frame
         main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
@@ -881,7 +888,6 @@ public class MainView {
 
         // ! BUG no warning when searching for a request ID that does not have an offer
 
-        // ! BUG requests date might be broken?
         // new label, jtextfield, and button to search for the request
         JPanel search_panel = new JPanel();
         JLabel search_label = new JLabel("Search for Request by ID:");

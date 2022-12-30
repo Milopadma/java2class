@@ -48,20 +48,12 @@ public class SchoolHELPGUI {
         return null;
     }
 
-    // notes
-    // the reading from file works if the schoolhelp instance is instantiated with
-    // schoolhelpgui
-    // but it doesnt work if it isnt instantiated with schoolhelpgui
-    // ! thus something is wrong with the saving functions
-
     // this method is called when the User clicks on the Exit button, this method
     // attempts to save the SchoolHELP object to a file
     public static void saveSchoolHELPInstance() {
         try {
             // using FileManager class
             FileManager.saveData(SchoolHELP, "SchoolHELP.ser");
-
-            // ! BUG ; new objects are not saved, loading is fine though
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -247,7 +239,7 @@ public class SchoolHELPGUI {
         }
     }
 
-    public static void createNewAdminUser(HashMap<String, String> saved_fields, School school) {
+    public static SchoolAdmin createNewAdminUser(HashMap<String, String> saved_fields, School school) {
         // this method takes in a Hashmap of the fields from the admin registration
         // screen and creates a new schooladmin user based on them
 
@@ -277,6 +269,9 @@ public class SchoolHELPGUI {
 
         // add the new admin to the admin list
         SchoolHELP.addUser(newAdmin);
+
+        // return the newAdmin
+        return newAdmin;
     }
 
     public static void createNewRequest(HashMap<String, String> saved_fields, School school) {
