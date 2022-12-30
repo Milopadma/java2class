@@ -962,7 +962,8 @@ public class MainView {
             JButton buttons[] = { back_button };
 
             // get the current user's school's available requests for offers
-            ArrayList<Offer> thisRequestOffers = new ArrayList<Offer>();
+            ArrayList<Offer> thisRequestOffers = new ArrayList<>();
+            thisRequestOffers = SchoolHELPGUI.getOffersOfRequest(selected_request);
 
             // create the column names
             String column_names[] = { "ID", "Status", "Offer Date", "Volunteer Name", "Remarks" };
@@ -1517,8 +1518,8 @@ public class MainView {
         String[] volunteersOffers;
         try {
             volunteer = (Volunteer) SchoolHELPGUI.getCurrentUser();
-            volunteersOffers = new String[] { volunteer.getOffers().toString() };
-            Stream.of(volunteersOffers).forEach(System.out::println);
+            // to get the offers of the volunteer and convert them to a string array
+            volunteersOffers = volunteer.getOffers().stream().map(offer -> offer.toString()).toArray(String[]::new);
         } catch (Exception e) {
             System.out.println("Error: " + e);
             return;

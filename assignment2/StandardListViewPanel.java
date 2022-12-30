@@ -23,7 +23,7 @@ public class StandardListViewPanel extends JPanel {
         list_panel.add(listScroller);
 
         // button layout are vertically stacked with same width using BoxLayout
-        button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
+        button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.X_AXIS));
 
         // add the buttons
         for (JButton button : buttons) {

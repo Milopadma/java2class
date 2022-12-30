@@ -159,6 +159,13 @@ public class SchoolHELPGUI {
         // ßet the status of the offer to rejected
         try {
             selected_offer.setOfferStatus("REJECTED");
+            // also change the status of it in the volunteer object
+            // also change the status of it in the volunteer object, why ? since there are
+            // essentially two copies of the same offer in two different arraylists, one in
+            // the volunteer object and one in the request object
+            selected_offer.getIsOwnedBy().getOffers().stream()
+                    .filter(offer -> offer.getOfferID() == selected_offer.getOfferID()).findFirst().get()
+                    .setOfferStatus("REJECTED");
             return true;
         } catch (Exception err) {
             err.printStackTrace();
@@ -171,6 +178,12 @@ public class SchoolHELPGUI {
         // set the status of the offer to accepted
         try {
             selected_offer.setOfferStatus("ACCEPTED");
+            // also change the status of it in the volunteer object, why ? since there are
+            // essentially two copies of the same offer in two different arraylists, one in
+            // the volunteer object and one in the request object
+            selected_offer.getIsOwnedBy().getOffers().stream()
+                    .filter(offer -> offer.getOfferID() == selected_offer.getOfferID()).findFirst().get()
+                    .setOfferStatus("ACCEPTED");
             return true;
         } catch (Exception err) {
             err.printStackTrace();
