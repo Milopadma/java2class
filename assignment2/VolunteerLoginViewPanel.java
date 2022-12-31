@@ -4,11 +4,22 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class is the view for the volunteer login screen.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class VolunteerLoginViewPanel extends JPanel {
     public static JTextField usernameField = new JTextField(10);
     public static JPasswordField passwordField = new JPasswordField(10);
 
-    // constructor
+    /**
+     * This constructor creates the template for the volunteer login screen GUI.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public VolunteerLoginViewPanel() {
         // init the template from LoginPanel
         String titleString = "<html><h1>SchoolHELP Volunteer Login</h1></html>";
@@ -114,6 +125,12 @@ public class VolunteerLoginViewPanel extends JPanel {
         });
     }
 
+    /**
+     * This method cleans the center panel and clears the fields.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public void destroy() {
         // clear the fields
         usernameField.setText("");

@@ -1,23 +1,33 @@
 import javax.swing.*;
 import java.awt.*;
 
-// this class is responsible for the left side of the main view
-// buttons and content varies if its for a School Admin or Volunteer user
+/**
+ * This class is responsible for the left side of the main view buttons and
+ * content varies if its for a School Admin or Volunteer user.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class SidemenuView extends JPanel {
     // GUI element initializations
     JPanel profile_picture_panel = new JPanel();
     JPanel name_occupation_panel = new JPanel();
     JPanel button_panel = new JPanel();
-
     JButton edit_profile_button = new JButton("Edit Profile");
     JButton school_help_admin_button = new JButton("SchoolHELP Admin View");
     JButton schools_button = new JButton("Schools");
     JButton requests_button = new JButton("Requests");
     JButton offers_button = new JButton("Offers");
-
     JButton logout_button = new JButton("Logout");
 
-    // class constructors
+    /**
+     * This constructor creates a SidemenuView for a School Admin or Volunteer user.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param User - the current user
+     */
     public SidemenuView(User user) {
         // the school admin view
         // check if the current user is the SchoolHELP admin
@@ -205,8 +215,16 @@ public class SidemenuView extends JPanel {
 
     }
 
-    // this class's helper methods
-    // to generate the custom profile picture based on the User's name
+    /**
+     * This method generates a custom profile picture based on the first and last
+     * letter of the user's name.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param User - the user whose profile picture is to be generated.
+     * @return JPanel - the profile picture panel.
+     */
     private JPanel generateProfilePicture(User user) {
         // get the first and last name of the user
         String profile_picture_text;

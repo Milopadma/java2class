@@ -23,7 +23,7 @@ public class MultibuttonInputPanel extends JPanel {
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
      * 
-     * @param buttons
+     * @param buttons - an array of buttons to be added to the panel.
      */
     public MultibuttonInputPanel(JButton[] buttons) {
         // button layout are vertically stacked with same width using BoxLayout

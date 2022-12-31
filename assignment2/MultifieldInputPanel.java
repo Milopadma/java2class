@@ -25,7 +25,7 @@ public class MultifieldInputPanel extends JPanel {
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
      * 
-     * @param fieldNames
+     * @param fieldNames - an array of field names to be added to the panel.
      */
     MultifieldInputPanel(String[] fieldNames) {
         // field layout are vertically stacked with same width using BoxLayout

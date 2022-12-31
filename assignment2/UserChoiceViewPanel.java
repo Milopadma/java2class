@@ -4,6 +4,13 @@
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * This class is the view for the user choice screen, where the user can choose
+ * to login as an admin or a volunteer.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class UserChoiceViewPanel extends JPanel {
     // a generic 2 choice button for the initial login screen
     // class fields
@@ -12,6 +19,12 @@ public class UserChoiceViewPanel extends JPanel {
     private JButton ExitButton = new JButton("Exit");
 
     // constructor
+    /**
+     * This constructor creates the template for the user choice screen GUI.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public UserChoiceViewPanel() {
         JLabel title_label = new JLabel("<html><h1>" + "SchoolHELP Menu" + "</h1></html>");
 
@@ -71,7 +84,3 @@ public class UserChoiceViewPanel extends JPanel {
         });
     }
 }
-
-// notes
-// adding the centerpanel to another parent panel seems to just cover the empty
-// parent panel

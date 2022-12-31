@@ -3,12 +3,26 @@ import java.util.stream.Stream;
 
 import javax.swing.*;
 
-// this class represents the standard info list panel
+/**
+ * This class represents the standard labelled info list panel.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class LabelledListViewPanel extends JPanel {
     // GUI element initializations
     JPanel list_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
+    /**
+     * This constructor creates a panel with labelled info list and buttons in it.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param labels - an array of labels to be added to the panel.
+     * @param data   - an array of data to be added to the panel.
+     */
     public LabelledListViewPanel(String[] labels, String[] data) {
         // the list layout is vertically stacked with same width using BoxLayout
         list_panel.setLayout(new BoxLayout(list_panel, BoxLayout.Y_AXIS));

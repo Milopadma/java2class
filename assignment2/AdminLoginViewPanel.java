@@ -6,11 +6,28 @@ import java.awt.*;
 
 // this class handles the user login screen GUI, and it also handles the AdminLogin functionalities,
 // takes and processes data from and for the SchoolAdmin class
+/**
+ * This class is the view for the admin login screen, where the user can input
+ * their username and password.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ * 
+ */
 public class AdminLoginViewPanel extends JPanel {
     public static JTextField usernameField = new JTextField(10);
     public static JPasswordField passwordField = new JPasswordField(10);
 
     // constructor
+    /**
+     * This constructor creates the template for the admin login screen GUI.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param Boolean isFirstTimeLogin - this is a boolean that determines whether
+     *                the user is logging in for the first time or not.
+     */
     public AdminLoginViewPanel(Boolean isFirstTimeLogin) {
         // init the template from LoginPanel
         // title label with string
@@ -111,6 +128,13 @@ public class AdminLoginViewPanel extends JPanel {
                 });
     }
 
+    /**
+     * This method clears the fields of the admin login screen.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     */
     public void destroy() {
         // clear the fields
         usernameField.setText("");
