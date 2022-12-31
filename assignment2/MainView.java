@@ -81,6 +81,12 @@ public class MainView {
     }
 
     // show AdminLoginView (enter username and password for school admins)
+    /**
+     * This method is responsible for showing the admin login view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showAdminLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
@@ -90,6 +96,12 @@ public class MainView {
     }
 
     // show VolunteerLoginView (enter username and password for volunteers)
+    /**
+     * This method is responsible for showing the volunteer login view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showVolunteerLoginView() {
         // clear the frame before adding new elements
         main_frame.getContentPane().removeAll();
@@ -99,6 +111,12 @@ public class MainView {
     }
 
     // initialize the side menu view
+    /**
+     * This method is responsible for showing the side menu view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showSideMenuView() {
         SidemenuView admin_sidemenu_view_panel = new SidemenuView(SchoolHELPGUI.getCurrentUser());
         main_frame.add(admin_sidemenu_view_panel, BorderLayout.WEST);
@@ -109,6 +127,12 @@ public class MainView {
     // * */ for the sidemenu buttons
     // show AdminSchoolsMenuView (school admin menu with sidemenu dashboard)
     // method 1/4 for the admin sidemenu buttons
+    /**
+     * This method is responsible for showing the admin schools menu view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showAdminSchoolsMenuView() {
         // clear the frame
         right_menu_view_panel.removeAll();
@@ -167,6 +191,12 @@ public class MainView {
     // to show the admin version of the Requests menu, this is for the sidemenu
     // "Requests" button
     // method 2/4 for the admin sidemenu buttons
+    /**
+     * This method is responsible for showing the admin requests menu view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showAdminRequestsMenuView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -178,14 +208,6 @@ public class MainView {
         // new label as title using html h1
         JLabel subtitle_label = new JLabel("<html><h3>Requests</h3></html>");
         subtitle_label.setVerticalAlignment(JLabel.TOP);
-
-        // panel view content
-        // String button_labels[] = { "View all Requests for this school", "View every
-        // Request from all Schools" };
-
-        // // an array of functions to be called when the buttons are clicked
-        // Runnable button_functions[] = { MainView::showRequestSubmissionForSchoolView,
-        // MainView::showAllRequestsView };
 
         // buttons for the admin school menu view
         JButton submit_request_button = new JButton("Submit a Request for this School");
@@ -227,6 +249,12 @@ public class MainView {
 
     // to show the admin version of the Offers menu, this is for the sidemenu button
     // method 3/4 for the admin sidemenu buttons
+    /**
+     * This method is responsible for showing the admin offers menu view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showAdminOffersMenuView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -277,6 +305,12 @@ public class MainView {
 
     // this method shows the view for editing the profile of the school admin user,
     // just a multifieldinput panel
+    /**
+     * This method is responsible for showing the edit profile view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showEditProfileView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -336,6 +370,12 @@ public class MainView {
     // * */ show METHODS FOR ADMIN SCHOOL MENU
     // to show the view for registering a new school, step
     // method 1/2 of the school side menu for admin
+    /**
+     * This method is responsible for showing the register school view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showAdminRegisterSchoolView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -400,6 +440,12 @@ public class MainView {
 
     // to show the school admin registration panel view
     // method 2/2 of the school side menu for admin
+    /**
+     * This method is responsible for showing the register school admin view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showAdminRegisterSchoolAdminView(School newSchool) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -485,6 +531,13 @@ public class MainView {
     }
 
     // this is shown when both a school and school admin is registered
+    /**
+     * This method is responsible for showing the school admin and school completion
+     * view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showSchoolAdminAndSchoolCompletionView(School newSchool, SchoolAdmin newSchoolAdmin) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -536,6 +589,12 @@ public class MainView {
     }
 
     // this is shown when the schoolinfo is requested
+    /**
+     * This method is responsible for showing the school info view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showSchoolInfoView(School newSchool, SchoolAdmin newAdmin, boolean extraInfo) {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -607,50 +666,13 @@ public class MainView {
     }
 
     // * */ show METHODS FOR ADMIN REQUESTS MENU]
-    // all the show methods that relates to the requests menu in the admin menu goes
-    // here
-    // this method is to submit a request for the school that the school admin is in
-    // (local)
-    // public static void showRequestSubmissionForSchoolView() {
-    // // clear the right menu panel
-    // right_menu_view_panel.removeAll();
-
-    // // new label as title using html h1
-    // JLabel title_label = new JLabel("<html><h1>SchoolHELP Admin
-    // Menu</h1></html>");
-    // title_label.setVerticalAlignment(JLabel.TOP);
-
-    // // new label as title using html h1
-    // JLabel subtitle_label = new JLabel("<html><h3>Request
-    // Submissions</h3></html>");
-    // subtitle_label.setVerticalAlignment(JLabel.TOP);
-
-    // // panel view content
-    // // buttons for this panel
-    // JButton submit_request_button = new JButton("Submit a Request");
-    // submit_request_button.addActionListener(e ->
-    // showRequestSubmissionChoiceView());
-    // JButton back_button = new JButton("Back");
-    // back_button.addActionListener(e -> showAdminRequestsMenuView());
-    // JButton buttons[] = { submit_request_button, back_button };
-
-    // // the panel view
-    // MultibuttonInputPanel admin_request_submission_view_panel = new
-    // MultibuttonInputPanel(buttons);
-
-    // // add these elements to the right menu panel
-    // right_menu_view_panel.add(title_label, BorderLayout.NORTH);
-    // right_menu_view_panel.add(subtitle_label, BorderLayout.NORTH);
-    // right_menu_view_panel.add(admin_request_submission_view_panel,
-    // BorderLayout.CENTER);
-
-    // // then add the right menu panel to the main frame
-    // main_frame.add(right_menu_view_panel, BorderLayout.CENTER);
-    // main_frame.setVisible(true);
-
-    // }
-
     // this method is to show the request submission view
+    /**
+     * This method is responsible for showing the request submission view panel.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showRequestSubmissionChoiceView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -693,6 +715,12 @@ public class MainView {
     }
 
     // this method is to show the tutorial request submission view
+    /**
+     * This method is responsible for showing the tutorial request submission view
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showTutorialRequestSubmissionView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -762,6 +790,12 @@ public class MainView {
     }
 
     // this method is to show the resource request submission view
+    /**
+     * This method is responsible for showing the resource request submission view
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showResourceRequestSubmissionView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -834,6 +868,12 @@ public class MainView {
     // school
     /**
      * Only for Admin offers Menu
+     */
+    /**
+     * This method is responsible for showing the admin offers menu view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
      */
     public static void showReviewsForOffersView() {
         // using TableModelViewPanel class to display the table, from the Requests data
@@ -928,6 +968,12 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    /**
+     * This method is responsible for showing the offers of a request.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showOffersOfRequest(Request selected_request) {
         // ask SchoolHELPGUI to search for the request and return the offers of that
         // request object
@@ -961,24 +1007,6 @@ public class MainView {
 
             // create the column names
             String column_names[] = { "ID", "Status", "Offer Date", "Volunteer Name", "Remarks" };
-
-            //// VERY unsure that this works
-            // function to invoke when a row is clicked, essentially to show the Offer
-            // // details of that Offer
-            // Runnable row_clicked_function = () -> {
-            // try {
-            // // get the selected row
-            // Object value_as_object = RequestTableModelViewPanel.getSelectedRowValue();
-
-            // // get the selected request
-            // Offer selected_offer = (Offer) value_as_object;
-
-            // // show the offers of that request
-            // showOfferDetails(selected_offer);
-            // } catch (Exception e) {
-            // e.printStackTrace();
-            // }
-            // };
 
             // create the table model
             OfferTableModelViewPanel reviews_for_offers_view_panel = new OfferTableModelViewPanel(column_names,
@@ -1072,6 +1100,12 @@ public class MainView {
 
     }
 
+    /**
+     * This method is responsible for showing the details of an offer.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     private static void showOfferDetails(Offer selected_offer, Request selected_request_of_this) {
         // just show the details in a JList
         // clear the right menu panel
@@ -1144,6 +1178,12 @@ public class MainView {
     // * THIS STAGE HAS ALL METHODS AND showX() METHODS RELATED TO THE VOLUNTEER
     // * USER */
 
+    /**
+     * This method is responsible for showing the volunteer register view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showVolunteerRegisterView() {
         // this method is called when a user wants to register as a volunteer, this
         // meethod shows the volunteer register view panel
@@ -1206,6 +1246,12 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    /**
+     * This method is responsible for showing the volunteer register success view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     private static void showVolunteerRegisterSuccessView(Volunteer new_volunteer) {
         // this method is called when a volunteer user is successfully registered, this
         // method shows the volunteer register success view panel
@@ -1245,6 +1291,12 @@ public class MainView {
 
     // this method is called when the volunteer user logs in, this method shows the
     // volunteer main menu view panel
+    /**
+     * This method is responsible for showing the volunteer main menu view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showVolunteerMenuView() {
         // clear the frame
         right_menu_view_panel.removeAll();
@@ -1281,41 +1333,6 @@ public class MainView {
         // create the table view object
         RequestTableModelViewPanel table = new RequestTableModelViewPanel(column_names, requests, buttons);
 
-        // // when clicked, open a dialog menu
-        // sort_by_button.addActionListener(e -> {
-        // // create a new dialog menu
-        // JDialog dialog = new JDialog();
-        // // set the title
-        // dialog.setTitle("Sort By");
-        // // set the size
-        // dialog.setSize(300, 200);
-        // // set the layout
-        // dialog.setLayout(new BorderLayout());
-        // // set the location
-        // dialog.setLocationRelativeTo(null);
-        // // set the modality
-        // dialog.setModal(true);
-
-        // // create the buttons
-        // JButton school_name_button = new JButton("School Name");
-        // JButton city_button = new JButton("City");
-        // JButton date_button = new JButton("Date");
-
-        // // create the panel view object
-        // JPanel list = new JPanel();
-        // list.setLayout(new GridLayout(3, 1));
-
-        // // add the buttons to the panel
-        // list.add(school_name_button);
-        // list.add(city_button);
-        // list.add(date_button);
-
-        // // add the list to the dialog
-        // dialog.add(list, BorderLayout.CENTER);
-
-        // // set the dialog to visible
-        // dialog.setVisible(true);
-        // });
         // new label, jtextfield, and jbutton to seacrh for a request
         JPanel search_panel = new JPanel();
         JLabel search_label = new JLabel("Search request by ID: ");
@@ -1368,6 +1385,12 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    /**
+     * This method is responsible for showing the request details view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     private static void showRequestDetails(Request selected_request) {
         // this method shows teh request details from the selected request
         // clear the right menu panel
@@ -1415,6 +1438,12 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    /**
+     * This method is responsible for showing the submit offer view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showSubmitOfferView(Request selected_request) {
         // this method shows the submit offer view panel to allow the user to input
         // remarks into a JTextArea and have it submitted to the system
@@ -1482,6 +1511,12 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    /**
+     * This method is responsible for showing the volunteer offers menu view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showVolunteerOffersMenuView() {
         // this goes to a view where it shows all the offers this volunteer has
         // submitted
@@ -1536,6 +1571,12 @@ public class MainView {
     }
 
     // * METHODS ONLY FOR SCHOOLHELP ADMINS, SCHOOLADMINS OF HELP */
+    /**
+     * This method is responsible for showing the school HELP admin menu view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     public static void showSchoolHELPAdminView() {
         // clear the right menu panel
         right_menu_view_panel.removeAll();
@@ -1581,6 +1622,12 @@ public class MainView {
         main_frame.setVisible(true);
     }
 
+    /**
+     * This method is responsible for showing the all users table view.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     */
     private static void showAllUsersView() {
         // this method takes all the users and shows them in a list view
         // clear the right menu panel
@@ -1626,15 +1673,3 @@ public class MainView {
 
     }
 }
-
-// !notes
-// all exceptions handled by their own component classes
-// all GUI elements are initialized in the constructor
-// all GUI elements are added to the main_frame in the show methods
-// all GUI elements are removed from the main_frame in the show methods
-// all GUI elements must only transfer data to SchoolHELPGUI and not direct to
-// the data classes
-// all GUI elements must only transfer data from SchoolHELPGUI and not direct
-// from the data classes (by method calls)
-// all inputs are validated by the GUI elements that asked for it
-// all inputs are wrapped in a try-catch block to handle exceptions
