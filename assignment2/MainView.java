@@ -445,6 +445,9 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param School newSchool - the school that the school admin was registered
+     *               to.
      */
     public static void showAdminRegisterSchoolAdminView(School newSchool) {
         // clear the right menu panel
@@ -537,6 +540,9 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param School      the school object that was created
+     * @param SchoolAdmin the school admin object that was created
      */
     public static void showSchoolAdminAndSchoolCompletionView(School newSchool, SchoolAdmin newSchoolAdmin) {
         // clear the right menu panel
@@ -594,6 +600,10 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param School
+     * @param SchoolAdmin
+     * @param boolean
      */
     public static void showSchoolInfoView(School newSchool, SchoolAdmin newAdmin, boolean extraInfo) {
         // clear the right menu panel
@@ -973,6 +983,8 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param selected_request the request that the user wants to see the offers of.
      */
     public static void showOffersOfRequest(Request selected_request) {
         // ask SchoolHELPGUI to search for the request and return the offers of that
@@ -1105,6 +1117,9 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param Offer
+     * @param Request
      */
     private static void showOfferDetails(Offer selected_offer, Request selected_request_of_this) {
         // just show the details in a JList
@@ -1251,6 +1266,8 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param Volunteer
      */
     private static void showVolunteerRegisterSuccessView(Volunteer new_volunteer) {
         // this method is called when a volunteer user is successfully registered, this
@@ -1390,6 +1407,8 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param Request
      */
     private static void showRequestDetails(Request selected_request) {
         // this method shows teh request details from the selected request
@@ -1443,6 +1462,8 @@ public class MainView {
      * 
      * @author I Gusti Bagus Milo Padma Wijaya - E2000426
      *         Date: 2022-24-12
+     * 
+     * @param Request
      */
     public static void showSubmitOfferView(Request selected_request) {
         // this method shows the submit offer view panel to allow the user to input

@@ -4,7 +4,13 @@ import java.util.stream.Stream;
 
 import javax.swing.*;
 
-// this class represents the multifield input panel. 
+/**
+ * This class represents the multifield input panel. It is used to display a
+ * panel with multiple fields to input data.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class MultifieldInputPanel extends JPanel {
     // GUI element initializations
     JPanel field_panel = new JPanel();
@@ -13,6 +19,14 @@ public class MultifieldInputPanel extends JPanel {
     boolean allFieldsFilled = false;
 
     // class constructor
+    /**
+     * This constructor creates a panel with multiple fields in it.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param fieldNames
+     */
     MultifieldInputPanel(String[] fieldNames) {
         // field layout are vertically stacked with same width using BoxLayout
         field_panel.setLayout(new BoxLayout(field_panel, BoxLayout.Y_AXIS));
@@ -40,7 +54,14 @@ public class MultifieldInputPanel extends JPanel {
         add(field_panel, new GridBagConstraints());
     }
 
-    // method to return a hashmap of the saved field names and values
+    /**
+     * This method returns a hashmap of the saved field names and values.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @return HashMap<String, String> savedFields
+     */
     public HashMap<String, String> getSavedFields() {
         // create a new hashmap
         HashMap<String, String> savedFields = new HashMap<String, String>();
@@ -72,7 +93,14 @@ public class MultifieldInputPanel extends JPanel {
         return savedFields;
     }
 
-    // method to check if all fields are filled
+    /**
+     * This method checks if all fields are filled.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @return boolean allFieldsFilled
+     */
     public boolean checkFields() {
         // iterate over the text_field panel and get the text from each label and text
         Stream.iterate(0, i -> i + 1).limit(text_field_panel.getComponentCount()).forEach(i -> {
