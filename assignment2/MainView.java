@@ -52,9 +52,22 @@ public class MainView {
         main_frame.setTitle("SchoolHELP");
         main_frame.setLayout(new BorderLayout());
 
-        // TODO: add icon, fade animations, splashscreen
-        // TODO: feature checks
-        // TODO: bug fixing 3
+        // set the icon on the top left corner of the frame
+        main_frame.setIconImage(new ImageIcon("images/helplogo.jpg").getImage());
+
+        // show the splashscreen with HELP logo
+        main_frame.add(new JLabel(null, new ImageIcon("images/helplogo.jpg"), JLabel.CENTER),
+                BorderLayout.CENTER);
+        main_frame.setVisible(true);
+
+        // wait 2 seconds
+        try {
+            Thread.sleep(2000);
+            // clear the frame
+            main_frame.getContentPane().removeAll();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // show the login view
         showUserChoiceView();
