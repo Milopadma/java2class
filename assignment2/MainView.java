@@ -55,7 +55,6 @@ public class MainView {
         main_frame.setLayout(new BorderLayout());
 
         // TODO: add icon, fade animations, splashscreen
-        // TODO: sort by button
         // TODO: feature checks
         // TODO: bug fixing 3
 
@@ -457,6 +456,7 @@ public class MainView {
         // the panel and save the fields to a hashmap
         next_button.addActionListener(e -> {
             try {
+                // check if all fields are filled
                 if (admin_register_school_admin_view_panel.checkFields() == false) {
                     JOptionPane.showMessageDialog(null, "Please fill in all the fields");
                     return;
@@ -464,11 +464,12 @@ public class MainView {
                 // get the saved fields and saved to Hashmap
                 HashMap<String, String> saved_fields = admin_register_school_admin_view_panel.getSavedFields();
 
-                if (!SchoolHELPGUI.checkIfSchoolExists(saved_fields.get("School Name"))) {
+                // early return if newSchool is passed as null and the school name doesnt exist
+                if (!SchoolHELPGUI.checkIfSchoolExists(saved_fields.get("School Name")) && newSchool == null) {
                     JOptionPane.showMessageDialog(null, "School doesn't exist!");
                     return;
                 } else {
-
+                    // if the school isnt null
                     // create a new school object by calling from SchoolHELPGUI
                     SchoolAdmin newSchoolAdmin = SchoolHELPGUI.createNewAdminUser(saved_fields, newSchool);
 
