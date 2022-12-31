@@ -7,7 +7,13 @@ import java.util.ArrayList;
 // this class represents the table model view panel, 
 // creates an object that takes in an arraylist of data and displays 
 // it onto a table view
-
+/**
+ * This class represents the table model view panel, creates an object that
+ * takes in an arraylist of data and displays it onto a table view.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class OfferTableModelViewPanel extends JPanel {
     private static JTable table = new JTable();
 
@@ -16,6 +22,16 @@ public class OfferTableModelViewPanel extends JPanel {
     JPanel table_panel = new JPanel();
     JPanel button_panel = new JPanel();
 
+    /**
+     * This constructor creates a table model view panel with a table and buttons.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param columnNames - an array of column names to be added to the table.
+     * @param data        - an arraylist of data to be added to the table.
+     * @param buttons     - an array of buttons to be added to the panel.
+     */
     public OfferTableModelViewPanel(String[] columnNames, ArrayList<Offer> data, JButton[] buttons) {
         // table layout are vertically stacked with same width using BoxLayout
         table_panel.setLayout(new BoxLayout(table_panel, BoxLayout.Y_AXIS));
@@ -26,21 +42,6 @@ public class OfferTableModelViewPanel extends JPanel {
             tableModel.addRow(new Object[] { row.getOfferID(), row.getOfferStatus(), row.getOfferDate(),
                     row.getIsOwnedBy().getFullname(), row.getOfferRemarks() });
         }
-
-        // // listen for click events in the table rows
-        // tableModel.addTableModelListener(e -> {
-        // // if the table is clicked
-        // if (e.getType() == TableModelEvent.UPDATE) {
-        // // get the selected row
-        // int selectedRow = table.getSelectedRow();
-
-        // // get the value of the first column of the selected row
-        // Object value = table.getValueAt(selectedRow, 0);
-
-        // // run the function
-        // runnable_function.run();
-        // }
-        // });
 
         // create the table and add the table model to it
         table = new JTable(tableModel);
@@ -60,15 +61,5 @@ public class OfferTableModelViewPanel extends JPanel {
         // to add the table panel and button panel to the parent panel
         add(table_panel, new GridBagConstraints());
         add(button_panel, new GridBagConstraints());
-    }
-
-    public static Object getSelectedRowValue() {
-        // get the selected row
-        int selectedRow = table.getSelectedRow();
-
-        // get the value of the first column of the selected row
-        Object value = table.getValueAt(selectedRow, 0);
-
-        return value;
     }
 }

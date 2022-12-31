@@ -9,8 +9,9 @@ import java.io.ObjectOutputStream;
  * data. This class uses serialisation for the saving and loading of the app
  * data.
  * 
- * @author I GUSTI BAGUS MILO PADMA WIJAYA
  * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
  */
 public class FileManager {
     // class fields
@@ -20,8 +21,9 @@ public class FileManager {
     /**
      * This method is used to save the data to the file.
      * 
-     * @param data
-     * @return
+     * @param data     - the data to be saved
+     * @param fileName - the name of the file
+     * @return boolean - true if the data is saved successfully, false otherwise.
      */
     public static boolean saveData(SchoolHELP data, String fileName) {
         // save the data by means of serialization
@@ -30,10 +32,10 @@ public class FileManager {
             ObjectOutputStream out = new ObjectOutputStream(fos);
             // out.writeObject(testClass);
             out.writeObject(data);
-            System.out.println("Data saved to file:" + data);
-            for (User user : data.getUsers()) {
-                System.out.println("User: " + user);
-            }
+            // System.out.println("Data saved to file:" + data);
+            // for (User user : data.getUsers()) {
+            // System.out.println("User: " + user);
+            // }
             out.close();
             fos.close();
             return true;
@@ -46,7 +48,8 @@ public class FileManager {
     /**
      * This method is used to load the data from the file.
      * 
-     * @return
+     * @param fileName - the name of the file
+     * @return SchoolHELP - the data loaded from the file
      */
     public static SchoolHELP loadData(String fileName) {
         // check if the file exists
@@ -57,10 +60,10 @@ public class FileManager {
                 FileInputStream fis = new FileInputStream(file);
                 ObjectInputStream in = new ObjectInputStream(fis);
                 SchoolHELP data = (SchoolHELP) in.readObject();
-                System.out.println("Data loaded from file: " + data);
-                for (User user : data.getUsers()) {
-                    System.out.println(user);
-                }
+                // System.out.println("Data loaded from file: " + data);
+                // for (User user : data.getUsers()) {
+                // System.out.println(user);
+                // }
                 in.close();
                 fis.close();
                 return data;

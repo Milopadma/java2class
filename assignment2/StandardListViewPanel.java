@@ -1,6 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class represents the standard list view panel.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class StandardListViewPanel extends JPanel {
 
     // gui init
@@ -8,6 +14,16 @@ public class StandardListViewPanel extends JPanel {
     JPanel button_panel = new JPanel();
     JList<String> list = new JList<String>();
 
+    /**
+     * This constructor creates a panel with a list and buttons in it.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param list_content - an array of strings to be added to the list.
+     * @param buttons      - an array of buttons to be added to the panel.
+     * 
+     */
     public StandardListViewPanel(String[] list_content, JButton[] buttons) {
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);

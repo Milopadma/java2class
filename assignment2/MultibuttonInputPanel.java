@@ -3,7 +3,13 @@ import java.util.stream.Stream;
 
 import javax.swing.*;
 
-// this class represents the generic panel with multiple buttons in it. Only cares about the display of n amount of buttons.
+/**
+ * This class represents the generic panel with multiple buttons in it. Only
+ * cares about the display of n amount of buttons.
+ * 
+ * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+ *         Date: 2022-24-12
+ */
 public class MultibuttonInputPanel extends JPanel {
     // GUI element initializations
     JPanel button_panel = new JPanel();
@@ -11,6 +17,14 @@ public class MultibuttonInputPanel extends JPanel {
 
     // class constructor that accepts a String array of button names and an Event
     // listener to add to the buttons
+    /**
+     * This constructor creates a panel with multiple buttons in it.
+     * 
+     * @author I Gusti Bagus Milo Padma Wijaya - E2000426
+     *         Date: 2022-24-12
+     * 
+     * @param buttons - an array of buttons to be added to the panel.
+     */
     public MultibuttonInputPanel(JButton[] buttons) {
         // button layout are vertically stacked with same width using BoxLayout
         button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.Y_AXIS));
