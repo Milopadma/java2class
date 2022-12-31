@@ -32,10 +32,10 @@ public class FileManager {
             ObjectOutputStream out = new ObjectOutputStream(fos);
             // out.writeObject(testClass);
             out.writeObject(data);
-            System.out.println("Data saved to file:" + data);
-            for (User user : data.getUsers()) {
-                System.out.println("User: " + user);
-            }
+            // System.out.println("Data saved to file:" + data);
+            // for (User user : data.getUsers()) {
+            // System.out.println("User: " + user);
+            // }
             out.close();
             fos.close();
             return true;
@@ -60,10 +60,10 @@ public class FileManager {
                 FileInputStream fis = new FileInputStream(file);
                 ObjectInputStream in = new ObjectInputStream(fis);
                 SchoolHELP data = (SchoolHELP) in.readObject();
-                System.out.println("Data loaded from file: " + data);
-                for (User user : data.getUsers()) {
-                    System.out.println(user);
-                }
+                // System.out.println("Data loaded from file: " + data);
+                // for (User user : data.getUsers()) {
+                // System.out.println(user);
+                // }
                 in.close();
                 fis.close();
                 return data;

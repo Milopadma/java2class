@@ -36,7 +36,7 @@ public class SchoolHELPGUI {
         try {
             // first off, we need to serialize the data from the appdata folder
             SchoolHELP = getSchoolHELPFromAppdata();
-            SchoolHELP.getUsers().forEach(user -> System.out.println(user));
+            // SchoolHELP.getUsers().forEach(user -> System.out.println(user));
             // then init the main_view class
             new MainView();
 
@@ -54,11 +54,12 @@ public class SchoolHELPGUI {
                 // if it fails to load or the ile does not exist, create a new instance
                 SchoolHELP = new SchoolHELP();
                 // print
-                System.out.println("SchoolHELPInstance was Null!");
+                // System.out.println("SchoolHELPInstance was Null!");
                 return SchoolHELP;
             } else {
-                System.out
-                        .println("SchoolHELP data loaded from appdata folder: " + SchoolHELP.getUsers().toString());
+                // System.out
+                // .println("SchoolHELP data loaded from appdata folder: " +
+                // SchoolHELP.getUsers().toString());
                 return SchoolHELP;
             }
         } catch (Exception err) {
